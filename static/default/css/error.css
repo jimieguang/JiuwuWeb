@@ -1,0 +1,19 @@
+.w {
+    width: 80%;
+    margin-left: 10%;
+}
+.img {
+    width: 250px;
+    height: 250px;
+    background-color: rgba(255,255,255,.2);
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 150px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.txt {
+    text-align: center;
+    font-size: 24px;
+    color:rgba(255,255,255,.7);
+}

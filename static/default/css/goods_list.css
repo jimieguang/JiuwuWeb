@@ -156,7 +156,7 @@ span div {
     width: 220px;
     height: 60px;
     position: absolute;
-    background-color:rgba(0,0,0,.3);
+    box-shadow: inset 0px -55px 10px rgba(0,0,0,.4);
     color:#fff;
     border-radius: 3px;
     text-align: center;
