@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情</title>
+    <link rel="shortcut icon" href="../../static/default/favicon.ico"/>
+    <link rel="stylesheet" href="../../static/default/css/base.css">
+    <link rel="stylesheet" href="../../static/default/css/common.css">
+    <link rel="stylesheet" href="../../static/default/css/goods_detail.css">
+</head>
+<body>
+    <div class="logo"><a href="/"><div></div></a></div>
+    <div class="goods">
+        {% if goods.imagefile != "" %}
+            <div class="image"><img src="/static/upload/{{goods.imagefile}}" alt=""></div>
+        {% else %}
+            <div class="image"><img src="https://inews.gtimg.com/newsapp_bt/0/15133660520/1000" alt=""></div>
+        {% endif %}
+        <div class="detail">
+            <div class="w">
+            <div class="dt">商品详情</div>
+            <div class="dd">商品名称:<i>{{goods.name}}</i></div>
+            <div class="dd">商品价格:<i>{{goods.price}}</i>¥</div>
+            <div class="dd">上架时间:<i>{{goods.issuedate}}</i></div>
+            <div class="dd">商品描述:<i>{{goods.introduction}}</i></div>
+            <div class="dd">联系方式:<i></i></div>
+            <div class="dd"></div>
+            <div class="tocomment">参与评论&nbsp</div>
+            </div>
+        </div>
+    </div>
+    <!--母评-->
+    <div class="bigbox">
+    {% for mcon in msg_ces %}
+        <div class="comment">
+            <div class="mcomment">
+                <div class="comhp"></div>
+                <div class="commentator">
+                    <div class="comname">{{ mcon.owner.name }}</div>
+                    <div class="comtime">{{mcon.messagedate}}</div>
+                    <div class="comcontent">{{mcon.content}}</div> 
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <!--
+    子评实际样式
+    <div class="soncomment">
+        <div>昵称</div>
+        <div>回复评论的内容</div>
+        <div>时间</div>
+    </div>
+    -->
+    <div class="detfoot"></div>
+
+
+    <script>
+
+        //加载评论
+        //存储子评论于js数组
+        var scomment_num = {{ msg_ces_num }};//母评论数与子评论堆数一致
+        var scomments = new Array(scomment_num);//子评总集
+        for (var i=0;i<scomment_num;i++){//各子评集
+            scomments[i]=new Array(10);
+            for (var j=0;j<10;j++){//子评
+                scomments[i][j]=new Array(3);//0昵称、1内容、2时间
+            }
+        }
+        var num_i = 0;
+        var num_j = 0;
+        {% for scom1 in msg_cts_list %}
+            {% for scom2 in scom1 %}
+                scomments[num_i][num_j][0]="{{scom2.owner.name}}";
+                scomments[num_i][num_j][1]="{{scom2.content}}";
+                scomments[num_i][num_j][2]="{{scom2.messagedate}}";
+                num_j++;
+            {% endfor %}
+            num_i++;
+        {% endfor %}
+        
+        //生成
+        var big = document.querySelector('.bigbox');
+        for (var i=0;i<scomment_num;i++){
+            for(var j=0;j<30;j++){
+                if(scomments[i][j][0]==null) break;
+                else{
+                    var div_box = this.document.createElement('div');
+                    var span_name = this.document.createElement('span');
+                    var span_content = this.document.createElement('span');
+                    var div_time = this.document.createElement('div');
+                    var child = big.children[i];
+                    child.appendChild(div_box);
+                    div_box.appendChild(span_name);
+                    div_box.appendChild(span_content);
+                    div_box.appendChild(div_time);
+                    span_name.innerHTML=scomments[i][j][0] + "&nbsp:&nbsp";
+                    span_content.innerHTML=scomments[i][j][1];
+                    div_time.innerHTML="——————&nbsp" + scomments[i][j][2] + "&nbsp";
+                    div_box.className="soncomment";
+                    span_name.className="name";
+                    div_time.className="time";
+                }
+            }
+        }
+    </script>
+        
+</body>
+</html>

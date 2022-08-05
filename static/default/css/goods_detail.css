@@ -1,0 +1,137 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+/* 大盒子 */
+.goods {
+    display: flex;
+    width: 750px;
+    height: 500px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,.5);
+    overflow: hidden;
+    margin-top: 150px;
+}
+/* 信息栏 */
+.detail {
+    width: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 图片 */
+.image {
+    width: 45%;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 10px 0px 30px rgba(0,0,0,.6);
+    overflow: hidden;
+}
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.w {
+    width: 90%;
+    height: 70%;
+    margin-left: 10%;
+}
+/* 标题 */
+.detail .dt {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-left: -20%;
+}
+.tocomment {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    margin-left: -21%;
+    font-family: 'icomoon';
+    margin-top: 20%;
+    cursor:pointer;
+}
+.tocomment:hover {
+    color:rgb(45, 127, 162);
+}
+/* 子项 */
+.detail .dd {
+    width: 100%;
+    height: 33px;
+    font-size: 17px;
+    line-height: 40px;
+}
+/* 评论区 */
+.comment {
+    width: 750px;
+    height:auto;
+    margin: 20px 20px;
+    transition: 0.5s;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+/* 母评 */
+.mcomment {
+    width: 80%;
+    height: 100px;
+    background-color: rgba(103, 193, 223, 0.3);
+    margin-top: 20px;
+    display: flex;
+    border-radius: 10px;
+}
+/* 头像 */
+.comhp {
+    position: relative;
+    left :1%;
+    top:10%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,.6);
+}
+/* 表示信息？也许 */
+.commentator {
+    margin:10px 15px;
+}
+.comname ,.soncomment .name {
+    font-size: 15px;
+    color: rgb(28, 92, 117);
+}
+.comtime {
+    color:rgba(0,0,0,.3);
+}
+.soncomment .time {
+    color:rgba(0,0,0,.3);
+    font-size: 12px;
+}
+.comcontent {
+    font-size: 14px;
+    margin: 10px 0px;
+}
+/* 子评 */
+.soncomment {
+    width: 73%;
+    height: auto;
+    background-color: rgba(118, 179, 210, 0.2);
+    margin-bottom: 10px;
+    margin-left: 7%;
+    padding: 15px;
+    line-height: 20px;
+    font-size: 14px;
+    border-radius: 10px;
+}
+/* 时间 */
+.soncomment div {
+    float: right;
+}
+/* 底部 */
+.detfoot {
+    width: 100%;
+    height: 50px;
+}

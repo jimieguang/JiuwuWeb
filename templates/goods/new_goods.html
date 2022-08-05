@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布商品</title>
+    <link rel="shortcut icon" href="../../static/default/favicon.ico"/>
+    <link rel="stylesheet" href="../../static/default/css/base.css">
+    <link rel="stylesheet" href="../../static/default/css/common.css">
+    <link rel="stylesheet" href="../../static/default/css/new_goods.css">
+
+    <!-- 引入jquery,cropper -->
+    <script src="../../static/default/jquery/dist/jquery.js"></script>
+    <!-- <script src="../../static/default/cropperjs/dist/cropper.js"></script> -->
+    <link rel="stylesheet" href="../../static/default/cropperjs/dist/cropper.css">
+    
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/cropper/4.1.0/cropper.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/cropper/4.1.0/cropper.css"> -->
+</head>
+<body>
+    <div class="logo"><a href="/"></a></div>
+    <div class="w">
+        <form action="./newGoods" method="post" enctype="multipart/form-data">
+            <!-- 安全性参数 -->
+            {% csrf_token %}
+            <div class="goodsname">
+                <div class="tips">商品名称：</div>
+                <input class="name" type="text" name="name">
+            </div>
+            <div class="goodspri">
+                <div class="tips">商品价格：</div>
+                <input class="pri" type="text" name="price">
+            </div>
+            <div class="goodsdes">
+                <div class="tips">商品描述：</div>
+                <textarea class="des" name="introduction" id="" cols="30" rows="6"></textarea>
+            </div>
+            <div class="goodsimg">
+                <div class="uploadImage" id="uploadImage">选择图片</div><!-- 上传按钮 -->
+                <img src="" id="previewImage" alt=""><!-- 预览图片v1 -->
+            </div>
+            <input class="inputfile" id="inputFile_base64" type="text"  name="imagefile">
+            <input class="inputfile" id="inputFile_name" type="text" name="imagefile_name">
+            <div class="set"><span id="left"></span><span id="reset"></span><span id="right"></span></div>
+            <div class="upload">
+                <input type="submit" value="发布商品" id="getCroppedCanvas">
+            </div>
+        </form>
+        
+        <input class="inputfile" id="inputFile" type="file" accept="image/*" name="imagefile">
+    </div>
+    <script>
+        //点击选择图片时打开上传文件窗口
+        uploadImage.addEventListener('click',function(){
+            document.querySelector('#inputFile').click();
+        });
+
+        //预览图片
+        inputFile.addEventListener('change',function(){
+            var file = this.files[0];
+            name = file.name;
+            previewImage.src = file ? URL.createObjectURL(file) : '';
+            tailor();
+            
+        },this);
+
+        //裁剪
+        function tailor(){
+            $('#previewImage').cropper({
+                aspectRatio:11/15,
+                viewMode:1,
+                //preview:".new_preview",hid
+                autoCropArea:1,
+                background:false,
+                
+                ready:function () {
+                    console.log("ready");
+                },
+                cropstart: function (e) {
+                    console.log("cropstart");
+                },
+                cropmove: function (e) {
+                    console.log("cropmove");
+                },
+                cropend: function (e) {
+                    console.log("cropend");
+                },
+                crop: function (e) {
+                    console.log("crop");
+                },
+                zoom: function (e) {
+                    console.log("zoom");
+                },
+            });
+            $("#right").on("click",function(){
+                $('#previewImage').cropper('rotate',15);
+            })
+            $("#left").on("click",function(){
+                $('#previewImage').cropper('rotate',-15);
+            })
+            $("#reset").on("click",function(){
+                $('#previewImage').cropper('reset');
+            })
+
+            $("#getCroppedCanvas").on("click", function () {
+                console.log($('#previewImage').cropper('getCroppedCanvas'));;
+                var cas=$('#previewImage').cropper('getCroppedCanvas');
+                var base64url=cas.toDataURL('image/jpeg');
+                var inputFile = document.getElementById('inputFile_base64');
+                var inputFile_name = document.getElementById('inputFile_name');
+                inputFile.value = base64url;
+                inputFile_name.value = name;
+            })
+        }
+        
+        
+    </script>
+</body>
+</html> 

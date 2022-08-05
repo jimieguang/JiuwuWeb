@@ -1,0 +1,128 @@
+body,.subm,.agreement{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+.logo {
+    background-image: url(../images/logo.png);
+}
+/* 大盒子 */
+.lr {
+    display: flex;
+    height: 600px;
+    width: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+    min-width: 400px;
+    min-height: 600px;
+    box-shadow: 20px 20px 30px rgba(0,0,0,.2);
+    color:rgba(255,255,255,0.7);
+    justify-content: center;
+    align-items: center;
+    perspective: 500px;
+}
+.login {
+    height: 100%;
+    width: 100%;
+    transition: 1s;
+    opacity: 1;
+    z-index: 0;
+    background:linear-gradient(to right,rgba(69, 204, 231,0.3),rgba(66, 186, 230,0.3));
+}
+.register {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: 0;
+    transition: 1s;
+    background:linear-gradient(to right,rgba(66, 186, 230,0.3),rgba(75, 169, 241,0.3));
+    z-index: -1;
+}
+/* 切换动画 */
+/* @keyframes rotate {
+    0%{
+
+    }
+    100%{
+        transform: rotateY(180deg);
+    }
+}
+.rotate {
+    animation-name: rotate;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+} */
+/* 输入框 */
+input{
+    border:0px;
+    border-bottom: 1px solid rgba(255,255,255,0.7);
+    margin-left: 5px;
+    background-color: rgba(255,255,255,0);
+    outline: none;
+    width: 200px;
+    color:azure;
+    font-size: 15px;
+    font-weight: 100;
+}
+.test {
+    width: 20px;
+}
+/* 链接颜色 */
+a {
+    color: rgb(168, 197, 220);
+}
+/* title */
+.lrt {
+    font-size: 25px;
+    margin: 50px;
+    text-align: center;
+}
+/* 输入框的盒子 */
+.inp {
+    font-size: 15px;
+    margin: 10px;
+    text-align: center;
+}
+/* 验证的盒子 */
+.verify {
+    width: 100%;
+    height: 20px;
+    /* background-color: #fff; */
+}
+/* 确认按钮 */
+.sub {
+    width: 80px;
+    height: 40px;
+    border-radius: 100px;
+    margin: 20px 0;
+    border:0px;
+    background-color: rgba(255,255,255,0.2);
+    cursor:pointer;
+    color:rgba(255,255,255,0.8);
+}
+/* 鼠标悬浮加阴影 */
+.sub:hover {
+    box-shadow: 10px 0px 20px rgba(255,255,255,0.5),0px 10px 20px rgba(255,255,255,0.5),0px -10px 20px rgba(255,255,255,0.5),-10px 0px 20px rgba(255,255,255,0.5);
+}
+/* 切换注册登录的盒子 */
+.toanother {
+    text-align: center;
+    margin: 50px 0;
+}
+/* 切换按钮 */
+.change1,.change2 {
+    position:relative ;
+    left:50%;
+    transform: translateX(-50%);
+    margin: -5px 0 ;
+    font-size: 13px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: center;
+    cursor:pointer;
+    font-family: 'icomoon';
+}
+.tab {
+    text-indent: -2em;
+    /* 缩进对齐 */
+}

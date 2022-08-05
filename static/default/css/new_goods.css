@@ -1,0 +1,131 @@
+body {
+    color:rgb(230,230,230);
+    font-size: 18px;
+    font-weight: 100;
+}
+input,textarea {
+    color:rgb(230,230,230);
+}
+/* 外盒子 */
+.w {
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    box-shadow: 20px 20px 30px rgba(255,255,255,0.3);
+}
+/* 流式布局 */
+.goodsname,.goodspri,.goodsdes,.upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 输入框初始化 */
+.goodsname .name,.goodspri .pri {
+    outline: none;
+    background-color: rgba(255,255,255,0);
+    border: none;
+    border-bottom: 1px solid rgb(230,230,230);
+    width: 170px;
+}
+/* 商品名称盒子 */
+.goodsname {
+    width: 100%;
+    height: 30px;
+    margin-top: 110px;
+    padding-top: 20px;
+}
+/* 商品名称 */
+.goodsname .name {
+    
+} 
+/* 商品价格盒子 */
+.goodspri {
+    width: 100%;
+    height: 30px;
+    padding-top: 20px;
+}
+/* 商品描述盒子 */
+.goodsdes {
+    width: 100%;
+    height: 100px;
+    padding-left: 10px;
+    padding-top: 20px;
+}
+/* 商品描述 */
+.goodsdes .des {
+    background-color: rgba(255,255,255,0);
+    border-radius: 5px;
+    border:1px solid rgb(230,230,230) ; 
+    outline: none;
+    width: 180px;
+}
+/* 商品图片盒子 */
+.goodsimg {
+    width: 60%;
+    height: 250px;
+    padding-top: 10px;
+    margin-left: 20%;
+}
+/* 上传图片 */
+.uploadImage {
+    width: 80px;
+    height: 20px;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 50%;
+    margin-bottom: 10px;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+/* 选择文件 */
+.inputfile {
+    display: none;
+}
+/* 预览图片 */
+#previewImage {
+    width: 176px;
+    height: 240px;
+    object-fit: contain;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+/* 提交按钮盒子 */
+.upload {
+    width: 100%;
+    height: 40px;
+    margin-top: 90px;
+    padding-bottom: 40px;
+    padding-top: 20px;
+}
+.upload input:hover {
+    box-shadow: 5px 0px 10px rgba(255,255,255,0.2),0px 5px 10px rgba(255,255,255,0.2),-5px 0px 10px rgba(255,255,255,0.2),0px -5px 10px rgba(255,255,255,0.2);
+}
+/* 提交按钮 */
+.upload input {
+    background-color: rgba(255,255,255,0);
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    border:1px solid rgb(230,230,230) ;
+    cursor: pointer;
+}
+.set {
+    float: left;
+    position: relative;
+    width: 200px;
+    height: 20px;
+    margin-top: 65px;
+    left:50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+
+}
+span {
+    font-family: 'icomoon';
+    cursor: pointer;
+    font-weight: 100;
+    color:rgba(255,255,255,0.8);
+}

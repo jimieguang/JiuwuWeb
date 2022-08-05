@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表页</title>
+    <link rel="shortcut icon" href="../../static/default/favicon.ico"/>
+    <link rel="stylesheet" href="../../static/default/css/base.css">
+    <link rel="stylesheet" href="../../static/default/css/common.css">
+    <link rel="stylesheet" href="../../static/default/css/goods_list.css">
+    <script src="../../static/default/js/goods_list.js"></script>
+</head>
+<body>
+    <div class="logo"><a href="/"><div></div></a></div>
+    <div class="box1"><div class="page_title">九物广场</div></div>
+    <div class="box1_5">
+        <div class="search">
+            <form method="post" action="search/">
+                <!-- 安全性参数 -->
+                {% csrf_token %}
+                <div class="searchtxt"><input type="text" placeholder="搜索商品/用户" name="keywords" value=""></div>
+                <div class="searchbtn"><input href="search/" type="submit" class="acubtn"><i class="newbtn"></i></div>
+            </form>
+        </div>
+        <div class="sort">
+                <div class="sortway">全部商品&nbsp</div>
+                <div class="sortnav">
+                    <a class="d" href="day">今日内</a>
+                    <a class="w" href="week">近一星期</a>
+                    <a class="m" href="month">近一个月</a>
+                    <a class='all' href="all">全部商品</a>
+                </div>
+        </div>
+    </div>
+    <div class="box2">
+        <div class="list">
+            <!--实际样式 
+                <span class="item">
+                    <a class="image" href="./goodsDetail/{{goods.id}}">
+                    <img src="../../static/upload/goods2.jpg" ></a>
+                    <div class="mes">
+                        <i>商品名称：</i><i class="name">某样东西</i><br>
+                        <i>上架时间：</i><i class="time">5.27 18:00</i><br>
+                        <i>价格：</i><i class="price">20rmb</i>
+                    </div>
+                </span> -->
+        </div>
+    </div>
+    <div class="box3">
+        <div class="pagenav">
+            <ul>
+                <li class="prev">&ltprev</li>
+                <li class="txt">当前第&nbsp<i class="currentpage">1</i>&nbsp页,共&nbsp<i class="totalpage"></i>&nbsp页</li>
+                <li class="next">next&gt</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <script>
+        //更改时间范围
+        var sortway0 = this.document.querySelector('.sortway');
+        {% if during == "day" %}
+            sortway0.innerHTML='今日内&nbsp';
+        {% elif during == "week" %}
+            sortway0.innerHTML='近一星期&nbsp';
+        {% elif during == "month" %}
+            sortway0.innerHTML='近一个月&nbsp';
+        {% endif %}
+
+        //加载数据
+        var goodsInfos = new Array({{goods_num}});
+        for (var i=0;i<goodsInfos.length;i++){
+            goodsInfos[i]=new Array(5);
+        }
+        //0链接指向、1图片地址、2商品名称、3上架时间、4商品价格
+        var number = 0;
+        {% for goods in goods_infos %}
+            goodsInfos[number][0] = "/goodsIssue/goodsDetail/{{goods.id}}";
+            goodsInfos[number][1] = "/static/upload/{{ goods.imagefile }}";
+            goodsInfos[number][2] = "{{ goods.name }}";
+            goodsInfos[number][3] = "{{ goods.issuedate }}";
+            goodsInfos[number][4] = "{{ goods.price }}¥";
+            number++;
+        {% endfor %}
+
+        var list = this.document.querySelector('.list');
+        var persum = 0;
+        function upload(page_num){
+            var start = (page_num - 1)* one_page_num;
+            var end = page_num * one_page_num -1;
+            for(var i=start;i<=end;i++){
+                if(i>=goodsnum){ break; }
+                //图片
+                var item = this.document.createElement('span');
+                var a = this.document.createElement('a');
+                var img = this.document.createElement('img');
+                list.appendChild(item);
+                item.appendChild(a); 
+                a.appendChild(img); 
+                //信息
+                var mes = this.document.createElement('div');
+                var h_1 = this.document.createElement('i');
+                var h_2 = this.document.createElement('i');
+                var h_3 = this.document.createElement('i');
+                var i_1 =this.document.createElement('i');
+                var i_2 = this.document.createElement('i');
+                var i_3 = this.document.createElement('i');
+                var br_1 = this.document.createElement('br');
+                var br_2 = this.document.createElement('br');
+                item.appendChild(mes);
+                mes.appendChild(h_1);
+                mes.appendChild(i_1);
+                mes.appendChild(br_1);
+                mes.appendChild(h_2);
+                mes.appendChild(i_2);
+                mes.appendChild(br_2);
+                mes.appendChild(h_3);
+                mes.appendChild(i_3);
+                //添加图片
+                a.setAttribute('href',goodsInfos[i][0]);
+                if (goodsInfos[i][1] != "/static/upload/"){
+                    img.setAttribute('src',goodsInfos[i][1]);}
+                else{
+                    img.setAttribute('src',"https://inews.gtimg.com/newsapp_bt/0/15133660520/1000");}
+                //添加信息
+                h_1.innerHTML="商品名称:";
+                h_2.innerHTML="上架时间:";
+                h_3.innerHTML="商品价格:";
+                i_1.innerHTML=(goodsInfos[i][2]);
+                i_2.innerHTML=(goodsInfos[i][3]);
+                i_3.innerHTML=(goodsInfos[i][4]);
+                persum++;
+            }
+        }
+
+        //翻页
+        var goodsnum = {{goods_num}};//商品总数
+        var one_page_num = 9;//单页面商品数
+        var totalpage = Math.ceil(goodsnum/one_page_num);//总页数变量
+        var currentpage = 1;//当前页变量
+        var currentpage_css = this.document.querySelector('.currentpage');//css中当前页元素
+        var totalpage_css = this.document.querySelector('.totalpage');//css中的页数元素
+        totalpage_css.innerHTML=totalpage;//替换总页数
+        var prev = this.document.querySelector('.prev');
+        var next = this.document.querySelector('.next');
+        
+        prev.addEventListener('click',function(){//上一页
+            if(currentpage!=1){
+                currentpage-=1;
+                currentpage_css.innerHTML=currentpage;
+                    for(var x = 0;x < persum;x++){
+                        list.removeChild(list.children[0]);
+                    }
+                    persum=0;
+                upload(currentpage);
+            }
+        });
+        
+        next.addEventListener('click',function(){//下一页
+            if(currentpage!=totalpage){
+                currentpage+=1;
+                currentpage_css.innerHTML=currentpage;
+                for(var x = 0;x < persum;x++){
+                        list.removeChild(list.children[0]);
+                    }
+                persum=0;
+                upload(currentpage);
+            }
+        });
+        upload(currentpage);
+    </script>  
+</body>
+</html>
