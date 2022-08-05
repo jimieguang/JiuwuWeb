@@ -3220,9 +3220,7 @@
      * @param {Element} element - The target element for cropping.
      * @param {Object} [options={}] - The configuration options.
      */
-    
     function Cropper(element) {
-      
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       _classCallCheck(this, Cropper);
@@ -3243,7 +3241,6 @@
       this.sizing = false;
       this.init();
     }
-    
 
     _createClass(Cropper, [{
       key: "init",
@@ -3626,10 +3623,9 @@
 
     return Cropper;
   }();
-  
+
   assign(Cropper.prototype, render, preview, events, handlers, change, methods);
 
   return Cropper;
 
 })));
-
