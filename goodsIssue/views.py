@@ -130,6 +130,8 @@ def goodsDetail(req,goods_id):
 
 #评论栏模块
 def message(req):
+    msg = "未完成的页面！"
+    return render(req,'error_msg.html', locals())
     if not req.session.get('islogin'):
         msg = '你还未登陆，请先登陆！'
         return render(req,'error_msg.html', locals())

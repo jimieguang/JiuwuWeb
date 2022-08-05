@@ -58,6 +58,12 @@ class RegisterForm(ModelForm):
             else:
                 field.widget.attrs = {"class": "form-control", "placeholder" : field.label}
 
+#个人中心模块
+def self(req):
+    id = req.session['user_info']['uid']
+    user = User.objects.get(id=id)
+    return render(req,'user/self.html',locals())
+
 #登录模块
 def login(req):
     # 登录注册界面
