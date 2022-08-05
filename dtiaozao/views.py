@@ -32,15 +32,14 @@ def index(req):
 
 #搜索引擎模块
 def search(req,during):
-    if req.method == 'GET':
-        msg = '非法访问！！！'
-        return render(req,'error_msg.html', locals())
-    data = req.POST
-    goods_name = data['keywords']
+    goods_name = req.GET.get('keywords')
+    if goods_name==None:
+        goods_name = ""
     start = fun.timeTrans(during)
     end = fun.now()
     # 获取指定时间段且具有该关键词的商品数据
-    goods_infos = Goodsissue.objects.filter(issuedate__range = [start,end],name__contains=goods_name)
+    goods_infos = Goodsissue.objects.filter(issuedate__range = [start,end],name__contains=goods_name).order_by('-issuedate')
+    goods_num = len(goods_infos)
     return render(req, 'goods/goods_list.html', locals())
 
 #个人中心

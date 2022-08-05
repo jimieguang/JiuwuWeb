@@ -50,7 +50,7 @@
                 <div class="navt">我的</div>
             </div>
             <div class="navi"><a href="goodsIssue/newGoods">我要发布</a></div>
-            <div class="navi"><a href="goodsIssue/myGoods">我的商品</a></div>
+            <div class="navi"><a href="goodsIssue/myGoods/all">我的商品</a></div>
             <div class="item">
                 <div class="icon"></div>
             <div class="navt">市场</div>
@@ -69,10 +69,8 @@
 
     <!-- 搜索框 -->
     <div class="search">
-        <form method="post" action="search/">
-            <!-- 安全性参数 -->
-            {% csrf_token %}
-            <div class="searchtxt"><input type="text" placeholder="搜索商品/用户" name="keywords" value=""></div>
+        <form method="get" action="search/all">
+            <div class="searchtxt"><input type="text" placeholder="搜索商品（关键词）" name="keywords" value=""></div>
             <div class="searchbtn"><input href="search/" type="submit" class="acubtn"><i class="newbtn"></i></div> 
         </form>
     </div>

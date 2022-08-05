@@ -46,15 +46,17 @@ def newGoods(req):
         return HttpResponseRedirect("myGoods")
 
 
-def myGoods(req):
+def myGoods(req,during):
     '''展示我的商品'''
     if not req.session.get('islogin'):
         msg = '你还未登陆，请先登陆！'
         return render(req, 'error_msg.html', locals())
     if req.method == 'GET':
+        start = fun.timeTrans(during)
+        end = fun.now()
         uid = req.session['user_info']['uid']
-        #获取用户名下所有商品信息
-        goods_infos = Goodsissue.objects.filter(owner=uid)
+        #获取用户名下所有商品信息(限制发布时间,并降序排列)
+        goods_infos = Goodsissue.objects.filter(owner=uid,issuedate__range = [start,end]).order_by('-issuedate')
         goods_num = len(goods_infos)
         return render(req, 'goods/goods_list.html', locals())
     # 修改商品信息
@@ -88,7 +90,7 @@ def goodsList(req,during):
     start = fun.timeTrans(during)
     end = fun.now()
     # 获取指定时间段商品数据
-    goods_infos = Goodsissue.objects.filter(issuedate__range = [start,end])
+    goods_infos = Goodsissue.objects.filter(issuedate__range = [start,end]).order_by('-issuedate')
     goods_num = len(goods_infos)
     return render(req, 'goods/goods_list.html', locals())
 

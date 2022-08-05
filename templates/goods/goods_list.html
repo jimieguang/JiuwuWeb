@@ -16,9 +16,7 @@
     <div class="box1"><div class="page_title">九物广场</div></div>
     <div class="box1_5">
         <div class="search">
-            <form method="post" action="search/">
-                <!-- 安全性参数 -->
-                {% csrf_token %}
+            <form method="get" action="/search/{{ during }}">
                 <div class="searchtxt"><input type="text" placeholder="搜索商品/用户" name="keywords" value=""></div>
                 <div class="searchbtn"><input href="search/" type="submit" class="acubtn"><i class="newbtn"></i></div>
             </form>
