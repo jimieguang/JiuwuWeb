@@ -96,6 +96,9 @@
 .searchbtn input {
     display: none;
 }
+.newbtn {
+    /* cursor: pointer; */
+}
 /* 列表外盒子 */
 .box2 {
     width: 100%;

@@ -21,7 +21,7 @@
                 <!-- 安全性参数 -->
                 {% csrf_token %}
                 <input type="hidden" name="action" value="login">
-                <div class="inp">学号:<input type="text" maxlength="10" name="student_id" value=""></div>
+                <div class="inp">学号:<input type="text" maxlength="10" name="student_id" value="" minlength="10"></div>
                 <div class="verify"></div>
                 <div class="inp">密码:<input type="password" name="passwd" value=""></div>
                 <div class="verify"></div>

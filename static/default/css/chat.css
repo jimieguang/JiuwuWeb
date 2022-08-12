@@ -1,56 +1,165 @@
 .w {
     width: 60%;
-    height: 100%;
-    margin-left: 20%;
-    margin-top: 100px;
+    height: 75%;
+    max-width: 650px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: -40px;
+    padding-top: 40px;
+    border-radius: 5px 5px 0px 0px;
     background-color: rgba(255,255,255,0.2);
-    overflow: hidden;
+    overflow-y: scroll;
+    /* 隐藏滚动条 */
+    scrollbar-width: none; /* firefox */
+   -ms-overflow-style: none; /* IE 10+ */
 }
+/* 隐藏滚动条 */
+.w::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+}
+
 /* 聊天对象 */
 .object {
-    width: 100%;
+    width: 60%;
     height: 40px;
-    background-color: rgba(255,255,255,.2);
+    max-width: 650px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background-image:  linear-gradient(180deg,rgba(150, 199, 207, 0.9), rgba(150, 199, 207, 0.3));;
     font-size: 25px;
     line-height: 40px;
+    border-radius: 5px 5px 0px 0px;
     text-align: center;
     color:rgba(255,255,255,.8);
-    margin-bottom: 10px;
+    margin-top: 100px;
+    position:relative;
+    z-index: 1;
+}
+/* 时间 */
+.time {
+    color: rgba(255,255,255,.5);
+    margin-left:50%;
+    transform: translateX(-50%);
+    text-align: center;
 }
 /* 己方 */
 .self {
     width: 100%;
-    /* height: 70px; */
-    background-color: rgba(255,255,255,.2);
     margin-top: 20px;
 }
 /* 对方 */
 .other {
     width: 100%;
-    /* height: 70px; */
-    background-color: rgba(255,255,255,.3);
     margin-top: 20px;
-}
-.self .hp {
-    float: right;
-}
-.other .hp {
-    float: left;
 }
 .hp {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: rgba(255,255,255,.8);
+    margin: 0px 8px;
+    overflow: hidden;
+    background-color: rgba(255,255,255,.5);
 }
+.hp img {
+    height: 100%;
+    width: 100%;
+}
+/* 占位 */
+/* .occupied {
+    width: 25%;
+    height: 50px;
+    background-color: #fff;
+} */
 /* 内容 */
+.content {
+    max-width: 60%;
+    margin-top: 6px;
+    border: 1px solid rgba(255,255,255,.6);
+    color: rgba(255,255,255,.8);
+    padding: 3px 3px 3px 5px;
+    font-size: 13px;
+}
+
 .self .content {
-    float: right;
+    border-radius: 10px 0px 10px 10px;
 }
 .other .content {
+    border-radius: 0px 10px 10px 10px;
+}
+.self .content,.self .hp,.self .occupied {
+    float: right;
+}
+.other .content,.other .hp,.other .occupied {
     float: left;
 }
-.content {
+
+/* 伪元素清除浮动 */
+.self::after,.other::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.text {
+    position: relative;
     width: 60%;
+    max-width: 650px;
+    margin-left: 50%;
+    padding-left: 5%;
+    transform: translateX(-50%);
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 0px 0px 8px 8px;
+}
+/* 发送内容区 */
+textarea {
+    background-color: rgba(255,255,255,0);
+    border-radius: 8px;
+    border:1px solid rgb(230,230,230) ; 
+    outline: none;
+    color: rgba(255,255,255,.8);
+    width: 80%;
+    font-size: 14px;
+    padding: 5px 0px 5px 8px ;
+    resize:none;/*隐藏右下拉伸按钮*/
+}
+
+/* 修改滚动条样式 */
+textarea::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+textarea::-webkit-scrollbar-thumb {
+   border-radius: 3px;
+     -moz-border-radius: 3px;
+     -webkit-border-radius: 3px;
+     background-color: #f3f3f3;
+}
+textarea::-webkit-scrollbar-track {
+   background-color: transparent;
+}
+
+/* 发送按钮 */
+.send_btn {
+    width: 48px;
+    height: 25px;
+    border-radius: 8px;
+    transform: translateY(-30%);
+    margin-left: 5px;
     background-color: rgba(255,255,255,.2);
+    color: rgba(255,255,255,.8);
+    border: 0px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.send_btn:hover {
+    box-shadow: 5px 0px 10px rgba(255,255,255,0.1),
+    0px 5px 10px rgba(255,255,255,0.1),
+    -5px 0px 10px rgba(255,255,255,0.1),
+    0px -5px 10px rgba(255,255,255,0.1);
+}
+.lable {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
 }
