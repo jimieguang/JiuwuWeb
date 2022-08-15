@@ -1,7 +1,5 @@
 
 *.pyc
-dtiaozao/__pycache__/urls.cpython-39.pyc
 db.sqlite3
 *.png
 *.jpg
-*.pyc
