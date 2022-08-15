@@ -3,6 +3,8 @@
 from .settings import MEDIA_ROOT
 import base64
 import time
+import datetime
+from django.utils import timezone
 
 def mk_md5(s):
     import hashlib
@@ -13,8 +15,11 @@ def mk_md5(s):
 
 
 def now():
-    import time
     return time.strftime('%Y-%m-%d %X', time.localtime() )
+
+def str2datetime(str,delay=0):
+    '''字符串转datetime，delay为延迟时间，单位秒'''
+    return datetime.datetime.strptime(str, "%Y-%m-%d %X") + datetime.timedelta(seconds=delay)
 
 def timeTrans(during):
     import datetime

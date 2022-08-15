@@ -1,8 +1,9 @@
 #encoding: utf-8
 from django import forms
 from django.forms import ModelForm
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseRedirect
+import json
 
 from userIssue.models import User
 from userIssue.models import PrivateMessage
@@ -112,9 +113,6 @@ def logout(req):
 
 #私聊模块
 def private_message(req,with_uid):
-    if not req.session.get('islogin'):
-        msg = '你还未登陆，请先登陆！'
-        return render(req, 'error_msg.html', locals())
     Alice = User.objects.get(id = req.session['user_info']['uid'])
     Black = User.objects.get(id=with_uid)
     if req.method == 'GET':
@@ -122,13 +120,22 @@ def private_message(req,with_uid):
         A2B = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id).order_by('messagedate')
         B2A = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id).order_by('messagedate')
         messages = A2B | B2A
+        pastdate = messages.last().messagedate
         return render(req,"user/chat.html",locals())
-    pm_infos = {}
-    pm_infos["uid_from"] = Alice.id
-    pm_infos["uid_to"] = Black.id
-    pm_infos["messagedate"] = fun.now()
-    pm_infos["content"] = req.POST.get('content')
-    PrivateMessage.objects.create(**pm_infos)
-    return HttpResponseRedirect(f"/userIssue/PM/{with_uid}/")
+    if req.POST.get("refresh"):
+        start = fun.str2datetime(req.POST.get("pastdate"),1)
+        end = fun.now()
+        A2B = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id,messagedate__range = [start,end]).order_by('messagedate')
+        B2A = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id,messagedate__range = [start,end]).order_by('messagedate')
+        new_messages = A2B | B2A
+        return HttpResponse(json.dumps({'test':'1','test2':'2'}))
+    else:
+        pm_infos = {}
+        pm_infos["uid_from"] = Alice.id
+        pm_infos["uid_to"] = Black.id
+        pm_infos["messagedate"] = fun.now()
+        pm_infos["content"] = req.POST.get('content')
+        PrivateMessage.objects.create(**pm_infos)
+        return HttpResponseRedirect(f"/userIssue/PM/{with_uid}/")
 
 

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../../../static/default/css/base.css">
     <link rel="stylesheet" href="../../../static/default/css/common.css">
     <link rel="stylesheet" href="../../../static/default/css/chat.css">
+    
+    <script src="../../../static/default/jquery/dist/jquery.js"></script>
 </head>
 <body>
     <div class="logo"><a href="/"></a></div>
@@ -38,18 +40,34 @@
         <a class="lab" href="#lab"></a>
         <div id="lab"></div>
     </div>
-    <form class="text" action="" method="post">
+    <form class="text" action="./" method="post">
         <!-- 安全性参数 -->
         {% csrf_token %}
         <textarea name="content" id="" cols="30" rows="3" required="required"></textarea>
         <input class="send_btn" type="submit" value="发送"></input>
     </form>
-    <form class="post" action="" method="post">
-        <input type="text" name="pastdate" value={{pastdate}} >
+    <form class="post" action="./" method="post">
+        <!-- 安全性参数 -->
+        {% csrf_token %}
+        <input type="text" name="refresh" value="refresh">
+        <input type="text" name="pastdate" value="{{ pastdate | date:"Y-m-d H:i:s" }}">
         <input type="submit" id="post">
     </form>
 </body>
 <script>
+    $.ajax({
+        type: "POST",         //获取方式
+        url: "",    //数据读取地址(默认当前页面)  
+        data:{"csrfmiddlewaretoken": "{{csrf_token}}","refresh": "true","pastdate":"{{ pastdate | date:"Y-m-d H:i:s" }}"} ,
+        dataType:"json",    //
+        success: function(msg){
+            var data = msg.test;
+            alert(data);
+        },
+        error: function(msg){
+            alert(msg);
+        }
+    });
     // 直达底部
     var lable = document.querySelector('.lab');
     lable.click();
@@ -59,10 +77,10 @@
         new_mes=new Array(3);
     }//0所属，1时间，2内容
     var number=0;
-    {% for mes in  %}
-        new_mes[number][0]="{{}}";//0所属
-        new_mes[number][1]="{{}}";//1时间
-        new_mes[number][2]="{{}}";//2内容
+    {% for mes in new_messages %}
+        new_mes[number][0]="{{1}}";//0所属
+        new_mes[number][1]="{{2}}";//1时间
+        new_mes[number][2]="{{3}}";//2内容
         number++;
     {% endfor %}
 
@@ -116,6 +134,9 @@
         var post = document.querySelector('#post');
         post.click();
         //clearInterval(timer);
-    },2000)
+    },100000000)
+</script>
+<script>
+
 </script>
 </html>
