@@ -7,5 +7,5 @@ urlpatterns = [
     path('self/', views.self),
     path('login/', views.login),
     path('logout/', views.logout),
-    path('PM/<int:with_uid>', views.private_message),
+    path('PM/<int:with_uid>/', views.private_message),
 ]

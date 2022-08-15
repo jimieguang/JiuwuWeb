@@ -121,14 +121,14 @@ def private_message(req,with_uid):
         # 将私聊信息按时间排序/合并
         A2B = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id).order_by('messagedate')
         B2A = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id).order_by('messagedate')
-        res = A2B | B2A
-        return render(req,"/user/privae_message.html",locals())
-    pm_infos = []
+        messages = A2B | B2A
+        return render(req,"user/chat.html",locals())
+    pm_infos = {}
     pm_infos["uid_from"] = Alice.id
     pm_infos["uid_to"] = Black.id
     pm_infos["messagedate"] = fun.now()
     pm_infos["content"] = req.POST.get('content')
     PrivateMessage.objects.create(**pm_infos)
-    return HttpResponseRedirect(f"./PM/{with_uid}")
+    return HttpResponseRedirect(f"/userIssue/PM/{with_uid}/")
 
 
