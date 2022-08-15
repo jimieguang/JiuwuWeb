@@ -123,19 +123,22 @@ def private_message(req,with_uid):
         pastdate = messages.last().messagedate
         return render(req,"user/chat.html",locals())
     if req.POST.get("refresh"):
+        # 轮询同步信息时仅需关注对方发来的信息
         start = fun.str2datetime(req.POST.get("pastdate"),1)
         end = fun.now()
-        A2B = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id,messagedate__range = [start,end]).order_by('messagedate')
-        B2A = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id,messagedate__range = [start,end]).order_by('messagedate')
-        new_messages = A2B | B2A
-        return HttpResponse(json.dumps({'test':'1','test2':'2'}))
-    else:
-        pm_infos = {}
-        pm_infos["uid_from"] = Alice.id
-        pm_infos["uid_to"] = Black.id
-        pm_infos["messagedate"] = fun.now()
-        pm_infos["content"] = req.POST.get('content')
-        PrivateMessage.objects.create(**pm_infos)
-        return HttpResponseRedirect(f"/userIssue/PM/{with_uid}/")
+        B2As = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id,messagedate__range = [start,end]).order_by('messagedate')
+        response_dict = {"length":B2As.count(),"content":[],"messagedate":[]}
+        for B2A in B2As:
+            response_dict["content"].append(B2A.content)
+            response_dict["messagedate"].append(B2A.messagedate)
+        return HttpResponse(json.dumps(response_dict))
+    # 将自己发送的信息保存到数据库
+    pm_infos = {}
+    pm_infos["uid_from"] = Alice.id
+    pm_infos["uid_to"] = Black.id
+    pm_infos["messagedate"] = fun.now()
+    pm_infos["content"] = req.POST.get('content')
+    PrivateMessage.objects.create(**pm_infos)
+    return HttpResponse(json.dumps({'status':200}))
 
 
