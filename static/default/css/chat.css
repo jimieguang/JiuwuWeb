@@ -1,6 +1,10 @@
+body {
+    height: 100%;
+}
 .w {
     width: 60%;
-    height: 75%;
+    height: 580px;
+    /* height: 75%; */
     max-width: 650px;
     margin-left: 50%;
     transform: translateX(-50%);
@@ -158,9 +162,6 @@ textarea::-webkit-scrollbar-track {
     -5px 0px 10px rgba(255,255,255,0.1),
     0px -5px 10px rgba(255,255,255,0.1);
 }
-.lable {
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
+.post {
+    display: none;
 }

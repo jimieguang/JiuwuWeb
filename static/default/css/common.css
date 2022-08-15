@@ -5,6 +5,7 @@ body {
     background-size: 400%;
     animation:bganimation 15s infinite ;
     background-attachment: fixed;
+    /* overflow: hidden; */
 }
 /* 背景渐变动画 */
 @keyframes bganimation {

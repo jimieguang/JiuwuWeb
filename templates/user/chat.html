@@ -21,16 +21,16 @@
                     <div class="hp"><img src="../../../static/upload/{{ Alice.avatar}}" alt=""></div>
                     <div class="content">
                         <div class="txt">{{ message.content }}</div>
-                        <div class="triangle"></div>
+                        <!-- <div class="triangle"></div> -->
                     </div>
                 </div>
             {% else %}
                 <div class="other">
                     <div class="time">{{message.messagedate}}</div>
-                    <div class="hp"><img src="../../../static/upload/{{ Black.avatar}}" alt=""></div>
+                    <div class="hp"><img src="../../../static/upload/{{ Black.avatar}}" ></div>
                     <div class="content">
                         <div class="txt">{{ message.content }}</div>
-                        <div class="triangle"></div>
+                        <!-- <div class="triangle"></div> -->
                     </div>
                 </div>
             {% endif %}
@@ -44,10 +44,78 @@
         <textarea name="content" id="" cols="30" rows="3" required="required"></textarea>
         <input class="send_btn" type="submit" value="发送"></input>
     </form>
-    <script>
-        // 直达底部
-        var lable = document.querySelector('.lab');
-        lable.click();
-    </script>
+    <form class="post" action="" method="post">
+        <input type="text" name="pastdate" value={{pastdate}} >
+        <input type="submit" id="post">
+    </form>
 </body>
+<script>
+    // 直达底部
+    var lable = document.querySelector('.lab');
+    lable.click();
+
+    var new_mes = new Array(5);
+    for(let i=0;i<5;i++){
+        new_mes=new Array(3);
+    }//0所属，1时间，2内容
+    var number=0;
+    {% for mes in  %}
+        new_mes[number][0]="{{}}";//0所属
+        new_mes[number][1]="{{}}";//1时间
+        new_mes[number][2]="{{}}";//2内容
+        number++;
+    {% endfor %}
+
+    // 添加新内容
+    var w = document.querySelector('.w');
+    for(let i=0;i<2;i++){
+        w.removeChild(w.children[w.children.length-1]);
+    }
+    for(var a=0;a<number;a++){
+        if(new_mes[a][0]=='Alice.id'){
+            add('self',new_mes[a][1],"../../../static/upload/{{ Alice.avatar}}",new_mes[a][2]);
+        }
+        else{
+            add('other',new_mes[a][1],"../../../static/upload/{{ Black.avatar}}" ,new_mes[a][2]);
+        }
+    }
+    var a=document.createElement('a');
+    var lab = document.createElement('div');
+    w.appendChild(a);
+    w.appendChild(lab);
+    a.className='lab';
+    a.setAttribute("href","#lab");
+    lab.setAttribute("id","lab");
+
+    function add(Owner,Time,SRC,Txt){
+        var owner = document.createElement('div');
+        var time = document.createElement('div');
+        var hp = document.createElement('div');
+        var content = document.createElement('div');
+        var txt = document.createElement('div');
+        var img = document.createElement('img');
+        w.appendChild(owner);
+        owner.appendChild(time);
+        owner.appendChild(hp);
+        owner.appendChild(content);
+        content.appendChild(txt);
+        hp.appendChild(img);
+        owner.className=Owner;
+        time.className='time';
+        hp.className='hp';
+        img.setAttribute("src",SRC);
+        content.className='content';
+        time.innerHTML=(Time);
+        txt.className='txt';
+        txt.innerHTML=(Txt);
+    }
+
+    // 计时器
+    var timer=setInterval(function(){
+        //location.reload([true]);
+        var post = document.querySelector('#post');
+        post.click();
+        //clearInterval(timer);
+    },2000)
+</script>
 </html>
