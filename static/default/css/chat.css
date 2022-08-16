@@ -3,7 +3,7 @@ body {
 }
 .w {
     width: 60%;
-    height: 580px;
+    height: 590px;
     /* height: 75%; */
     max-width: 650px;
     margin-left: 50%;
@@ -111,6 +111,7 @@ body {
     max-width: 650px;
     margin-left: 50%;
     padding-left: 5%;
+    padding-bottom: 5px;
     transform: translateX(-50%);
     background-color: rgba(255,255,255,0.2);
     border-radius: 0px 0px 8px 8px;

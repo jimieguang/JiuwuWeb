@@ -41,71 +41,42 @@
         <div id="lab"></div>
     </div>
     <form class="text" action="./" method="post">
-        <!-- 安全性参数 -->
-        {% csrf_token %}
-        <textarea name="content" id="" cols="30" rows="3" required="required"></textarea>
-        <input class="send_btn" type="submit" value="发送"></input>
+        <textarea name="content" id="my_content" cols="30" rows="3" required="required"></textarea>
+        <input class="send_btn"  value="发送"></input>
     </form>
-    <form class="post" action="./" method="post">
-        <!-- 安全性参数 -->
+    <!-- <form class="post" action="./" method="post">
+        安全性参数
         {% csrf_token %}
         <input type="text" name="refresh" value="refresh">
         <input type="text" name="pastdate" value="{{ pastdate | date:"Y-m-d H:i:s" }}">
         <input type="submit" id="post">
-    </form>
+    </form> -->
 </body>
+
 <script>
-    $.ajax({
-        type: "POST",         //获取方式
-        url: "",    //数据读取地址(默认当前页面)  
-        data:{"csrfmiddlewaretoken": "{{csrf_token}}","refresh": "true","pastdate":"{{ pastdate | date:"Y-m-d H:i:s" }}"} ,
-        dataType:"json",    //
-        success: function(msg){
-            var data = msg.test;
-            alert(data);
-        },
-        error: function(msg){
-            alert(msg);
-        }
-    });
     // 直达底部
     var lable = document.querySelector('.lab');
     lable.click();
 
-    var new_mes = new Array(5);
-    for(let i=0;i<5;i++){
-        new_mes=new Array(3);
-    }//0所属，1时间，2内容
-    var number=0;
-    {% for mes in new_messages %}
-        new_mes[number][0]="{{1}}";//0所属
-        new_mes[number][1]="{{2}}";//1时间
-        new_mes[number][2]="{{3}}";//2内容
-        number++;
-    {% endfor %}
+    // 获取当前时间
+    function addZero(s) {
+        return s < 10 ? ('0' + s) : s;
+    }
+    function getNowTime() {
+        var date = new Date();
+        var year = date.getFullYear();  
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        var time = year + '年' + month + '月' + addZero(day) + '日 ' + addZero(hour) + ':' + addZero(minute) ;
+        return time;
+    }
 
-    // 添加新内容
+    //添加新消息至页面
     var w = document.querySelector('.w');
-    for(let i=0;i<2;i++){
-        w.removeChild(w.children[w.children.length-1]);
-    }
-    for(var a=0;a<number;a++){
-        if(new_mes[a][0]=='Alice.id'){
-            add('self',new_mes[a][1],"../../../static/upload/{{ Alice.avatar}}",new_mes[a][2]);
-        }
-        else{
-            add('other',new_mes[a][1],"../../../static/upload/{{ Black.avatar}}" ,new_mes[a][2]);
-        }
-    }
-    var a=document.createElement('a');
-    var lab = document.createElement('div');
-    w.appendChild(a);
-    w.appendChild(lab);
-    a.className='lab';
-    a.setAttribute("href","#lab");
-    lab.setAttribute("id","lab");
-
-    function add(Owner,Time,SRC,Txt){
+    function add_new_msg(Content,Time,Owner,SRC){//内容、时间、归属、头像
         var owner = document.createElement('div');
         var time = document.createElement('div');
         var hp = document.createElement('div');
@@ -125,18 +96,83 @@
         content.className='content';
         time.innerHTML=(Time);
         txt.className='txt';
-        txt.innerHTML=(Txt);
+        txt.innerHTML=(Content);
     }
 
+    //点击按钮发送消息
+    var send_btn=document.querySelector('.send_btn');
+    var my_content=document.querySelector('#my_content');
+    send_btn.addEventListener('click',function(){
+        $.ajax({
+            type: "POST",         //获取方式
+            url: "",    //数据读取地址(默认当前页面)  
+            data:{"csrfmiddlewaretoken": "{{csrf_token}}","content":my_content.value} ,
+            dataType:"json",    
+            success: function(msg){
+                //alert(msg);
+            },
+            error: function(msg){
+                alert(msg);
+            }
+        });
+        //删除定位标签
+        for(let i=0;i<2;i++){
+            w.removeChild(w.children[w.children.length-1]);
+        }
+        add_new_msg(my_content.value,getNowTime(),'self',"../../../static/upload/{{ Alice.avatar}}");
+        //加上定位标签
+        var a=document.createElement('a');
+        var lab = document.createElement('div');
+        w.appendChild(a);
+        w.appendChild(lab);
+        a.className='lab';
+        a.setAttribute("href","#lab");
+        lab.setAttribute("id","lab");
+
+        lable.click();
+        my_content.value='';
+    })
+
+    //获取数据
+    var past_date = "{{ pastdate }}";
+    function get_msg(){
+        $.ajax({
+            type: "POST",         //获取方式
+            url: "",    //数据读取地址(默认当前页面)  
+            data:{"csrfmiddlewaretoken": "{{csrf_token}}","refresh": "true","pastdate":past_date} ,
+            dataType:"json",    
+            success: function(msg){
+                var length = msg.length;
+                if (length !=0){
+                    //删
+                    for(let i=0;i<2;i++){
+                        w.removeChild(w.children[w.children.length-1]);
+                    }
+                    for(let i=0;i<length;i++){
+                        add_new_msg(msg.content[i],msg.messagedate[i],'other',"../../../static/upload/{{ Black.avatar}}" );
+                    }
+                    past_date = msg.pastdate;
+                    //加
+                    var a=document.createElement('a');
+                    var lab = document.createElement('div');
+                    w.appendChild(a);
+                    w.appendChild(lab);
+                    a.className='lab';
+                    a.setAttribute("href","#lab");
+
+                    lab.setAttribute("id","lab");
+                    lable.click();
+                }
+            },
+            error: function(msg){
+                alert(msg.length);
+            }
+        });
+    }
     // 计时器
     var timer=setInterval(function(){
-        //location.reload([true]);
-        var post = document.querySelector('#post');
-        post.click();
-        //clearInterval(timer);
-    },100000000)
-</script>
-<script>
-
+        get_msg();
+    },5000)
+    //clearInterval(timer);
 </script>
 </html>
