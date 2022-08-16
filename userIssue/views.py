@@ -120,18 +120,18 @@ def private_message(req,with_uid):
         A2B = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id).order_by('messagedate')
         B2A = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id).order_by('messagedate')
         messages = A2B | B2A
-        pastdate = messages.last().messagedate
+        pastdate = messages.last().messagedate.strftime("%Y-%m-%d %X")
         return render(req,"user/chat.html",locals())
     if req.POST.get("refresh"):
         # 轮询同步信息时仅需关注对方发来的信息
         start = fun.str2datetime(req.POST.get("pastdate"),1)
         end = fun.now()
         B2As = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id,messagedate__range = [start,end]).order_by('messagedate')
-        pastdate = B2As.last().messagedate
+        pastdate = B2As.last().messagedate.strftime("%Y-%m-%d %X") if B2As.last() else end
         response_dict = {"length":B2As.count(),"content":[],"messagedate":[],"pastdate":pastdate}
         for B2A in B2As:
             response_dict["content"].append(B2A.content)
-            response_dict["messagedate"].append(B2A.messagedate)
+            response_dict["messagedate"].append(B2A.messagedate.strftime("%Y-%m-%d %X"))
         return HttpResponse(json.dumps(response_dict))
     # 将自己发送的信息保存到数据库
     if req.POST.get('content')=="":
