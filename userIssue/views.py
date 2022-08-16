@@ -127,12 +127,15 @@ def private_message(req,with_uid):
         start = fun.str2datetime(req.POST.get("pastdate"),1)
         end = fun.now()
         B2As = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id,messagedate__range = [start,end]).order_by('messagedate')
-        response_dict = {"length":B2As.count(),"content":[],"messagedate":[]}
+        pastdate = B2As.last().messagedate
+        response_dict = {"length":B2As.count(),"content":[],"messagedate":[],"pastdate":pastdate}
         for B2A in B2As:
             response_dict["content"].append(B2A.content)
             response_dict["messagedate"].append(B2A.messagedate)
         return HttpResponse(json.dumps(response_dict))
     # 将自己发送的信息保存到数据库
+    if req.POST.get('content')=="":
+        return HttpResponse(json.dumps({'error':"Empty content"}))
     pm_infos = {}
     pm_infos["uid_from"] = Alice.id
     pm_infos["uid_to"] = Black.id
