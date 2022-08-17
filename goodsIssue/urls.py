@@ -8,6 +8,4 @@ urlpatterns = [
         path('myGoods/<str:during>', views.myGoods),
         path('goodsList/<str:during>', views.goodsList),
         path('goodsDetail/<int:goods_id>', views.goodsDetail),
-
-        path('message', views.message),
 ]

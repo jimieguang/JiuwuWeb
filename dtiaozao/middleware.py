@@ -4,7 +4,6 @@ def detect_login_middleware(get_response):
     '''检查用户是否登录以决定返回正常网页与否'''
     # One-time configuration and initialization.
     need_login_urls = [
-        '/userIssue/self/',
         '/goodsIssue/newGoods',
         '/goodsIssue/myGoods',
     ]

@@ -25,8 +25,8 @@ class User(models.Model):
 class PrivateMessage(models.Model):
     '''私聊信息表'''
     # 必填（非空）
-    uid_from = models.IntegerField(verbose_name="发信人",db_column='uid_from', blank=False)    #为节省空间，仅存储用户id
-    uid_to = models.IntegerField(verbose_name="收信人",db_column='uid_to', blank=False)        #为节省空间，仅存储用户id
+    pm_from = models.ForeignKey(User,related_name = "pm_from",verbose_name="发信人", blank=False,on_delete=models.CASCADE)    #外链仅储存id，不占用额外数据库资源
+    pm_to = models.ForeignKey(User,related_name = "pm_to",verbose_name="收信人", blank=False,on_delete=models.CASCADE)        
     messagedate = models.DateTimeField(verbose_name="私聊时间",db_column='messageDate', blank=False)
     content = models.TextField(verbose_name="私聊内容",max_length=255, db_column='content', blank=False)
     isRead = models.BooleanField(default=False, verbose_name="已读？", db_column='isRead')

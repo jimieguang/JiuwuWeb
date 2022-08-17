@@ -38,7 +38,7 @@ def timeTrans(during):
 
 def save_image(filename,base64_data):
     """将base64数据转换为图片并写入上传路径,增加时间戳防止文件覆盖"""
-    filename += "_" + str(time.time())
+    filename = filename.split(".")[0]+"_" + str(time.time()) + "." + filename.split(".")[1]
     with open(MEDIA_ROOT / filename, "wb") as f:
         byte_data = base64.b64decode(base64_data.split("data:image/jpeg;base64,")[1])
         f.write(byte_data)

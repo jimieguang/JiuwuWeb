@@ -32,6 +32,7 @@ class MessageCompose(models.Model):
     goods = models.ForeignKey(Goodsissue, blank=False,on_delete=models.CASCADE)
     messagedate = models.DateTimeField(verbose_name="留言时间",db_column='messageDate', blank=False)
     content = models.TextField(verbose_name="留言内容",max_length=255, db_column='content', blank=False)
+    isRead = models.BooleanField(default=False, verbose_name="已读？", db_column='isRead')
     # 选填（可为空）
 
     class Meta:
@@ -50,6 +51,7 @@ class MessageComment(models.Model):
     reply_from = models.ForeignKey(MessageCompose, blank=False, on_delete=models.CASCADE)    #母表
     messagedate = models.DateTimeField(verbose_name="留言时间",db_column='messageDate', blank=False)
     content = models.TextField(verbose_name="留言内容",max_length=255, db_column='content', blank=False)
+    isRead = models.BooleanField(default=False, verbose_name="已读？", db_column='isRead')
     # 选填（可为空）
     reply_to = models.ForeignKey(User, related_name='reply_to', blank=True, null=True,on_delete=models.CASCADE)
 

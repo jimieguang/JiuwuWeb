@@ -17,6 +17,9 @@ urlpatterns = [
 
     # 商品相关模块
     path('goodsIssue/', include('goodsIssue.urls',namespace = "goodsIssue")),
+
+    # 消息中心模块
+    path('message/<str:type>/',views.message),
     
 ]
 

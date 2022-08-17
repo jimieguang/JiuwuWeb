@@ -39,7 +39,8 @@ def newGoods(req):
         infos["issuedate"] = fun.now()
         infos["imagefile"] = fun.save_image(data["imagefile_name"],data["imagefile"])
         Goodsissue.objects.create(**infos)
-        return HttpResponseRedirect("myGoods")
+        return HttpResponseRedirect("myGoods/all/")
+    return render(req, 'goods/new_goods.html', locals())
 
 
 def myGoods(req,during):
@@ -52,14 +53,14 @@ def myGoods(req,during):
         goods_infos = Goodsissue.objects.filter(owner=uid,issuedate__range = [start,end]).order_by('-issuedate')
         goods_num = goods_infos.count()
         return render(req, 'goods/goods_list.html', locals())
-    # 修改商品信息
+    # 修改商品信息(待优化)
     data = req.POST
     id = req.GET['id']
     obj = Goodsissue.objects.get(id=id)
     form = Goodsform(data=data, files=req.FILES,instance = obj)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect("goodsIssue/myGoods")
+        return HttpResponseRedirect("goodsIssue/myGoods/all")
     msg = '表单格式有误'
     return render(req, 'error_msg.html', locals())
 
@@ -82,8 +83,7 @@ def goodsDetail(req,goods_id):
     if req.method == 'GET':
         goods = Goodsissue.objects.get(id=goods_id)
         # 判断商品是否属于本人以决定赋予编辑权限与否
-        if goods.owner_id == req.session['user_info']['uid']:
-            isOwner = True
+        isOwner = (goods.owner_id == req.session['user_info']['uid'])
         # 评论母表
         msg_ces = MessageCompose.objects.filter(goods=goods)
         msg_ces_num = msg_ces.count()

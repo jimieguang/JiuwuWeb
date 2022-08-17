@@ -68,6 +68,7 @@ class RegisterForm(ModelForm):
 def mySpace(req,uid):
     if req.method == 'GET':
         user = User.objects.get(id=uid)
+        isOwner = (uid == req.session['user_info']['uid'])
         return render(req,'user/self.html',locals())
     # 修改个人信息
     uid = req.session['user_info']['uid']
@@ -131,9 +132,9 @@ def private_message(req,with_uid):
     Black = User.objects.get(id=with_uid)
     if req.method == 'GET':
         # 将私聊信息按时间排序/合并
-        A2B = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id).order_by('messagedate')
-        B2A = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id).order_by('messagedate')
-        messages = A2B | B2A
+        A2Bs = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id).order_by('messagedate')
+        B2As = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id).order_by('messagedate')
+        messages = A2Bs | B2As
         pastdate = messages.last().messagedate.strftime("%Y-%m-%d %X")
         return render(req,"user/chat.html",locals())
     if req.POST.get("refresh"):
@@ -151,8 +152,8 @@ def private_message(req,with_uid):
     if req.POST.get('content')=="":
         return HttpResponse(json.dumps({'error':"Empty content"}))
     pm_infos = {}
-    pm_infos["uid_from"] = Alice.id
-    pm_infos["uid_to"] = Black.id
+    pm_infos["pm_from"] = Alice.id
+    pm_infos["pm_to"] = Black.id
     pm_infos["messagedate"] = fun.now()
     pm_infos["content"] = req.POST.get('content')
     PrivateMessage.objects.create(**pm_infos)
