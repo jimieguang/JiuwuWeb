@@ -9,9 +9,6 @@ urlpatterns = [
     # 搜索
     path('search/<str:during>', views.search),
 
-    # 个人中心
-    path('self/', views.self),
-
     # 控制台（django默认）
     path('admin/', admin.site.urls),
 

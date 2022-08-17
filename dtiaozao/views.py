@@ -11,10 +11,6 @@ from django.http import HttpResponseRedirect
 # 自定义函数
 from dtiaozao import function as fun
 
-class Userform(ModelForm):
-    class Meta:
-        model = User
-        fields = ["student_id","passwd","name","avatar","signature","phone","email"]
 
 #主页
 def index(req):
@@ -42,24 +38,7 @@ def search(req,during):
     goods_num = len(goods_infos)
     return render(req, 'goods/goods_list.html', locals())
 
-#个人中心
-def self(req):
-    if not req.session.get('islogin'):
-        msg = '你还未登陆，请先登陆！'
-        return render(req, 'error_msg.html', locals())
-    if req.method == 'GET':
-        uid = req.session['user_info']['uid']
-        self_infos = User.objects.filter(uid=uid)
-        return render(req,'user/self.html',locals())
-    # 修改个人信息
-    uid = req.session['user_info']['uid']
-    obj = User.objects.get(uid=uid)
-    form = Userform(data = req.POST, files = req.FILES, instance = obj)
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect('/self')
-    msg = '表单格式有误'
-    return render(req, 'error_msg.html', locals())
+
 
     
     

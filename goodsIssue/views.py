@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 
-from . import controller
 from userIssue.models import User
 from goodsIssue.models import Goodsissue, MessageCompose, MessageComment
 from dtiaozao import function as fun
@@ -27,9 +26,6 @@ class Goodsform(ModelForm):
 
 def newGoods(req):
     '''发布新的商品'''
-    if not req.session.get('islogin'):
-        msg = '你还未登陆，请先登陆！'
-        return render(req, 'error_msg.html', locals())
     if req.method == 'GET':
         return render(req, 'goods/new_goods.html', locals())
     # 提取表单数据保存到数据库
@@ -48,16 +44,13 @@ def newGoods(req):
 
 def myGoods(req,during):
     '''展示我的商品'''
-    if not req.session.get('islogin'):
-        msg = '你还未登陆，请先登陆！'
-        return render(req, 'error_msg.html', locals())
     if req.method == 'GET':
         start = fun.timeTrans(during)
         end = fun.now()
         uid = req.session['user_info']['uid']
         #获取用户名下所有商品信息(限制发布时间,并降序排列)
         goods_infos = Goodsissue.objects.filter(owner=uid,issuedate__range = [start,end]).order_by('-issuedate')
-        goods_num = len(goods_infos)
+        goods_num = goods_infos.count()
         return render(req, 'goods/goods_list.html', locals())
     # 修改商品信息
     data = req.POST
@@ -71,17 +64,6 @@ def myGoods(req,during):
     return render(req, 'error_msg.html', locals())
 
 
-#商品下架模块
-def delGoods(req):
-    data = req.GET
-    isDel = controller.del_goods(data)
-    if isDel == -1:
-        msg = '删除商品失败，请联系管理员！'
-        return render(req, 'error_msg.html', locals())
-    uid = req.session['user_info']['uid']
-    rt = controller.get_goods(uid)
-    return HttpResponseRedirect('issue')
-
 #商品浏览模块
 def goodsList(req,during):
     if req.method == 'POST':
@@ -91,23 +73,20 @@ def goodsList(req,during):
     end = fun.now()
     # 获取指定时间段商品数据
     goods_infos = Goodsissue.objects.filter(issuedate__range = [start,end]).order_by('-issuedate')
-    goods_num = len(goods_infos)
+    goods_num = goods_infos.count()
     return render(req, 'goods/goods_list.html', locals())
 
 
 #商品详情页模块(增加留言功能)
 def goodsDetail(req,goods_id):
-    if not req.session.get('islogin'):
-        msg = '你还未登陆，请先登陆！'
-        return render(req, 'error_msg.html', locals())
     if req.method == 'GET':
         goods = Goodsissue.objects.get(id=goods_id)
         # 判断商品是否属于本人以决定赋予编辑权限与否
         if goods.owner_id == req.session['user_info']['uid']:
-            isowner = True
+            isOwner = True
         # 评论母表
         msg_ces = MessageCompose.objects.filter(goods=goods)
-        msg_ces_num = len(msg_ces)
+        msg_ces_num = msg_ces.count()
         msg_cts_list = []
         # 评论子表
         for i in range(msg_ces_num):
@@ -134,32 +113,3 @@ def goodsDetail(req,goods_id):
 def message(req):
     msg = "未完成的页面！"
     return render(req,'error_msg.html', locals())
-    if not req.session.get('islogin'):
-        msg = '你还未登陆，请先登陆！'
-        return render(req,'error_msg.html', locals())
-    if req.method == 'GET':
-        uid = req.session['user_info']['uid']
-
-        #通过用户id获取其发布的商品id
-        p = Goodsissue.objects.filter(owner_id=uid)
-        if not p:
-            msg = '你还未上架任何商品！'
-            return render(req,'error_msg.html', locals())
-
-        #定义一个送信人id的列表
-        messager_infos = []
-
-        #通过商品id获取该栏下留言
-        for goods in p:
-            goods_id = goods.id
-            p2 = MessageCompose.objects.filter(goods_id=goods_id)
-            if p2:
-                for p in p2:
-                #因为二级list无法作为迭代器，因此使用元组
-                    messager_infos.append((p.uid, goods_id))
-
-        #对list中的数据进行去重工作
-        messager_infos = list(set(messager_infos))
-        #跨APP调用trade子模块中controller中的方法，传入一个列表对象
-        result = controller.get_gooods_message(messager_infos)
-        return render(req,'message_log.html', locals())

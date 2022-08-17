@@ -10,6 +10,11 @@ from userIssue.models import PrivateMessage
 
 import dtiaozao.function as fun
 
+class Userform(ModelForm):
+    class Meta:
+        model = User
+        fields = ["student_id","passwd","name","avatar","signature","phone","email"]
+        
 class LoginForm(forms.Form):
     '''登录表单'''
     student_id = forms.IntegerField(
@@ -60,10 +65,19 @@ class RegisterForm(ModelForm):
                 field.widget.attrs = {"class": "form-control", "placeholder" : field.label}
 
 #个人中心模块
-def self(req):
-    id = req.session['user_info']['uid']
-    user = User.objects.get(id=id)
-    return render(req,'user/self.html',locals())
+def mySpace(req,uid):
+    if req.method == 'GET':
+        user = User.objects.get(id=uid)
+        return render(req,'user/self.html',locals())
+    # 修改个人信息
+    uid = req.session['user_info']['uid']
+    obj = User.objects.get(uid=uid)
+    form = Userform(data = req.POST, files = req.FILES, instance = obj)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('./')
+    msg = '表单格式有误'
+    return render(req, 'error_msg.html', locals())
 
 #登录模块
 def login(req):
