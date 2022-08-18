@@ -2,7 +2,6 @@
 *.png
 *.jpg
 *.pyc
-goodsIssue/migrations
-static/upload/
-sqlite3.db
-userIssue/migrations
+goodsIssue/migrations/*
+static/upload/*
+userIssue/migrations/*
