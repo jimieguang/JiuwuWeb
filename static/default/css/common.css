@@ -161,7 +161,7 @@ body {
     justify-content: center;
     align-items: center;
     transition: 0.4s;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
     left: -20px;
     opacity: 0;
@@ -172,6 +172,29 @@ body {
     justify-content: center;
     align-items: center;
     opacity: 1;
+}
+.item .hint {
+    width: 7px;
+    height: 7px;
+    background-color: rgba(235, 25, 67, 0.863);
+    border-radius: 50%;
+    transform: translate(-4px,-8px);
+    display: block;
+}
+.navi .hint {
+    /* width: 20px; */
+    height: 15px;
+    background-color: rgba(235, 25, 67, 0.863);
+    position: absolute;
+    transform: translate(60px,-35px);
+    border-radius: 6px 6px 6px 0px;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0px 2px;
+    text-align: center;
+    line-height: 15px;
+    display: block;
+    font-size: 12px;
+    scale: 0.9;
 }
 /* 底部 */
 footer {
