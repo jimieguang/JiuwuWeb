@@ -83,7 +83,10 @@ def goodsDetail(req,goods_id):
     if req.method == 'GET':
         goods = Goodsissue.objects.get(id=goods_id)
         # 判断商品是否属于本人以决定赋予编辑权限与否
-        isOwner = (goods.owner_id == req.session['user_info']['uid'])
+        try:
+            isOwner = (goods.owner_id == req.session['user_info']['uid'])
+        except KeyError:
+            isOwner = False
         # 评论母表
         msg_ces = MessageCompose.objects.filter(goods=goods)
         msg_ces_num = msg_ces.count()
@@ -96,7 +99,7 @@ def goodsDetail(req,goods_id):
     # 响应留言操作(将留言保存在数据库)
     data = req.POST
     message_infos = {}
-    message_infos["uid_id"] = req.session['user_info']['uid']
+    message_infos["owner_id"] = req.session['user_info']['uid']
     message_infos["messagedate"] = fun.now()
     message_infos["content"] = data.get('message_content')
     if data['reply_from']:
@@ -108,8 +111,3 @@ def goodsDetail(req,goods_id):
         message_infos["goods_id"] = goods_id
         MessageCompose.objects.create(**message_infos)
     return HttpResponseRedirect(f"goodsDetail/{goods_id}")
-
-#评论栏模块
-def message(req):
-    msg = "未完成的页面！"
-    return render(req,'error_msg.html', locals())

@@ -132,16 +132,18 @@ def private_message(req,with_uid):
     Black = User.objects.get(id=with_uid)
     if req.method == 'GET':
         # 将私聊信息按时间排序/合并
-        A2Bs = PrivateMessage.objects.filter(uid_from = Alice.id,uid_to = Black.id).order_by('messagedate')
-        B2As = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id).order_by('messagedate')
+        A2Bs = PrivateMessage.objects.filter(pm_from = Alice,pm_to = Black).order_by('messagedate')
+        B2As = PrivateMessage.objects.filter(pm_from = Black,pm_to = Alice).order_by('messagedate')
         messages = A2Bs | B2As
-        pastdate = messages.last().messagedate.strftime("%Y-%m-%d %X")
+        pastdate = messages.last().messagedate.strftime("%Y-%m-%d %X") if messages.count()!=0 else fun.now()
+        # 对私聊信息进行已读处理
+        B2As.update(isRead=True)
         return render(req,"user/chat.html",locals())
     if req.POST.get("refresh"):
         # 轮询同步信息时仅需关注对方发来的信息
         start = fun.str2datetime(req.POST.get("pastdate"),1)
         end = fun.now()
-        B2As = PrivateMessage.objects.filter(uid_from = Black.id,uid_to = Alice.id,messagedate__range = [start,end]).order_by('messagedate')
+        B2As = PrivateMessage.objects.filter(pm_from = Black,pm_to = Alice,messagedate__range = [start,end]).order_by('messagedate')
         pastdate = B2As.last().messagedate.strftime("%Y-%m-%d %X") if B2As.last() else end
         response_dict = {"length":B2As.count(),"content":[],"messagedate":[],"pastdate":pastdate}
         for B2A in B2As:
@@ -152,8 +154,8 @@ def private_message(req,with_uid):
     if req.POST.get('content')=="":
         return HttpResponse(json.dumps({'error':"Empty content"}))
     pm_infos = {}
-    pm_infos["pm_from"] = Alice.id
-    pm_infos["pm_to"] = Black.id
+    pm_infos["pm_from"] = Alice
+    pm_infos["pm_to"] = Black
     pm_infos["messagedate"] = fun.now()
     pm_infos["content"] = req.POST.get('content')
     PrivateMessage.objects.create(**pm_infos)

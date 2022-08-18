@@ -17,7 +17,7 @@
     <div class="object">{{ Black.name }}</div>
     <div class="w">
         {% for message in messages %}
-            {% if message.uid_from == Alice.id %}
+            {% if message.pm_from == Alice %}
                 <div class="self">
                     <div class="time">{{message.messagedate}}</div>
                     <div class="hp"><img src="../../../static/upload/{{ Alice.avatar}}" alt=""></div>
@@ -120,8 +120,6 @@
             a.setAttribute("href","#lab");
             lab.setAttribute("id","lab");
             lable.click();
-            my_content.value='';
-    
             $.ajax({
                 type: "POST",         //获取方式
                 url: "",    //数据读取地址(默认当前页面)  
@@ -138,6 +136,7 @@
                     err_tag.innerHTML=('!');
                 }
             });
+            my_content.value='';
         }
     })
 

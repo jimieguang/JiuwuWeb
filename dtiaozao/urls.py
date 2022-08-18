@@ -19,7 +19,10 @@ urlpatterns = [
     path('goodsIssue/', include('goodsIssue.urls',namespace = "goodsIssue")),
 
     # 消息中心模块
-    path('message/<str:type>/',views.message),
+    path('message/',views.message),
+
+    # 系统通知模块
+    path('sys_message/',views.sys_message),
     
 ]
 
