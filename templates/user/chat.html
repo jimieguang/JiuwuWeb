@@ -25,6 +25,7 @@
                         <div class="txt">{{ message.content }}</div>
                         <!-- <div class="triangle"></div> -->
                     </div>
+                    <!-- <div class="unread">未读</div> -->
                 </div>
             {% else %}
                 <div class="other">
@@ -40,10 +41,10 @@
         <a class="lab" href="#lab"></a>
         <div id="lab"></div>
     </div>
-    <form class="text" action="./" method="post">
+    <div class="text clearfix">
         <textarea name="content" id="my_content" cols="30" rows="3" required="required"></textarea>
-        <input class="send_btn"  value="发送"></input>
-    </form>
+        <div class="send_btn">发送</div>
+    </div>
     <!-- <form class="post" action="./" method="post">
         安全性参数
         {% csrf_token %}
@@ -76,8 +77,9 @@
 
     //添加新消息至页面
     var w = document.querySelector('.w');
+    var owner;
     function add_new_msg(Content,Time,Owner,SRC){//内容、时间、归属、头像
-        var owner = document.createElement('div');
+        owner = document.createElement('div');
         var time = document.createElement('div');
         var hp = document.createElement('div');
         var content = document.createElement('div');
@@ -103,34 +105,40 @@
     var send_btn=document.querySelector('.send_btn');
     var my_content=document.querySelector('#my_content');
     send_btn.addEventListener('click',function(){
-        $.ajax({
-            type: "POST",         //获取方式
-            url: "",    //数据读取地址(默认当前页面)  
-            data:{"csrfmiddlewaretoken": "{{csrf_token}}","content":my_content.value} ,
-            dataType:"json",    
-            success: function(msg){
-                //alert(msg);
-            },
-            error: function(msg){
-                //alert("发送消息失败，请检查网络连接情况！");
+        if(my_content.value != ''){
+            //删除定位标签
+            for(let i=0;i<2;i++){
+                w.removeChild(w.children[w.children.length-1]);
             }
-        });
-        //删除定位标签
-        for(let i=0;i<2;i++){
-            w.removeChild(w.children[w.children.length-1]);
+            add_new_msg(my_content.value,getNowTime(),'self',"../../../static/upload/{{ Alice.avatar}}");
+            //加上定位标签
+            var a=document.createElement('a');
+            var lab = document.createElement('div');
+            w.appendChild(a);
+            w.appendChild(lab);
+            a.className='lab';
+            a.setAttribute("href","#lab");
+            lab.setAttribute("id","lab");
+            lable.click();
+            my_content.value='';
+    
+            $.ajax({
+                type: "POST",         //获取方式
+                url: "",    //数据读取地址(默认当前页面)  
+                data:{"csrfmiddlewaretoken": "{{csrf_token}}","content":my_content.value} ,
+                dataType:"json",    
+                success: function(msg){
+                    //alert(msg);
+                },
+                error: function(msg){
+                    //显示感叹号提示
+                    var err_tag=document.createElement('div');
+                    owner.appendChild(err_tag);
+                    err_tag.className='err';
+                    err_tag.innerHTML=('!');
+                }
+            });
         }
-        add_new_msg(my_content.value,getNowTime(),'self',"../../../static/upload/{{ Alice.avatar}}");
-        //加上定位标签
-        var a=document.createElement('a');
-        var lab = document.createElement('div');
-        w.appendChild(a);
-        w.appendChild(lab);
-        a.className='lab';
-        a.setAttribute("href","#lab");
-        lab.setAttribute("id","lab");
-
-        lable.click();
-        my_content.value='';
     })
 
     //获取数据
@@ -165,7 +173,7 @@
                 }
             },
             error: function(msg){
-                alert("同步消息失败，请检查网络连接情况！");
+                //alert(msg.length);
             }
         });
     }

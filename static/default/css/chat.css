@@ -83,6 +83,7 @@ body {
     color: rgba(255,255,255,.8);
     padding: 3px 3px 3px 5px;
     font-size: 13px;
+    overflow: hidden;
 }
 
 .self .content {
@@ -91,11 +92,26 @@ body {
 .other .content {
     border-radius: 0px 10px 10px 10px;
 }
-.self .content,.self .hp,.self .occupied {
+.self .content,.self .hp,.err,.unread {
     float: right;
 }
 .other .content,.other .hp,.other .occupied {
     float: left;
+}
+.err {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    background-color: rgba(236, 24, 24, 0.7);
+    transform: translate(-5px,12px);
+}
+.unread {
+    transform: translate(-5px,12px);
+    color: rgba(236, 24, 24, 0.6);
 }
 
 /* 伪元素清除浮动 */
@@ -118,6 +134,7 @@ body {
 }
 /* 发送内容区 */
 textarea {
+    float:left;
     background-color: rgba(255,255,255,0);
     border-radius: 8px;
     border:1px solid rgb(230,230,230) ; 
@@ -146,15 +163,18 @@ textarea::-webkit-scrollbar-track {
 
 /* 发送按钮 */
 .send_btn {
+    float:left;
     width: 48px;
     height: 25px;
     border-radius: 8px;
-    transform: translateY(-30%);
+    transform: translateY(130%);
     margin-left: 5px;
     background-color: rgba(255,255,255,.2);
     color: rgba(255,255,255,.8);
-    border: 0px;
+    border:none;
     font-size: 13px;
+    text-align: center;
+    line-height: 25px;
     cursor: pointer;
 }
 .send_btn:hover {
@@ -162,7 +182,4 @@ textarea::-webkit-scrollbar-track {
     0px 5px 10px rgba(255,255,255,0.1),
     -5px 0px 10px rgba(255,255,255,0.1),
     0px -5px 10px rgba(255,255,255,0.1);
-}
-.post {
-    display: none;
 }
