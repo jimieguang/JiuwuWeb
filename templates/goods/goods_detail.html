@@ -27,22 +27,31 @@
             <div class="dd">商品描述:<i>{{goods.introduction}}</i></div>
             <div class="dd">联系方式:<i></i></div>
             <div class="dd"></div>
-            <div class="tocomment">参与评论&nbsp</div>
+            <div class="tocomment">评论商品&nbsp</div>
+            <form  class="addmc" action="">
+                <textarea class="addmcomment" required="required"></textarea>
+                <input type="submit"class="uploadmc" value="评论">
+            </form>
             </div>
         </div>
     </div>
     <!--母评-->
     <div class="bigbox">
     {% for mcon in msg_ces %}
-        <div class="comment">
+        <div class="comment" index={{ forloop.counter }}>
             <div class="mcomment">
                 <div class="comhp"></div>
                 <div class="commentator">
                     <div class="comname">{{ mcon.owner.name }}</div>
                     <div class="comtime">{{mcon.messagedate}}</div>
                     <div class="comcontent">{{mcon.content}}</div> 
+                    <div class="tomcomment" index="{{ forloop.counter }}">回复</div>
                 </div>
             </div>
+            <!-- <form class="addsc" action="">
+                <input type="submit" class="uploadsc" value="发送">
+                <textarea class="addsoncomment" name="" required="required"></textarea>
+            </form> -->
         </div>
     {% endfor %}
     </div>
@@ -58,6 +67,32 @@
 
 
     <script>
+
+        //选择同一类名的所有元素
+        var getElementsByClassName = function(classname) {
+            //如果浏览器支持getElementsByClassName，使用现有方法
+            if(document.getElementsByClassName) {
+                return document.getElementsByClassName(classname);
+            }else{
+                //定义一个数组保存所要获取的变量
+                var results=new Array();
+                var elems=document.getElementsByTagName("*");
+                for (var i=0;i<elems.length;i++) {
+                    if(elems[i].className){
+                        //将className通过空格分开并保存到数组
+                        var elem_classname = new Array();
+                        elem_classname = elems[i].className.split(' ');
+                        for (var j=0;j<elem_classname.length;j++) {
+                            //如果传入的类名和循环的类名相同，返回这个元素到results数组
+                            if (classname == elem_classname[j]) {
+                                results.push(elems[i]);
+                            }
+                        }
+                    }
+                }
+                return results;
+            }
+        }
 
         //加载评论
         //存储子评论于js数组
@@ -91,18 +126,99 @@
                     var span_name = this.document.createElement('span');
                     var span_content = this.document.createElement('span');
                     var div_time = this.document.createElement('div');
+                    var div_reply = this.document.createElement('div');
                     var child = big.children[i];
                     child.appendChild(div_box);
                     div_box.appendChild(span_name);
                     div_box.appendChild(span_content);
+                    div_box.appendChild(div_reply);
                     div_box.appendChild(div_time);
-                    span_name.innerHTML=scomments[i][j][0] + "&nbsp:&nbsp";
-                    span_content.innerHTML=scomments[i][j][1];
-                    div_time.innerHTML="——————&nbsp" + scomments[i][j][2] + "&nbsp";
+                    span_name.innerHTML=scomments[i][j][0];
+                    span_content.innerHTML=':'+scomments[i][j][1];
+                    div_time.innerHTML=("——————" + scomments[i][j][2] );
                     div_box.className="soncomment";
                     span_name.className="name";
                     div_time.className="time";
+                    div_reply.innerHTML=('回复');
+                    div_reply.className='replysc';
                 }
+            }
+        }
+
+        //添加评论框
+        var add_case = function(father,Object){
+            var addsc = document.createElement('form');
+            var uploadsc = document.createElement('input');
+            var addsoncomment =document.createElement('textarea');
+            father.appendChild(addsc);
+            addsc.appendChild(uploadsc);
+            addsc.appendChild(addsoncomment);
+            addsc.className='addsc';
+            addsc.setAttribute('action',"");
+            addsc.setAttribute('name','');
+            uploadsc.className='uploadsc';
+            uploadsc.setAttribute('type','submit');
+            uploadsc.setAttribute('value','发送');
+            addsoncomment.className='addsoncomment';
+            addsoncomment.setAttribute('name','');
+            addsoncomment.setAttribute('required','required');
+            addsoncomment.setAttribute('placeholder','回复@'+Object+': ')
+        }
+        //评论商品
+        var tocomment =document.querySelector('.tocomment');
+        var addmc = document.querySelector('.addmc');
+        var time =0;
+        tocomment.addEventListener('click',function(){
+            if (time==0){
+                addmc.style.display='block';
+                tocomment.innerHTML=('收起评论&nbsp');
+                time++;
+            }
+            else{
+                addmc.style.display='none';
+                tocomment.innerHTML=('评论商品&nbsp');
+                time--;
+            }
+        })
+        //回复评论
+        var reply =getElementsByClassName("tomcomment");//母评回复按钮集合
+        var comments_gather=getElementsByClassName("comment");//母评及其子评所在盒子的集合
+        var time_m=new Array(reply.length);//访问次数
+        for(let i=0;i<reply.length;i++){time_m[i]=0;}
+        for(let i=0;i<reply.length;i++){
+            reply[i].index=i;
+            //var comname = comments_gather[i].getElementsByClassName('comname');
+            reply[i].addEventListener('click',function(){
+                if(time_m[i] == 0){
+                    time_m[i]=1;
+                    var comname = comments_gather[i].getElementsByClassName('comname');
+                    add_case(comments_gather[i],comname[0].innerHTML);
+                }
+                else {
+                    //display:none
+                    comments_gather[i].removeChild(comments_gather[i].children[comments_gather[i].children.length-1]);
+                    time_m[i]=0;
+                }
+            })
+            var replysc = comments_gather[i].getElementsByClassName("replysc");
+            var time_s=new Array(replysc.length);
+            for(let i=0;i<replysc.length;i++){time_s[i]=0;}
+            if(replysc.length > 0){
+                for(let j=0;j<replysc.length;j++){
+                replysc.index=i;
+                replysc[j].addEventListener('click',function(){
+                    //alert(time_s[j]);______undefined??
+                    if(time_s[j]!=1){
+                        time_s[j]=1;
+                        var soncomment_name = comments_gather[i].getElementsByClassName('name');
+                        add_case(comments_gather[i],soncomment_name[j].innerHTML);
+                    }
+                    else {
+                        comments_gather[i].removeChild(comments_gather[i].children[comments_gather[i].children.length-1]);
+                        time_s[j]=0;
+                    }
+                })
+            }
             }
         }
     </script>

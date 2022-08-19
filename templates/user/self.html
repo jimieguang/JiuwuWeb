@@ -69,13 +69,13 @@
             <textarea name="" id="" cols="30" rows="6" placeholder="{{原签名}}"></textarea>
         </div>
         <div class="new_hp">
-            <div class="tips uploadImage">更改头像</div>
+            <div class="tips" id="uploadImage">更改头像</div>
             <img  id="previewImage" alt=""><!-- 预览图片v1 -->
             <input class="input_file" id="inputFile_base64" type="text"  name="imagefile">
             <input class="input_file" id="inputFile_name" type="text" name="imagefile_name">
             <span id="setWH"></span>
         </div>
-        <input type="file" class="input_file">
+        <input type="file" class="input_file" id="input_file">
         <input class="upload" id="upload" type="submit" value="确认编辑" accept="image/*"></input>
     </form>
 </body>
@@ -95,11 +95,11 @@
     })
 
     var previewImage =document.querySelector('#previewImage')
-    var uploadImage=document.querySelector('.uploadImage');
-    var input_file = document.querySelector('.input_file');
+    var uploadImage=document.querySelector('#uploadImage');
+    var input_file = document.querySelector('#input_file');
     var setWH = document.querySelector('#setWH');
     uploadImage.addEventListener('click',function(){
-            document.querySelector('.input_file').click();
+            document.querySelector('#input_file').click();
         });
     //预览图片
     input_file.addEventListener('change',function(){
