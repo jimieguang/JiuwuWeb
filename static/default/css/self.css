@@ -8,6 +8,8 @@ body,.header {
     max-width: 800px;
     min-width: 500px;
     margin-top: 90px;
+    display: block;
+    opacity: 1;
     box-shadow: 5px 8px 8px rgba(255, 255, 255, 0.05),-5px 8px 8px rgba(255, 255, 255, 0.05);
 }
 .header {
@@ -135,4 +137,103 @@ body,.header {
     0px 5px 10px rgba(255, 255, 255, 0.3),
     -5px 0px 10px rgba(255, 255, 255, 0.3),
     0px -5px 10px rgba(255, 255, 255, 0.3);
+}
+/* __________________________________________*/
+/* 编辑资料 */
+.edit {
+    width: 80%;
+    max-width: 700px;
+    min-width: 500px;
+    margin-top: 90px;
+    overflow: hidden;
+    display: none;
+    box-shadow: 5px 8px 8px rgba(255, 255, 255, 0.05),-5px 8px 8px rgba(255, 255, 255, 0.05);
+}
+.return {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    transform: translate(20px,15px);
+    cursor: pointer;
+}
+.new_name ,.signature,.new_hp,.upload {
+    transform: translate(220px,5px);
+    margin: 15px 0px;
+}
+.new_hp .tips {
+    transform: translate(65px,0px);
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+}
+.new_name input {
+    outline: none;
+    background-color: rgba(255,255,255,0);
+    border: none;
+    border-bottom: 1px solid rgb(230,230,230);
+    width: 200px;
+    font-size: 16px;
+    margin-top: 5px;
+    color:rgba(255, 255, 255, 0.8);
+    padding: 2px 10px;
+}
+/* 修改默认内容颜色 */
+input::input-placeholder,textarea::input-placeholder{
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{	
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-moz-placeholder,textarea::-moz-placeholder{			
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-moz-placeholder,textarea::-moz-placeholder{		
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-ms-input-placeholder,textarea::-ms-input-placeholder{		
+	color: rgba(255, 255, 255, 0.4);
+}
+textarea {
+    background-color: rgba(255,255,255,0);
+    border-radius: 5px;
+    border:1px solid rgb(230,230,230) ; 
+    outline: none;
+    width: 200px;
+    resize:none;
+    font-size: 15px;
+    margin-top: 5px;
+    color:rgba(255, 255, 255, 0.8);
+    padding: 5px 5px;
+}
+.tips {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+#previewImage {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    margin: 5px 0px;
+    overflow: hidden;
+    object-fit: contain;
+    /* margin-left: 50px; */
+    /* transform: translateX(-50%); */
+}
+.input_file {
+    display: none;
+}
+.upload {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border: 1px solid rgb(230,230,230);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    padding: 2px;
+    margin-left: 60px;
+    cursor: pointer;
+}
+.upload:hover {
+    box-shadow: 5px 0px 10px rgba(255,255,255,0.1),
+    0px 5px 10px rgba(255,255,255,0.1),
+    -5px 0px 10px rgba(255,255,255,0.1),
+    0px -5px 10px rgba(255,255,255,0.1);
 }
