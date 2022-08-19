@@ -13,7 +13,7 @@ import dtiaozao.function as fun
 class Userform(ModelForm):
     class Meta:
         model = User
-        fields = ["student_id","passwd","name","avatar","signature","phone","email"]
+        fields = ["name","avatar","signature","phone","email"]
         
 class LoginForm(forms.Form):
     '''登录表单'''
@@ -71,10 +71,15 @@ def mySpace(req,uid):
         isOwner = (uid == req.session['user_info']['uid'])
         return render(req,'user/self.html',locals())
     # 修改个人信息
-    uid = req.session['user_info']['uid']
-    obj = User.objects.get(uid=uid)
-    form = Userform(data = req.POST, files = req.FILES, instance = obj)
+    uid = req.session.get('user_info')['uid']
+    obj = User.objects.get(id=uid)
+    data = req.POST
+    form = Userform(data = data,instance = obj)
     if form.is_valid():
+        # 实例化modelform，提交前对用户属性进行更改
+        form = form.save(commit=False)
+        if data["imagefile"]:
+            form.avatar = fun.save_image(data["imagefile_name"],data["imagefile"])
         form.save()
         return HttpResponseRedirect('./')
     msg = '表单格式有误'

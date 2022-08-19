@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>九物——个人中心</title>
-    <link rel="shortcut icon" href="../../../static/default/favicon.ico"/>
-    <link rel="stylesheet" href="../../../static/default/css/base.css">
-    <link rel="stylesheet" href="../../../static/default/css/common.css">
-    <link rel="stylesheet" href="../../../static/default/css/self.css">
+    <link rel="shortcut icon" href="../../../../static/default/favicon.ico"/>
+    <link rel="stylesheet" href="../../../../static/default/css/base.css">
+    <link rel="stylesheet" href="../../../../static/default/css/common.css">
+    <link rel="stylesheet" href="../../../../static/default/css/self.css">
     <!-- 引入jquery,cropper -->
-    <script src="../../static/default/jquery/dist/jquery.js"></script>
+    <script src="../../../../static/default/jquery/dist/jquery.js"></script>
     <!-- <script src="../../static/default/cropperjs/dist/cropper.js"></script> -->
-    <link rel="stylesheet" href="../../static/default/cropperjs/dist/cropper.css">
+    <link rel="stylesheet" href="../../../../static/default/cropperjs/dist/cropper.css">
     
     <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script> -->
     <script src="https://cdn.bootcdn.net/ajax/libs/cropper/4.1.0/cropper.js"></script>
@@ -23,7 +23,7 @@
     <div class="w">
         <div class="header">
             <div class="hp">
-                <img src="../../../static/upload/{{user.avatar}}" alt="">
+                <img src="../../../../static/upload/{{user.avatar}}" alt="">
             </div>
             <div class="mes">
                 <!-- <input type="text"> -->
@@ -33,40 +33,42 @@
         </div>
         <div class="condition">
             <div>
-                <i class="num">5</i><br>
+                <i class="num">?</i><br>
                 <span class="goods_new">当前上架</span>
             </div>
             <span class="line_self"></span>
             <div>
-                <i class="num">10</i><br>
+                <i class="num">?</i><br>
                 <span class="goods_all">全部商品</span>
             </div>
             <span class="line_self"></span>
             <div>
-                <i class="num">15</i><br>
+                <i class="num">?</i><br>
                 <span class="attention">关注</span>
             </div>
             <span class="line_self"></span>
             <div>
-                <i class="num">8</i><br>
+                <i class="num">?</i><br>
                 <span class="fans">粉丝</span>
             </div>
         </div>
         <div class="footer">
             <div class="to_edit">编辑资料</div>
             <div>关注</div>
-            <div>私信</div>
+            <a href="/userIssue/PM/{{user.id}}"><div>私信</div></a>
         </div>
     </div>
-    <form class="edit" name="">
+    <form class="edit" name="" method="post" action="">
+        <!-- 安全性参数 -->
+        {% csrf_token %}
         <div class="return">&nbsp&lt&lt&nbsp返回</div>
         <div class="new_name">
             <div class="tips">编辑昵称：</div>
-            <input type="text" name="name" placeholder="{{原昵称}}">
+            <input type="text" name="name" placeholder="{{user.name}}">
         </div>
         <div class="signature">
             <div class="tips">编辑签名：</div>
-            <textarea name="" id="" cols="30" rows="6" placeholder="{{原签名}}"></textarea>
+            <textarea name="signature" id="" cols="30" rows="6" placeholder="{{user.signature}}"></textarea>
         </div>
         <div class="new_hp">
             <div class="tips" id="uploadImage">更改头像</div>
@@ -75,7 +77,11 @@
             <input class="input_file" id="inputFile_name" type="text" name="imagefile_name">
             <span id="setWH"></span>
         </div>
+<<<<<<< Updated upstream
         <input type="file" class="input_file" id="input_file">
+=======
+        <input id="input_file" type="file" class="input_file">
+>>>>>>> Stashed changes
         <input class="upload" id="upload" type="submit" value="确认编辑" accept="image/*"></input>
     </form>
 </body>
@@ -95,7 +101,11 @@
     })
 
     var previewImage =document.querySelector('#previewImage')
+<<<<<<< Updated upstream
     var uploadImage=document.querySelector('#uploadImage');
+=======
+    var uploadImage=document.querySelector('.uploadImage');
+>>>>>>> Stashed changes
     var input_file = document.querySelector('#input_file');
     var setWH = document.querySelector('#setWH');
     uploadImage.addEventListener('click',function(){
