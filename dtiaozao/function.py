@@ -22,6 +22,7 @@ def str2datetime(str,delay=0):
     return datetime.datetime.strptime(str, "%Y-%m-%d %X") + datetime.timedelta(seconds=delay)
 
 def timeTrans(during):
+    '''返回指定时间之前的datetime数据'''
     import datetime
     now = datetime.datetime.now()
     if during == "day":

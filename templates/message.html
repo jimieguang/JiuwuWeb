@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -5,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>消息中心</title>
-
     <link rel="shortcut icon" href="../../static/default/favicon.ico"/>
     <link rel="stylesheet" href="../../static/default/css/base.css">
     <link rel="stylesheet" href="../../static/default/css/common.css">
@@ -21,32 +21,34 @@
             <div class="reply">回复我的<span class="hint"></span></div>
             <div class="goods_comment">商品评价<span class="hint"></span></div>
         </div>
-        {% for  in  %}
-            <div class="my_news_sty">
-                <a class="sender_1">
-                    <div class="hp_1"><img src="../../static/upload/abc.png" alt=""></div>
-                    <div class="hint_1">num</div>
-                    <div class="name_1">{{name}}</div>
-                    <div class="content_1">{{啦啊啊啊啊啊啊laallalala啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊}}</div>
-                </a>
-            </div>
-        {% endfor %}
-        {% for  in   %}
+        <div class="my_news_sty">
+            {% for user,unread_num,last_message in my_news %}
+            <a class="sender_1" href="/userIssue/PM/{{user.id}}">
+                <div class="hp_1"><img src="../../static/upload/{{user.avatar}}" alt=""></div>
+                <div class="hint_1">{{unread_num}}</div>
+                <div class="name_1">{{user.name}}</div>
+                <div class="content_1">{{last_message}}</div>
+            </a>
+            {% endfor %}
+        </div>
         <div class="reply_sty">
-            <a class="sender_2">
-                <div class="pointer_2">"{{我发布的评论}}"</div>
-                <div class="content_2">{{回信人}}: {{对我评论的回复}}</div>
+            {% for msg_ct in msg_cts %}
+            <a class="sender_2" href="/goodsIssue/goodsDetail/{{msg_ct.reply_from.goods.id}}">
+                <div class="content_2">{{msg_ct.owner.name}}回复@{{msg_ct.reply_to.name}}: {{msg_ct.content}}</div>
+                <div class="pointer_2">"{{msg_ct.reply_from.content}}"</div>
             </a>
+            {% endfor %}
         </div>
-        {% endfor %}
-        {% for  in   %}
         <div class="goods_comment_sty">
-            <a class="sender_3">
-                <div class="goods_3">商品 {{商品名称}} 下的评论：</div>
-                <div class="content_3">{{回信人}}: {{对我商品的评论}}</div>
+            {% for msg_ce in msg_ces  %}
+            <a class="sender_3" href="/goodsIssue/goodsDetail/{{msg_ce.goods.id}}">
+                <div class="goods_3">商品 {{msg_ce.goods.name}} 下的评论：</div>
+                <div class="content_3">{{msg_ce.owner.name}}: {{msg_ce.content}}</div>
+                <div >{{ msg_ce.messagedate }}</div>
             </a>
+            {% endfor %}
         </div>
-        {% endfor %}
+        
     </div>
 </body>
 <script>

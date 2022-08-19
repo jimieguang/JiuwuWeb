@@ -5,10 +5,11 @@ def detect_login_middleware(get_response):
     # One-time configuration and initialization.
     need_login_urls = [
         '/goodsIssue/newGoods',
-        '/goodsIssue/myGoods',
     ]
     need_login_url_elements = [
         '/userIssue/PM/',
+        '/message/', 
+        '/goodsIssue/myGoods',
     ]
     def middleware(req):
         need_detect = False

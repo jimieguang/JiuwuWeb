@@ -53,7 +53,8 @@ class MessageComment(models.Model):
     content = models.TextField(verbose_name="留言内容",max_length=255, db_column='content', blank=False)
     isRead = models.BooleanField(default=False, verbose_name="已读？", db_column='isRead')
     # 选填（可为空）
-    reply_to = models.ForeignKey(User, related_name='reply_to', blank=True, null=True,on_delete=models.CASCADE)
+    reply_to = models.ForeignKey('self', related_name='reply_mt', blank=True, null=True,on_delete=models.CASCADE)  #回复的另一子表
+
 
     class Meta:
         verbose_name = "留言的评论"
