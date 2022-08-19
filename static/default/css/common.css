@@ -25,6 +25,23 @@ body {
 .fr {
     float:right;
 }
+/* 修改默认内容颜色 */
+input::input-placeholder,textarea::input-placeholder{
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{	
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-moz-placeholder,textarea::-moz-placeholder{			
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-moz-placeholder,textarea::-moz-placeholder{		
+	color: rgba(255, 255, 255, 0.4);
+}
+input::-ms-input-placeholder,textarea::-ms-input-placeholder{		
+	color: rgba(255, 255, 255, 0.4);
+}
+
 /* 字体图标声明 */
 @font-face {
     font-family: 'icomoon';

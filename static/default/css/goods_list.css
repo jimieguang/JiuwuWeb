@@ -202,7 +202,11 @@ span img:hover {
     border-radius: 50%;
     cursor: pointer;
 }
-
+.list a {
+    display: inline-block;
+    width: 220px;
+    height: 300px;
+}
 /* .list span {
     width: 200px;
     height: 200px;

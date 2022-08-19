@@ -46,6 +46,13 @@ body {
     justify-content: center;
     margin-left: -20%;
 }
+/* 子项 */
+.detail .dd {
+    width: 100%;
+    height: 33px;
+    font-size: 17px;
+    line-height: 40px;
+}
 .tocomment {
     font-size: 15px;
     display: flex;
@@ -58,12 +65,75 @@ body {
 .tocomment:hover {
     color:rgb(45, 127, 162);
 }
-/* 子项 */
-.detail .dd {
+/* 写母评 */
+.addmcomment {
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: rgba(255,255,255,0);
+    border-radius: 5px;
+    border:1px solid rgb(230,230,230) ; 
+    outline: none;
+    width: 300px;
+    height: 60px;
+    resize:none;
+    color: rgba(0,0,0,.7);
+    font-size: 14px;
+    padding: 3px;
+}
+.addmc {
+    width: 380px;
+    height: 80px;
+    display: none;
+    /* background-color: #fff; */
+}
+.uploadmc {
+    transform: translate(2px,-8px);
+    border-radius: 5px;
+    border: 0px;
+    padding: 1px 5px;
+    color:rgba(0,0,0,.7);
+    cursor: pointer;
+    background-color: rgba(255,255,255,.3);
+}
+.uploadmc:hover {
+    box-shadow: 5px 0px 10px rgba(255,255,255,0.1),
+    0px 5px 10px rgba(255,255,255,0.1),
+    -5px 0px 10px rgba(255,255,255,0.1),
+    0px -5px 10px rgba(255,255,255,0.1);
+}
+/* 写子评 */
+.addsc {
     width: 100%;
-    height: 33px;
-    font-size: 17px;
-    line-height: 40px;
+}
+.addsoncomment {
+    margin-top: 5px;
+    float: right;
+    margin-right: 10%;
+    background-color: rgba(255,255,255,0);
+    border-radius: 5px;
+    border:1px solid rgb(230,230,230) ; 
+    outline: none;
+    width: 73%;
+    min-height: 60px;
+    resize:none;
+    color:rgba(255,255,255,.6);
+    font-size: 14px;
+    padding: 3px;
+}
+.uploadsc {
+    transform:translate(637px,68px);
+    border-radius: 5px;
+    border: 0px;
+    padding: 1px 5px;
+    color:rgba(0,0,0,.7);
+    cursor: pointer;
+    background-color: rgba(255,255,255,.3);
+}
+.uploadsc:hover {
+    box-shadow: 5px 0px 10px rgba(255,255,255,0.1),
+    0px 5px 10px rgba(255,255,255,0.1),
+    -5px 0px 10px rgba(255,255,255,0.1),
+    0px -5px 10px rgba(255,255,255,0.1);
 }
 /* 评论区 */
 .comment {
@@ -113,6 +183,17 @@ body {
 .comcontent {
     font-size: 14px;
     margin: 10px 0px;
+    max-width: 480px;
+    width: 480px;
+    /* background-color: #fff; */
+}
+/* 回复母评论 */
+.tomcomment {
+    float: right;
+    transform: translate(120%,-140%);
+    color: rgba(0,0,0,.4);
+    cursor: pointer;
+    font-family: 'icomoon';
 }
 /* 子评 */
 .soncomment {
@@ -126,9 +207,19 @@ body {
     font-size: 14px;
     border-radius: 10px;
 }
-/* 时间 */
-.soncomment div {
+
+/* 子评时间&回复*/
+.soncomment .time {
     float: right;
+    transform: translate(20px,0px);
+}
+.replysc {
+    float: right;
+    font-size: 10px;
+    color:rgba(0,0,0,.4);
+    transform: translate(-18px,15px);
+    cursor: pointer;
+    margin: 3px 0px;
 }
 /* 底部 */
 .detfoot {
