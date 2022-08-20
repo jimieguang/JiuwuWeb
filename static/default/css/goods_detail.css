@@ -34,6 +34,19 @@ body {
     height: 100%;
     object-fit: cover;
 }
+/* 删除商品 */
+.delete_goods {
+    position: absolute;
+    transform: translate(170px,-230px);
+    font-size: 13px;
+    cursor: pointer;
+}
+.delete_goods:hover {
+    color: rgba(193, 41, 41, 0.912);
+}
+.delete_goods_form {
+    display: none;
+}
 .w {
     width: 90%;
     height: 70%;
@@ -64,6 +77,12 @@ body {
 }
 .tocomment:hover {
     color:rgb(45, 127, 162);
+}
+.tochat {
+    transform: translate(280px,60px);
+}
+.tochat a:hover {
+    color: rgba(0,0,0,.6);
 }
 /* 写母评 */
 .addmcomment {
@@ -164,6 +183,11 @@ body {
     height: 40px;
     border-radius: 50%;
     background-color: rgba(255,255,255,.6);
+    overflow: hidden;
+}
+.comhp img {
+    width: 100%;
+    height: 100%;
 }
 /* 表示信息？也许 */
 .commentator {

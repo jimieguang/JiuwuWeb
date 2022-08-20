@@ -59,11 +59,24 @@
             <div class="navi"><a href="goodsIssue/goodsList/all">全部商品</a></div>
             <div class="navi"><a href="goodsIssue/goodsList/day">今日新品</a></div>
             <div class="item">
+                {% if msg_unread_num == 0 and sys_unread_num == 0 %}
+                <div class="icon"></div>
+                {% else %}
                 <div class="icon"><div class="hint"></div></div>
+                {% endif %}
             <div class="navt">消息</div>
             </div>
+            {% if msg_unread_num != 0 %}
             <div class="navi"><a href="message/">回复我的<span class="hint">{{ msg_unread_num }}</span></a></div>
+            {% else %}
+            <div class="navi"><a href="message/">回复我的</a></div>
+            {% endif %}
+
+            {% if sys_unread_num != 0 %}
             <div class="navi"><a href="sys_message">系统通知<span class="hint">{{ sys_unread_num }}</span></a></div>
+            {% else %}
+            <div class="navi"><a href="sys_message">系统通知</a></div>
+            {% endif %}
         </div>
     </div>
     <!-- 通用伸缩侧边栏end -->

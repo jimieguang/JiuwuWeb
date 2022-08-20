@@ -17,15 +17,31 @@
     <div class="logo"><a href="/"></a></div>
     <div class="w">
         <div class="type">
+            {% if private_messages_unread_num != 0 %}
             <div class="my_news">我的消息<span class="hint"></span></div>
+            {% else %}
+            <div class="my_news">我的消息</div>
+            {% endif %}
+
+            {% if msg_cts_unread_num != 0 %}
             <div class="reply">回复我的<span class="hint"></span></div>
+            {% else %}
+            <div class="reply">回复我的</div>
+            {% endif %}
+
+            {% if msg_ces_unread_num != 0 %}
             <div class="goods_comment">商品评价<span class="hint"></span></div>
+            {% else %}
+            <div class="goods_comment">商品评价</div>
+            {% endif %}
         </div>
         <div class="my_news_sty">
             {% for user,unread_num,last_message in my_news %}
             <a class="sender_1" href="/userIssue/PM/{{user.id}}">
                 <div class="hp_1"><img src="../../static/upload/{{user.avatar}}" alt=""></div>
+                {% if unread_num != 0 %}
                 <div class="hint_1">{{unread_num}}</div>
+                {% endif %}
                 <div class="name_1">{{user.name}}</div>
                 <div class="content_1">{{last_message}}</div>
             </a>

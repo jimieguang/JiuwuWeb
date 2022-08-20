@@ -20,6 +20,7 @@
             <div class="image"><img src="https://inews.gtimg.com/newsapp_bt/0/15133660520/1000" alt=""></div>
         {% endif %}
         <div class="detail">
+            <div class="delete_goods">删除商品</div>
             <div class="w">
             <div class="dt">商品详情</div>
             <div class="dd">商品名称:<i>{{goods.name}}</i></div>
@@ -28,10 +29,10 @@
             <div class="dd">商品描述:<i>{{goods.introduction}}</i></div>
             <div class="dd">联系方式:<i></i></div>
             <div class="dd"></div>
-            <div class="tocomment">评论商品&nbsp</div>
-            <div class="tocomment">
+            <div class="tochat">
                 <a href="/userIssue/PM/{{goods.owner.id}}" >点此私聊</a>
             </div>
+            <div class="tocomment">评论商品&nbsp</div>
             <form  class="addmc" action="" method="post">
                 <!-- 安全性参数 -->
                 {% csrf_token %}
@@ -39,6 +40,13 @@
                 <input type="submit"class="uploadmc" value="评论">
             </form>
             </div>
+
+            <!-- 删除商品 -->
+            <form class="delete_goods_form" action="" method="post">
+                <!-- 安全性参数 -->
+                {% csrf_token %}
+                <input type="submit" class="delete_upload">
+            </form>
         </div>
     </div>
     <!--母评-->
@@ -47,7 +55,7 @@
         <div class="comment" index={{ forloop.counter }}>
             <div class="mcomment" id={{ mcon.id }}>
                 <div class="comhp">
-                    {% comment %} <img src="{% static 'upload/'%}{{mcon.owner.avatar}}"> {% endcomment %}
+                    <img src="{% static 'upload/'%}{{mcon.owner.avatar}}"> 
                 </div>
                 <div class="commentator">
                     <div class="comname">{{ mcon.owner.name }}</div>
@@ -179,15 +187,16 @@
             addsoncomment.className='addsoncomment';
             addsoncomment.setAttribute('name','content');
             addsoncomment.setAttribute('required','required');
-            addsoncomment.setAttribute('placeholder','回复@'+Object+': ')
-            msg_ces.className='';
+            addsoncomment.setAttribute('placeholder','回复@'+Object+': ');
+            msg_ces.style.display='none';
             msg_ces.setAttribute('name','reply_from');
             msg_ces.value=father.getElementsByClassName("mcomment")[0].getAttribute('id');
-            msg_cts.className='';
+            msg_cts.style.display='none';
             msg_cts.setAttribute('name','reply_to');
             msg_cts.value=reply_to.getAttribute('id');
             csrf_token.setAttribute('name','csrfmiddlewaretoken');
             csrf_token.value="{{csrf_token}}";
+            csrf_token.style.display='none';
             
         }
         //评论商品
@@ -249,6 +258,12 @@
             }
             }
         }
+        // 删除商品
+        var delete_btn = document.querySelector('.delete_goods');
+        var delete_upload = document.querySelector('.delete_upload');
+        delete_btn.addEventListener('click',function(){
+            delete_upload.click();
+        })
     </script>
         
 </body>
