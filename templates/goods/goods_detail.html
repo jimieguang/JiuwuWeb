@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品详情</title>
-    <link rel="shortcut icon" href="../../static/default/favicon.ico"/>
-    <link rel="stylesheet" href="../../static/default/css/base.css">
-    <link rel="stylesheet" href="../../static/default/css/common.css">
-    <link rel="stylesheet" href="../../static/default/css/goods_detail.css">
+    <link rel="shortcut icon" href="../../../static/default/favicon.ico"/>
+    <link rel="stylesheet" href="../../../static/default/css/base.css">
+    <link rel="stylesheet" href="../../../static/default/css/common.css">
+    <link rel="stylesheet" href="../../../static/default/css/goods_detail.css">
 </head>
 <body>
     <div class="logo"><a href="/"><div></div></a></div>
@@ -28,8 +28,10 @@
             <div class="dd">联系方式:<i></i></div>
             <div class="dd"></div>
             <div class="tocomment">评论商品&nbsp</div>
-            <form  class="addmc" action="">
-                <textarea class="addmcomment" required="required"></textarea>
+            <form  class="addmc" action="" method="post">
+                <!-- 安全性参数 -->
+                {% csrf_token %}
+                <textarea class="addmcomment" required="required" name="content"></textarea>
                 <input type="submit"class="uploadmc" value="评论">
             </form>
             </div>
@@ -39,7 +41,7 @@
     <div class="bigbox">
     {% for mcon in msg_ces %}
         <div class="comment" index={{ forloop.counter }}>
-            <div class="mcomment">
+            <div class="mcomment" id={{ mcon.id }}>
                 <div class="comhp"></div>
                 <div class="commentator">
                     <div class="comname">{{ mcon.owner.name }}</div>
@@ -101,7 +103,7 @@
         for (var i=0;i<scomment_num;i++){//各子评集
             scomments[i]=new Array(10);
             for (var j=0;j<10;j++){//子评
-                scomments[i][j]=new Array(3);//0昵称、1内容、2时间
+                scomments[i][j]=new Array(4);//0昵称、1内容、2时间、3ID
             }
         }
         var num_i = 0;
@@ -111,6 +113,7 @@
                 scomments[num_i][num_j][0]="{{scom2.owner.name}}";
                 scomments[num_i][num_j][1]="{{scom2.content}}";
                 scomments[num_i][num_j][2]="{{scom2.messagedate}}";
+                scomments[num_i][num_j][3]="{{scom2.id}}"
                 num_j++;
             {% endfor %}
             num_i++;
@@ -137,6 +140,7 @@
                     span_content.innerHTML=':'+scomments[i][j][1];
                     div_time.innerHTML=("——————" + scomments[i][j][2] );
                     div_box.className="soncomment";
+                    div_box.setAttribute("id",scomments[i][j][3]);
                     span_name.className="name";
                     div_time.className="time";
                     div_reply.innerHTML=('回复');
@@ -146,23 +150,39 @@
         }
 
         //添加评论框
-        var add_case = function(father,Object){
+        var add_case = function(father,Object,reply_to){
             var addsc = document.createElement('form');
             var uploadsc = document.createElement('input');
             var addsoncomment =document.createElement('textarea');
+            var msg_ces =document.createElement('input');
+            var msg_cts =document.createElement('input');
+            var csrf_token = document.createElement('input');
             father.appendChild(addsc);
             addsc.appendChild(uploadsc);
             addsc.appendChild(addsoncomment);
+            addsc.appendChild(msg_ces);
+            addsc.appendChild(msg_cts);
+            addsc.appendChild(csrf_token);
             addsc.className='addsc';
             addsc.setAttribute('action',"");
+            addsc.setAttribute('method',"post");
             addsc.setAttribute('name','');
             uploadsc.className='uploadsc';
             uploadsc.setAttribute('type','submit');
             uploadsc.setAttribute('value','发送');
             addsoncomment.className='addsoncomment';
-            addsoncomment.setAttribute('name','');
+            addsoncomment.setAttribute('name','content');
             addsoncomment.setAttribute('required','required');
             addsoncomment.setAttribute('placeholder','回复@'+Object+': ')
+            msg_ces.className='';
+            msg_ces.setAttribute('name','reply_from');
+            msg_ces.value=father.getElementsByClassName("mcomment")[0].getAttribute('id');
+            msg_cts.className='';
+            msg_cts.setAttribute('name','reply_to');
+            msg_cts.value=reply_to.getAttribute('id');
+            csrf_token.setAttribute('name','csrfmiddlewaretoken');
+            csrf_token.value="{{csrf_token}}";
+            
         }
         //评论商品
         var tocomment =document.querySelector('.tocomment');
@@ -192,7 +212,8 @@
                 if(time_m[i] == 0){
                     time_m[i]=1;
                     var comname = comments_gather[i].getElementsByClassName('comname');
-                    add_case(comments_gather[i],comname[0].innerHTML);
+                    var mcomment_list = comments_gather[i].getElementsByClassName('mcomment');
+                    add_case(comments_gather[i],comname[0].innerHTML,mcomment_list[0]);
                 }
                 else {
                     //display:none
@@ -211,7 +232,8 @@
                     if(time_s[j]!=1){
                         time_s[j]=1;
                         var soncomment_name = comments_gather[i].getElementsByClassName('name');
-                        add_case(comments_gather[i],soncomment_name[j].innerHTML);
+                        var soncomment_list = comments_gather[i].getElementsByClassName('soncomment');
+                        add_case(comments_gather[i],soncomment_name[j].innerHTML,soncomment_list[j]);
                     }
                     else {
                         comments_gather[i].removeChild(comments_gather[i].children[comments_gather[i].children.length-1]);
