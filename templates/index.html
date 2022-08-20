@@ -1,3 +1,4 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -61,8 +62,8 @@
                 <div class="icon"><div class="hint"></div></div>
             <div class="navt">消息</div>
             </div>
-            <div class="navi"><a href="message/">回复我的<span class="hint">{{ total_unread_num }}</span></a></div>
-            <div class="navi"><a href="sys_message">系统通知<span class="hint">num</span></a></div>
+            <div class="navi"><a href="message/">回复我的<span class="hint">{{ msg_unread_num }}</span></a></div>
+            <div class="navi"><a href="sys_message">系统通知<span class="hint">{{ sys_unread_num }}</span></a></div>
         </div>
     </div>
     <!-- 通用伸缩侧边栏end -->
@@ -81,10 +82,11 @@
         <div class="arrowl"></div>
         <div class="arrowr"></div>
         <ul class="pictures">
-            <li class="picture"><a href="#"></a><img src="../static/upload/slidshow/pic1.jpg" alt=""></li>
-            <li class="picture"><a href="#"></a><img src="../static/upload/slidshow/pic2.jpg" alt=""></li>
-            <li class="picture"><a href="#"></a><img src="../static/upload/slidshow/pic3.jpg" alt=""></li>
-            <li class="picture"><a href="#"></a><img src="../static/upload/slidshow/pic4.jpg" alt=""></li>
+            {% static 'default/favicon.ico' %}
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic1.jpg'%}" alt=""></li>
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic2.jpg'%}" alt=""></li>
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic3.jpg'%}" alt=""></li>
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic4.jpg'%}" alt=""></li>
         </ul>
         <!-- 小圆ol -->
         <ol></ol>

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -28,6 +29,9 @@
             <div class="dd">联系方式:<i></i></div>
             <div class="dd"></div>
             <div class="tocomment">评论商品&nbsp</div>
+            <div class="tocomment">
+                <a href="/userIssue/PM/{{goods.owner.id}}" >点此私聊</a>
+            </div>
             <form  class="addmc" action="" method="post">
                 <!-- 安全性参数 -->
                 {% csrf_token %}
@@ -42,7 +46,9 @@
     {% for mcon in msg_ces %}
         <div class="comment" index={{ forloop.counter }}>
             <div class="mcomment" id={{ mcon.id }}>
-                <div class="comhp"></div>
+                <div class="comhp">
+                    {% comment %} <img src="{% static 'upload/'%}{{mcon.owner.avatar}}"> {% endcomment %}
+                </div>
                 <div class="commentator">
                     <div class="comname">{{ mcon.owner.name }}</div>
                     <div class="comtime">{{mcon.messagedate}}</div>

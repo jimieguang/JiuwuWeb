@@ -22,10 +22,11 @@ def index(req):
         private_messages_unread_num = PrivateMessage.objects.filter(pm_to_id=uid,isRead=False).count()
         msg_ces_unread_num = MessageCompose.objects.filter(goods__owner_id=uid,isRead=False).count()
         msg_cts_unread_num = (MessageComment.objects.filter(reply_to__owner_id=uid,isRead=False) | MessageComment.objects.filter(reply_from__owner_id=uid,reply_to__isnull=True,isRead=False)).count()
-        total_unread_num = private_messages_unread_num + msg_ces_unread_num + msg_cts_unread_num
+        msg_unread_num = private_messages_unread_num + msg_ces_unread_num + msg_cts_unread_num
+        sys_unread_num = 0
     else:
-        total_unread_num = 0
-        system_message_num = 1
+        msg_unread_num = 0
+        sys_unread_num = 1
         isLogin = False
     return render(req, 'index.html', locals())
 
