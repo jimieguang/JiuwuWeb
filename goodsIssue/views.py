@@ -1,7 +1,7 @@
 #encoding: utf-8
 from django import forms
 from django.forms import ModelForm
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 
@@ -41,6 +41,22 @@ def newGoods(req):
         Goodsissue.objects.create(**infos)
         return HttpResponseRedirect("myGoods/all/")
     return render(req, 'goods/new_goods.html', locals())
+
+def delGoods(req):
+    '''删除特定商品(仅限本人）'''
+    if req.method == 'GET':
+        msg = "无效的请求路径"
+        return render(req, 'error_msg.html', locals())
+    data = req.POST
+    goods_id = data.get('goods_id')
+    goods = Goodsissue.objects.get(id=goods_id)
+    if req.session['user_info']['uid'] == goods.owner.id:
+        goods.imagefile.delete()
+        goods.delete()                #仅调用delete无法删除imagefield文件
+    return HttpResponse("200")
+
+
+    
 
 
 def myGoods(req,during):

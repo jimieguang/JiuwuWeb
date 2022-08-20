@@ -4,6 +4,7 @@ from .settings import MEDIA_ROOT
 import base64
 import time
 import datetime
+import os
 from django.utils import timezone
 
 def mk_md5(s):
@@ -44,3 +45,4 @@ def save_image(filename,base64_data):
         byte_data = base64.b64decode(base64_data.split("data:image/jpeg;base64,")[1])
         f.write(byte_data)
     return filename
+

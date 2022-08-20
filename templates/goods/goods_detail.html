@@ -42,9 +42,10 @@
             </div>
 
             <!-- 删除商品 -->
-            <form class="delete_goods_form" action="" method="post">
+            <form class="delete_goods_form" action="../delGoods/" method="post">
                 <!-- 安全性参数 -->
                 {% csrf_token %}
+                <input name="goods_id"  value={{goods.id}}>
                 <input type="submit" class="delete_upload">
             </form>
         </div>

@@ -79,6 +79,7 @@ def mySpace(req,uid):
         # 实例化modelform，提交前对用户属性进行更改
         form = form.save(commit=False)
         if data["imagefile"]:
+            obj.avatar.delete()     #删除原头像文件
             form.avatar = fun.save_image(data["imagefile_name"],data["imagefile"])
         form.save()
         return HttpResponseRedirect('./')
