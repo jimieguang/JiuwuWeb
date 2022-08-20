@@ -3,7 +3,7 @@
 *.jpg
 *.pyc
 goodsIssue/migrations/*
-static/upload/*
+static/upload/
 userIssue/migrations/*
 .vscode/launch.json
 sqlite3.db
