@@ -33,13 +33,13 @@
             <!-- head portait头像 -->
             <div class="hp">
                 {% if isLogin %}
-                    <div class="tip"><a href="userIssue/mySpace/{{ uid }}/"><img src="../static/upload/abc.png"></a></div>
+                    <div class="tip"><a href="userIssue/mySpace/{{ uid }}/"><img src="../static/upload/{{user.avatar}}"></a></div>
                 {% else %}
                     <div class="tip"><a href="userIssue/login">点击登录</a></div>
                 {% endif %}
             </div>
                 {% if isLogin %}
-                    <div class="name"><p>welcome~</p><h2>{{ name }}</h2></div>
+                    <div class="name"><p>welcome~</p><h2>{{ user.name }}</h2></div>
                 {% else %}
                     <div class="name"><p>welcome~</p><h2>yourname</h2></div>
                 {% endif %}
