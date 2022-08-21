@@ -23,12 +23,20 @@
     <div class="w">
         <div class="header">
             <div class="hp">
-                <img src="../../../../static/upload/{{user.avatar}}" alt="">
+                {% if user.avatar != '' %}
+                <img src="../../../../static/upload/{{user.avatar}}">
+                {% else %}
+                <img src="../../../../static/images/default_avatar.png">
+                {% endif %}
             </div>
             <div class="mes">
                 <!-- <input type="text"> -->
                 <div class="name">{{user.name}}</div>
+                {% if user.signature != null %}
                 <div class="introductory">{{user.signature}}</div>
+                {% else %}
+                <div class="introductory">默认签名</div>
+                {% endif %}
             </div>
         </div>
         <div class="condition">
@@ -146,6 +154,7 @@
             // })
             // setWH.click();
             $("#upload").on("click", function () {
+                alert()
                 console.log($('#previewImage').cropper('getCroppedCanvas'));;
                 var cas=$('#previewImage').cropper('getCroppedCanvas');
                 var base64url=cas.toDataURL('image/jpeg');
