@@ -1,4 +1,5 @@
 from django.db import models
+from dtiaozao.settings import BASE_DIR
 
 
 class User(models.Model):

@@ -16,8 +16,6 @@ def index(req):
     if isLogin == True:
         uid = req.session.get('user_info')["uid"]
         user = User.objects.get(id=uid)
-        name = user.name
-        avatar = user.avatar
         # 显示未读消息数量(filter筛选时，双下划线表示查询相关数据的属性)
         private_messages_unread_num = PrivateMessage.objects.filter(pm_to_id=uid,isRead=False).count()
         msg_ces_unread_num = MessageCompose.objects.filter(goods__owner_id=uid,isRead=False).count()
@@ -49,7 +47,7 @@ def message(req):
     uid = req.session.get('user_info')["uid"]
     user = User.objects.get(id=uid)
     # 取得各类型未读信息的数量
-    private_messages = PrivateMessage.objects.filter(pm_to_id=uid)
+    private_messages = PrivateMessage.objects.filter(pm_to_id=uid).order_by('-messagedate')
     private_messages_unread = private_messages.filter(isRead=False)
     private_messages_unread_num = private_messages_unread.count()
     msg_ces = MessageCompose.objects.filter(goods__owner_id=uid).order_by('-messagedate')

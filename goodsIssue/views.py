@@ -53,7 +53,7 @@ def delGoods(req):
     if req.session['user_info']['uid'] == goods.owner.id:
         goods.imagefile.delete()
         goods.delete()                #仅调用delete无法删除imagefield文件
-    return HttpResponse("200")
+    return HttpResponse("删除成功")
 
 
     
