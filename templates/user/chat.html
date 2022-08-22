@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -5,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>私聊</title>
-    <link rel="shortcut icon" href="../../../static/default/favicon.ico"/>
+    {% comment %} <link rel="shortcut icon" href="../../../static/default/favicon.ico"/> {% endcomment %}
+    <link rel="shortcut icon" href="{% static '/default/favicon.ico' %}"/>
     <link rel="stylesheet" href="../../../static/default/css/base.css">
     <link rel="stylesheet" href="../../../static/default/css/common.css">
     <link rel="stylesheet" href="../../../static/default/css/chat.css">
@@ -22,17 +24,25 @@
                     <div class="time">{{message.messagedate}}</div>
                     <div class="hp"><img src="../../../static/upload/{{ Alice.avatar}}" alt=""></div>
                     <div class="content">
-                        <div class="txt">{{ message.content }}</div>
+                        <div class="txt">{{ message.content }}
+                            {% if message.image %}
+                                <img src="../../../static/upload/{{ message.image}}">
+                            {% endif %}
+                        </div>
                         <!-- <img src=''>-->
                     </div>
                     <!-- <div class="unread">未读</div> -->
                 </div>
-            {% else %}
+            {% else %} 
                 <div class="other">
                     <div class="time">{{message.messagedate}}</div>
                     <div class="hp"><img src="../../../static/upload/{{ Black.avatar}}" ></div>
                     <div class="content">
-                        <div class="txt">{{ message.content }}</div>
+                        <div class="txt">{{ message.content }}
+                            {% if message.image %}
+                                <img src="../../../static/upload/{{ message.image}}">
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endif %}
@@ -139,11 +149,16 @@
                 delete_lab();//删除定位标签
                 add_new_msg('',getNowTime(),'self',"../../../static/upload/{{ Alice.avatar}}",URL.createObjectURL(file));
                 add_lab();//加上定位标签
+                var formData = new FormData();
+                formData.append("image",file);
+                formData.append("csrfmiddlewaretoken","{{csrf_token}}");
                 $.ajax({
                     type: "POST",
                     url: "",
-                    data:{"csrfmiddlewaretoken": "{{csrf_token}}","content":URL.createObjectURL(file)} ,
-                    dataType:"json",    
+                    data:formData,
+                    async: false,
+                    processData: false,
+                    contentType:false,
                     success: function(msg){
                         //alert(msg);
                     },
@@ -200,7 +215,7 @@
                 if (length !=0){
                     delete_lab();
                     for(let i=0;i<length;i++){
-                        add_new_msg(msg.content[i],msg.messagedate[i],'other',"../../../static/upload/{{ Black.avatar}}",msg.img[i]);
+                        add_new_msg(msg.content[i],msg.messagedate[i],'other',"../../../static/upload/{{ Black.avatar}}","../../../static/upload/"+msg.image_name[i]);
                     }
                     past_date = msg.pastdate;
                     add_lab();

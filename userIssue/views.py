@@ -147,17 +147,17 @@ def private_message(req,with_uid):
         end = fun.now()
         B2As = PrivateMessage.objects.filter(pm_from = Black,pm_to = Alice,messagedate__range = [start,end]).order_by('messagedate')
         pastdate = B2As.last().messagedate.strftime("%Y-%m-%d %X") if B2As.last() else end
-        response_dict = {"length":B2As.count(),"messagedate":[],"pastdate":pastdate,"content":[],"image":[]}
+        response_dict = {"length":B2As.count(),"messagedate":[],"pastdate":pastdate,"content":[],"image_name":[]}
         for B2A in B2As:
             response_dict["content"].append(B2A.content)
-            response_dict['image'].append(B2A.image)
+            response_dict['image_name'].append(B2A.image.name if B2A.image else "")
             response_dict["messagedate"].append(B2A.messagedate.strftime("%Y-%m-%d %X"))
         return HttpResponse(json.dumps(response_dict))
     # 将自己发送的信息保存到数据库
     data = req.POST
     if req.POST.get('content')=="" and req.POST.FILES=="":
         return HttpResponse(json.dumps({'error':"Empty content!"}))
-    form = PMform(data=data,files=data.FILES)
+    form = PMform(data=data,files=req.FILES)
     form = form.save(commit=False)   #获得返回值以修正modelform数据，非正式提交
     form.pm_from = Alice
     form.pm_to = Black
