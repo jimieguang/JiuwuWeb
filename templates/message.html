@@ -68,6 +68,13 @@
     </div>
 </body>
 <script>
+    // 自动刷新一次页面
+    $(document).ready(function () {
+            if(location.href.indexOf("#reloaded")==-1){
+               location.href=location.href+"#reloaded";
+               location.reload();
+            }
+        })
     var type=0;
     var my_news = document.querySelector('.my_news');
     var reply = document.querySelector('.reply');

@@ -23,7 +23,7 @@
                     <div class="hp"><img src="../../../static/upload/{{ Alice.avatar}}" alt=""></div>
                     <div class="content">
                         <div class="txt">{{ message.content }}</div>
-                        <!-- <div class="triangle"></div> -->
+                        <!-- <img src=''>-->
                     </div>
                     <!-- <div class="unread">未读</div> -->
                 </div>
@@ -33,7 +33,6 @@
                     <div class="hp"><img src="../../../static/upload/{{ Black.avatar}}" ></div>
                     <div class="content">
                         <div class="txt">{{ message.content }}</div>
-                        <!-- <div class="triangle"></div> -->
                     </div>
                 </div>
             {% endif %}
@@ -44,6 +43,8 @@
     <div class="text clearfix">
         <textarea name="content" id="my_content" cols="30" rows="3" required="required"></textarea>
         <div class="send_btn">发送</div>
+        <div class="photo"></div>
+        <input type="file" id="send_img" accept="image/*">
     </div>
     <!-- <form class="post" action="./" method="post">
         安全性参数
@@ -71,14 +72,14 @@
         var hour = date.getHours();
         var minute = date.getMinutes();
         var second = date.getSeconds();
-        var time = year + '年' + month + '月' + addZero(day) + '日 ' + addZero(hour) + ':' + addZero(minute) ;
+        var time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(minute) + ':' + addZero(second);
         return time;
     }
 
-    //添加新消息至页面
+    //前端显示消息
     var w = document.querySelector('.w');
     var owner;
-    function add_new_msg(Content,Time,Owner,SRC){//内容、时间、归属、头像
+    function add_new_msg(Content,Time,Owner,SRC,Photo){//内容、时间、归属、头像、图片
         owner = document.createElement('div');
         var time = document.createElement('div');
         var hp = document.createElement('div');
@@ -98,28 +99,74 @@
         content.className='content';
         time.innerHTML=(Time);
         txt.className='txt';
-        txt.innerHTML=(Content);
+        if(Content!=''){
+            txt.innerHTML=(Content);
+        }
+        else{
+            var photo = document.createElement('img');
+            photo.setAttribute('src',Photo);
+            txt.appendChild(photo);
+        }
     }
 
-    //点击按钮发送消息
+    //删除定位标签
+    function delete_lab(){
+        for(let i=0;i<2;i++){
+            w.removeChild(w.children[w.children.length-1]);
+        }
+    }
+    //加上定位标签
+    function add_lab(){
+        var a=document.createElement('a');
+        var lab = document.createElement('div');
+        w.appendChild(a);
+        w.appendChild(lab);
+        a.className='lab';
+        a.setAttribute("href","#lab");
+        lab.setAttribute("id","lab");
+        lable.click();
+    }
+
+    //发送图片
+    var photo = document.querySelector('.photo');
+    var send_img = document.querySelector('#send_img');
+    photo.addEventListener('click',function(){
+        send_img.click();
+    })
+    send_img.addEventListener('change',function(){
+            var file = this.files[0];
+            if(file.value != ''){
+                delete_lab();//删除定位标签
+                add_new_msg('',getNowTime(),'self',"../../../static/upload/{{ Alice.avatar}}",URL.createObjectURL(file));
+                add_lab();//加上定位标签
+                $.ajax({
+                    type: "POST",
+                    url: "",
+                    data:{"csrfmiddlewaretoken": "{{csrf_token}}","content":URL.createObjectURL(file)} ,
+                    dataType:"json",    
+                    success: function(msg){
+                        //alert(msg);
+                    },
+                    error: function(msg){
+                        //显示感叹号提示
+                        var err_tag=document.createElement('div');
+                        owner.appendChild(err_tag);
+                        err_tag.className='err';
+                        err_tag.innerHTML=('!');
+                    }
+                });
+                file.value='';
+            }
+    },this);
+
+    //发送消息
     var send_btn=document.querySelector('.send_btn');
     var my_content=document.querySelector('#my_content');
     send_btn.addEventListener('click',function(){
         if(my_content.value != ''){
-            //删除定位标签
-            for(let i=0;i<2;i++){
-                w.removeChild(w.children[w.children.length-1]);
-            }
+            delete_lab();
             add_new_msg(my_content.value,getNowTime(),'self',"../../../static/upload/{{ Alice.avatar}}");
-            //加上定位标签
-            var a=document.createElement('a');
-            var lab = document.createElement('div');
-            w.appendChild(a);
-            w.appendChild(lab);
-            a.className='lab';
-            a.setAttribute("href","#lab");
-            lab.setAttribute("id","lab");
-            lable.click();
+            add_lab();
             $.ajax({
                 type: "POST",         //获取方式
                 url: "",    //数据读取地址(默认当前页面)  
@@ -140,7 +187,7 @@
         }
     })
 
-    //获取数据
+    //加载消息数据
     var past_date = "{{ pastdate }}";
     function get_msg(){
         $.ajax({
@@ -151,24 +198,12 @@
             success: function(msg){
                 var length = msg.length;
                 if (length !=0){
-                    //删
-                    for(let i=0;i<2;i++){
-                        w.removeChild(w.children[w.children.length-1]);
-                    }
+                    delete_lab();
                     for(let i=0;i<length;i++){
-                        add_new_msg(msg.content[i],msg.messagedate[i],'other',"../../../static/upload/{{ Black.avatar}}" );
+                        add_new_msg(msg.content[i],msg.messagedate[i],'other',"../../../static/upload/{{ Black.avatar}}",msg.img[i]);
                     }
                     past_date = msg.pastdate;
-                    //加
-                    var a=document.createElement('a');
-                    var lab = document.createElement('div');
-                    w.appendChild(a);
-                    w.appendChild(lab);
-                    a.className='lab';
-                    a.setAttribute("href","#lab");
-
-                    lab.setAttribute("id","lab");
-                    lable.click();
+                    add_lab();
                 }
             },
             error: function(msg){
@@ -176,7 +211,7 @@
             }
         });
     }
-    // 计时器
+    // 计时器自动加载
     var timer=setInterval(function(){
         get_msg();
     },5000)

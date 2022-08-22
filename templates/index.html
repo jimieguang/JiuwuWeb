@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../static/default/css/index.css">
     <!-- 首页js文件 -->
     <script src="../static/default/js/index.js"></script>
+    <script src="../../static/default/jquery/dist/jquery.js"></script>
 </head>
 <body>
     <!-- hesder头部模块 -->
@@ -95,20 +96,29 @@
         <div class="arrowl"></div>
         <div class="arrowr"></div>
         <ul class="pictures">
-            {% static 'default/favicon.ico' %}
-            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic1.jpg'%}" alt=""></li>
-            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic2.jpg'%}" alt=""></li>
-            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic3.jpg'%}" alt=""></li>
-            <li class="picture"><a href="#"></a><img src="{%static 'images/slidshow/pic4.jpg'%}" alt=""></li>
+            <!-- {% static 'default/favicon.ico' %} -->
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slideshow/pic1.jpg'%}" alt=""></li>
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slideshow/pic2.jpg'%}" alt=""></li>
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slideshow/pic3.jpg'%}" alt=""></li>
+            <li class="picture"><a href="#"></a><img src="{%static 'images/slideshow/pic4.jpg'%}" alt=""></li>
         </ul>
         <!-- 小圆ol -->
-        <ol></ol>
+        <ol ></ol>
     </div>
     <!-- 轮播图end -->
 
-    <footer>
+    <!-- <footer>
         <div class="line"></div>
-    </footer>
+    </footer> -->
 
+    <script>
+        // 自动刷新一次页面
+        $(document).ready(function () {
+            if(location.href.indexOf("#reloaded")==-1){
+               location.href=location.href+"#reloaded";
+               location.reload();
+            }
+        })
+    </script>
 </body>
 </html>
