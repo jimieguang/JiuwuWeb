@@ -23,6 +23,9 @@ urlpatterns = [
 
     # 系统通知模块
     path('sys_message/',views.sys_message),
+
+    # 图片显示模块
+    path('image/upload/<str:image_name>/', views.get_img)
     
 ]
 

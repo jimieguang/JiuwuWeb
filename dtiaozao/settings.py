@@ -131,13 +131,13 @@ STATIC_URL = 'static/'
 
 #自定义静态文件地址
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static/"),
 )
 
 # 上传图片保存地址
 MEDIA_ROOT = BASE_DIR / 'static/upload'
 
-MEDIA_URL =  'upload/images/'  # 该图片的url地址
+MEDIA_URL =  'image/upload/'  # 该图片的url地址
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

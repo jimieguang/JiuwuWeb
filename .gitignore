@@ -6,4 +6,3 @@ goodsIssue/migrations/*
 static/upload/*
 userIssue/migrations/*
 .vscode/launch.json
-sqlite3.db

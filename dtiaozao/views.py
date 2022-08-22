@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from django.template import RequestContext
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
@@ -75,3 +75,10 @@ def message(req):
 # 系统通知模块
 def sys_message(req):
     return render(req, 'system_msg.html', locals())
+
+# 图片显示模块
+def get_img(request,image_name):
+    from dtiaozao.settings import MEDIA_ROOT
+    image_data = open(MEDIA_ROOT/image_name,"rb").read() 
+    return HttpResponse(image_data, content_type="image/png")
+ 
