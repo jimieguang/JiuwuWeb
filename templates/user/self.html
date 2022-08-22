@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>九物——个人中心</title>
-    <link rel="shortcut icon" href="../../../../static/default/favicon.ico"/>
-    <link rel="stylesheet" href="../../../../static/default/css/base.css">
-    <link rel="stylesheet" href="../../../../static/default/css/common.css">
-    <link rel="stylesheet" href="../../../../static/default/css/self.css">
+    <link rel="shortcut icon" href="{% static 'default/favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'default/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'default/css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'default/css/self.css' %}">
     <!-- 引入jquery,cropper -->
-    <script src="../../../../static/default/jquery/dist/jquery.js"></script>
+    <script src="{% static 'default/jquery/dist/jquery.js' %}"></script>
     <!-- <script src="../../static/default/cropperjs/dist/cropper.js"></script> -->
-    <link rel="stylesheet" href="../../../../static/default/cropperjs/dist/cropper.css">
+    <link rel="stylesheet" href="{% static 'default/cropperjs/dist/cropper.css' %}">
     
     <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script> -->
     <script src="https://cdn.bootcdn.net/ajax/libs/cropper/4.1.0/cropper.js"></script>
@@ -26,7 +26,7 @@
                 {% if user.avatar != '' %}
                 <img src="../../../../static/upload/{{user.avatar}}">
                 {% else %}
-                <img src="../../../../static/images/default_avatar.png">
+                <img src="{% static 'images/default_avatar.png' %}">
                 {% endif %}
             </div>
             <div class="mes">
