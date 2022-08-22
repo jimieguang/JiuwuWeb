@@ -35,34 +35,34 @@
                 {% if user.signature != null %}
                 <div class="introductory">{{user.signature}}</div>
                 {% else %}
-                <div class="introductory">默认签名</div>
+                <div class="introductory">这个家伙没有设置签名哦~</div>
                 {% endif %}
             </div>
         </div>
         <div class="condition">
-            <div>
+            <div style="pointer-events:none;">
                 <i class="num">?</i><br>
                 <span class="goods_new">当前上架</span>
             </div>
             <span class="line_self"></span>
-            <div>
+            <div style="pointer-events:none;">
                 <i class="num">?</i><br>
                 <span class="goods_all">全部商品</span>
             </div>
             <span class="line_self"></span>
-            <div>
+            <div style="pointer-events:none;">
                 <i class="num">?</i><br>
                 <span class="attention">关注</span>
             </div>
             <span class="line_self"></span>
-            <div>
+            <div style="pointer-events:none;">
                 <i class="num">?</i><br>
                 <span class="fans">粉丝</span>
             </div>
         </div>
         <div class="footer">
             <div class="to_edit">编辑资料</div>
-            <div>关注</div>
+            <div style="pointer-events:none;">关注</div>
             <a href="/userIssue/PM/{{user.id}}"><div>私信</div></a>
         </div>
     </div>

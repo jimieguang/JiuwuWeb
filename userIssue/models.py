@@ -29,9 +29,10 @@ class PrivateMessage(models.Model):
     pm_from = models.ForeignKey(User,related_name = "pm_from",verbose_name="发信人", blank=False,on_delete=models.CASCADE)    #外链仅储存id，不占用额外数据库资源
     pm_to = models.ForeignKey(User,related_name = "pm_to",verbose_name="收信人", blank=False,on_delete=models.CASCADE)        
     messagedate = models.DateTimeField(verbose_name="私聊时间",db_column='messageDate', blank=False)
-    content = models.TextField(verbose_name="私聊内容",max_length=255, db_column='content', blank=False)
     isRead = models.BooleanField(default=False, verbose_name="已读？", db_column='isRead')
     # 选填（可为空）
+    content = models.TextField(verbose_name="私聊内容",max_length=255, db_column='content', blank=True)      #私聊信息中内容与图片二者仅存其一
+    image = models.ImageField(verbose_name="图片", db_column='image',max_length=255, blank=True)
 
     class Meta:
         verbose_name = "私聊信息"

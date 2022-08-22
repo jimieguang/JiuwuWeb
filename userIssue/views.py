@@ -56,14 +56,10 @@ class RegisterForm(ModelForm):
             raise forms.ValidationError("密码不一致")
         return confirm_passwd
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            if name == "passwd":
-                field.widget.attrs = {"type":"password","class": "form-control", "placeholder" : field.label}
-            else:
-                field.widget.attrs = {"class": "form-control", "placeholder" : field.label}
-
+class PMform(ModelForm):
+    class Meta:
+        model = PrivateMessage
+        fields = ["content","image"]
 #个人中心模块
 def mySpace(req,uid):
     if req.method == 'GET':
@@ -151,20 +147,22 @@ def private_message(req,with_uid):
         end = fun.now()
         B2As = PrivateMessage.objects.filter(pm_from = Black,pm_to = Alice,messagedate__range = [start,end]).order_by('messagedate')
         pastdate = B2As.last().messagedate.strftime("%Y-%m-%d %X") if B2As.last() else end
-        response_dict = {"length":B2As.count(),"content":[],"messagedate":[],"pastdate":pastdate}
+        response_dict = {"length":B2As.count(),"messagedate":[],"pastdate":pastdate,"content":[],"image":[]}
         for B2A in B2As:
             response_dict["content"].append(B2A.content)
+            response_dict['image'].append(B2A.image)
             response_dict["messagedate"].append(B2A.messagedate.strftime("%Y-%m-%d %X"))
         return HttpResponse(json.dumps(response_dict))
     # 将自己发送的信息保存到数据库
-    if req.POST.get('content')=="":
-        return HttpResponse(json.dumps({'error':"Empty content"}))
-    pm_infos = {}
-    pm_infos["pm_from"] = Alice
-    pm_infos["pm_to"] = Black
-    pm_infos["messagedate"] = fun.now()
-    pm_infos["content"] = req.POST.get('content')
-    PrivateMessage.objects.create(**pm_infos)
+    data = req.POST
+    if req.POST.get('content')=="" and req.POST.FILES=="":
+        return HttpResponse(json.dumps({'error':"Empty content!"}))
+    form = PMform(data=data,files=data.FILES)
+    form = form.save(commit=False)   #获得返回值以修正modelform数据，非正式提交
+    form.pm_from = Alice
+    form.pm_to = Black
+    form.messagedate = fun.now()
+    form.save()                      #正式创建表
     return HttpResponse(json.dumps({'status':200}))
 
 

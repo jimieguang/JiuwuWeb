@@ -13,8 +13,9 @@
 }
 .news {
     width: 90%;
-    height: 78px;
-    font-size: 14px;
+    /* height: 78px; */
+    height: auto;
+    font-size: 18px;
     overflow: hidden;
     padding: 10px;
     border: 1px solid rgba(117, 203, 216, 0.979);
