@@ -133,3 +133,9 @@ span {
     font-weight: 100;
     color:rgba(255,255,255,0.8);
 }
+@media screen and (orientation:portrait) {
+    .w {
+        scale:0.8;
+        transform: translate(-60%,-10%);
+    }
+}

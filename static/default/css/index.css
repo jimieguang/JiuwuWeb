@@ -15,7 +15,6 @@
     padding-left: 20px;
     font-size: 0px;
     transition: 0.5s;
-    
 }
 .search:hover .searchtxt input{
     width: 290px;
@@ -132,4 +131,10 @@ input::-moz-placeholder,textarea::-moz-placeholder{
 }
 input::-ms-input-placeholder,textarea::-ms-input-placeholder{		
 	color: rgba(0, 0, 0, 0.4);
+}
+@media screen and (orientation:portrait) {
+    .search {
+        scale:0.9;
+        transform: translateY(10px);
+    }
 }

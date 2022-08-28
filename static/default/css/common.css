@@ -69,6 +69,24 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder{
     background-size: contain;
     font-size:0;
 }
+@media screen and (orientation:portrait) {
+    .logo {
+        position:absolute;
+        top: 15px;
+        left:20px;
+        width: 150px;
+        height: 70px;
+    }
+    .logo a {
+        display:block;
+        width:120px;
+        height:64px;
+        background: url(../../images/logo.png) no-repeat;
+        background-size: contain;
+        font-size:0;
+    }
+}
+
 /* 大导航栏 */
 .nav {
     position: absolute;
@@ -212,6 +230,12 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder{
     display: block;
     font-size: 12px;
     scale: 0.9;
+}
+@media screen and (orientation:portrait) {
+    .nav {
+        scale:0.9;
+        transform: translate(-30px,20px);
+    }
 }
 /* 底部 */
 footer {

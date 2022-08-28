@@ -8,6 +8,12 @@
     font-weight: 500;
     text-align: center;
 }
+@media screen and (orientation:portrait) {
+    .page_title {
+        scale:0.8;
+        transform: translateY(-50%);
+    }
+}
 /* 标题外盒子 */
 .box1 {
     width: 100%;
@@ -48,6 +54,12 @@
     text-align: center;
     line-height: 33px;
     cursor: pointer;
+}
+@media screen and (orientation:portrait) {
+    .sort {
+        scale: 0.8;
+        transform: translateY(100%);
+    }
 }
 /* 鼠标悬浮展开 */
 .sort:hover .sortnav{
@@ -99,6 +111,12 @@
 .newbtn {
     /* cursor: pointer; */
 }
+@media screen and (orientation:portrait) {
+    .search {
+        scale: 0.9;
+        transform: translateY(-50%);
+    }
+}
 /* 列表外盒子 */
 .box2 {
     width: 100%;
@@ -124,6 +142,7 @@
     overflow: hidden;
     box-shadow: 20px 20px 20px rgba(0,0,0,.3);
 } */
+
 .list span {
     width: 220px;
     height: 300px;
@@ -133,28 +152,6 @@
     overflow: hidden;
     box-shadow: 20px 20px 20px rgba(0,0,0,.3);
 }
-/* 链接、图片*/
-/* .image {
-    width: 100%;
-    height: 100%;
-    transition: 0.3s;
-} */
-span img {
-    /* width: 100%; */
-    height: 100%;
-    transition: 0.3s;
-}
-
-/* 信息 */
-/* .mes {
-    width: 220px;
-    height: 60px;
-    position: absolute;
-    background-color:rgba(0,0,0,.1);
-    color:#fff;
-    text-align: center;
-    line-height: 20px;
-} */
 span div {
     width: 220px;
     height: 60px;
@@ -164,12 +161,56 @@ span div {
     border-radius: 3px;
     text-align: center;
     line-height: 20px;
-    position:absolute;
     transform: translateY(-100%);
 }
-/* .image:hover {
-    transform: scale(1.1);
-} */
+span img {
+    width: 220px;
+    height: 300px;
+    transition: 0.3s;
+}
+.list a {
+    display: inline-block;
+    width: 220px;
+    height: 300px;
+}
+
+@media screen and (orientation:portrait) {
+    .list span {
+        width: 154px;
+        height: 210px;
+        margin: 20px 20px;
+        border-radius: 2%;
+        align-items: flex-end;
+        overflow: hidden;
+        box-shadow: 20px 20px 20px rgba(0,0,0,.3);
+    }
+    span div {
+        width: 154px;
+        height: 50px;
+        position: absolute;
+        box-shadow: inset 0px -45px 10px rgba(0,0,0,.4);
+        color:#fff;
+        border-radius: 3px;
+        text-align: center;
+        line-height:12px;
+        transform: translateY(-100%);
+        font-size: 8px;
+    }
+    span img {
+        width: 154px;
+        height: 210px;
+        transition: 0.3s;
+    }
+    .list a {
+        display: inline-block;
+        width: 154px;
+        height: 210px;
+    }
+    .list {
+        transform: translateY(-8%);
+    }
+}
+
 span img:hover {
     transform: scale(1.1);
 }
@@ -179,6 +220,11 @@ span img:hover {
     justify-content: center;
     align-items: center;
     margin: 30px 0;
+}
+@media screen and (orientation:portrait) {
+    .pagenav {
+        scale: 0.9;
+    }
 }
 /* 分页 */
 .pagenav {
@@ -201,11 +247,6 @@ span img:hover {
     font-weight: 200;
     border-radius: 50%;
     cursor: pointer;
-}
-.list a {
-    display: inline-block;
-    width: 220px;
-    height: 300px;
 }
 /* .list span {
     width: 200px;

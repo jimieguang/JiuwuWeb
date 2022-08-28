@@ -60,20 +60,6 @@ a:hover {
     display: none; /* Chrome Safari */
 }
 
-/* 修改滚动条样式 */
-/* .my_news_sty::-webkit-scrollbar ,.reply_sty::-webkit-scrollbar ,.goods_comment_sty::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-.my_news_sty::-webkit-scrollbar-thumb ,.reply_sty::-webkit-scrollbar-thumb ,.goods_comment_sty::-webkit-scrollbar-thumb {
-   border-radius: 3px;
-     -moz-border-radius: 3px;
-     -webkit-border-radius: 3px;
-     background-color: #f3f3f383;
-}
-.my_news_sty::-webkit-scrollbar-track ,.reply_sty::-webkit-scrollbar-track ,.goods_comment_sty::-webkit-scrollbar-track {
-   background-color: transparent;
-} */
 .my_news_sty {
     display: none;
 }
@@ -168,4 +154,11 @@ a:hover {
     color: rgba(0,0,0,.6);
     font-size: 14px;
     overflow: hidden;
+}
+@media screen and (orientation:portrait) {
+    .w {
+        min-width: 480px;
+        scale:0.8;
+        transform: translate(-150px,20px);
+    }
 }
