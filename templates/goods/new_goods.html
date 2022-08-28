@@ -30,9 +30,9 @@
                 <div class="tips">商品名称：</div>
                 <input class="name" type="text" name="name">
             </div>
-            <div class="goodspri">
-                <div class="tips">商品价格：</div>
-                <input class="pri" type="text" name="price">
+            <div class="goodspri" >
+                <div class="tips" >商品价格：</div>
+                <input class="pri" type="text" name="price" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
             </div>
             <div class="goodsdes">
                 <div class="tips">商品描述：</div>

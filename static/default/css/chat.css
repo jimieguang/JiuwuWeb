@@ -202,3 +202,14 @@ textarea::-webkit-scrollbar-track {
     width: 250px;
     height: 100%;
 }
+@media screen and (orientation:portrait) {
+    .w ,.object,.text{
+        width: 80%;
+    }
+    .w {
+        height: 590px;
+    }
+    .photo {
+        transform: translate(10px,-25px);
+    }
+}

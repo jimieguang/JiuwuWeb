@@ -64,7 +64,7 @@
         <div class="footer">
             <div class="to_edit">编辑资料</div>
             <div style="pointer-events:none;">关注</div>
-            <a href="/userIssue/PM/{{user.id}}"><div>私信</div></a>
+            <div>私信<a href="/userIssue/PM/{{user.id}}"></a></div>
         </div>
     </div>
     <form class="edit" name="" method="post" action="">
@@ -98,7 +98,7 @@
     var returner =document.querySelector('.return');
     to_edit.addEventListener('click',function(){
         w.style.display='none';
-        edit.style.display='block';
+        edit.style.display='flex';
     })
     returner.addEventListener('click',function(){
         edit.style.display='none';
@@ -155,7 +155,6 @@
             // })
             // setWH.click();
             $("#upload").on("click", function () {
-                alert()
                 console.log($('#previewImage').cropper('getCroppedCanvas'));;
                 var cas=$('#previewImage').cropper('getCroppedCanvas');
                 var base64url=cas.toDataURL('image/jpeg');
