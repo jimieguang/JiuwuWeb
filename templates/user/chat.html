@@ -20,7 +20,7 @@
         {% for message in messages %}
             {% if message.pm_from == Alice %}
                 <div class="self">
-                    <div class="time">{{message.messagedate}}</div>
+                    <div class="time">{{message.messagedate|date:"Y-m-d H:i:s"}}</div>
                     <div class="hp"><img src="../../../static/upload/{{ Alice.avatar}}" alt=""></div>
                     <div class="content">
                         <div class="txt">{{ message.content }}
@@ -34,7 +34,7 @@
                 </div>
             {% else %} 
                 <div class="other">
-                    <div class="time">{{message.messagedate}}</div>
+                    <div class="time">{{message.messagedate|date:"Y-m-d H:i:s"}}</div>
                     <div class="hp"><img src="../../../static/upload/{{ Black.avatar}}" ></div>
                     <div class="content">
                         <div class="txt">{{ message.content }}

@@ -69,7 +69,10 @@ def mySpace(req,uid):
     # 修改个人信息
     uid = req.session.get('user_info')['uid']
     obj = User.objects.get(id=uid)
-    data = req.POST
+    # req.POST默认不可修改，所以需要“副本”
+    data = req.POST.copy()
+    data["name"] = data['name'] if data['name']!="" else obj.name
+    data["signature"] = data['signature'] if data["signature"]!="" else obj.signature
     form = Userform(data = data,instance = obj)
     if form.is_valid():
         # 实例化modelform，提交前对用户属性进行更改

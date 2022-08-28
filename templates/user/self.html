@@ -33,7 +33,7 @@
             <div class="mes">
                 <!-- <input type="text"> -->
                 <div class="name">{{user.name}}</div>
-                {% if user.signature != null %}
+                {% if user.signature != '' %}
                 <div class="introductory">{{user.signature}}</div>
                 {% else %}
                 <div class="introductory">这个家伙没有设置签名哦~</div>
@@ -73,11 +73,11 @@
         <div class="return">&nbsp&lt&lt&nbsp返回</div>
         <div class="new_name">
             <div class="tips">编辑昵称：</div>
-            <input type="text" name="name" placeholder="{{user.name}}">
+            <input type="text" name="name" id="EditName" placeholder="{{user.name}}">
         </div>
         <div class="signature">
             <div class="tips">编辑签名：</div>
-            <textarea name="signature" id="" cols="30" rows="6" placeholder="{{user.signature}}"></textarea>
+            <textarea name="signature" id="EditSignature" cols="30" rows="6" placeholder="{{user.signature}}"></textarea>
         </div>
         <div class="new_hp">
             <div class="tips" id="uploadImage">更改头像</div>
@@ -155,8 +155,7 @@
             // })
             // setWH.click();
             $("#upload").on("click", function () {
-                alert()
-                console.log($('#previewImage').cropper('getCroppedCanvas'));;
+                //console.log($('#previewImage').cropper('getCroppedCanvas'));;
                 var cas=$('#previewImage').cropper('getCroppedCanvas');
                 var base64url=cas.toDataURL('image/jpeg');
                 var inputFile = document.getElementById('inputFile_base64');

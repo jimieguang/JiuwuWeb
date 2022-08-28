@@ -34,16 +34,20 @@
             <!-- head portait头像 -->
             <div class="hp">
                 {% if isLogin %}
-                    <div class="tip"><a href="userIssue/mySpace/{{ uid }}/"><img src="../static/upload/{{user.avatar}}"></a></div>
+                    {% if user.avatar != '' %}
+                        <div class="tip"><a href="userIssue/mySpace/{{ uid }}/"><img src="../static/upload/{{user.avatar}}"></a></div>
+                    {% else %}
+                        <div class="tip"><a href="userIssue/mySpace/{{ uid }}/"><img src="{% static 'images/default_avatar.png'%}"></a></div>
+                    {% endif %}
                 {% else %}
                     <div class="tip"><a href="userIssue/login">点击登录</a></div>
                 {% endif %}
             </div>
-                {% if isLogin %}
-                    <div class="name"><p>welcome~</p><h2>{{ user.name }}</h2></div>
-                {% else %}
-                    <div class="name"><p>welcome~</p><h2>yourname</h2></div>
-                {% endif %}
+            {% if isLogin %}
+                <div class="name"><p>welcome~</p><h2>{{ user.name }}</h2></div>
+            {% else %}
+                <div class="name"><p>welcome~</p><h2>yourname</h2></div>
+            {% endif %}
         </div>
         <div class="navitem">
             <div class="line"></div>
@@ -110,15 +114,5 @@
     <!-- <footer>
         <div class="line"></div>
     </footer> -->
-
-    <script>
-        // 自动刷新一次页面
-        $(document).ready(function () {
-            if(location.href.indexOf("#reloaded")==-1){
-               location.href=location.href+"#reloaded";
-               location.reload();
-            }
-        })
-    </script>
 </body>
 </html>
