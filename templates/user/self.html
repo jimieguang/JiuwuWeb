@@ -71,7 +71,6 @@
         <!-- 安全性参数 -->
         {% csrf_token %}
         <div class="big_box">
-            <div class="return">&nbsp&lt&lt&nbsp返回</div>
             <div class="new_name">
                 <div class="tips">编辑昵称：</div>
                 <input type="text" name="name" id="EditName" placeholder="{{user.name}}">
@@ -82,13 +81,14 @@
             </div>
             <div class="new_hp">
                 <div class="tips" id="uploadImage">更改头像</div>
+                <div id="newImage">重新选择</div>
                 <img  id="previewImage" alt=""><!-- 预览图片v1 -->
                 <input class="input_file" id="inputFile_base64" type="text"  name="imagefile">
                 <input class="input_file" id="inputFile_name" type="text" name="imagefile_name">
-                <span id="setWH"></span>
             </div>
             <input id="input_file" type="file" class="input_file">
             <input class="upload" id="upload" type="submit" value="确认编辑" accept="image/*"></input>
+            <div class="return">返回</div>
         </div>
     </form>
 </body>
@@ -116,7 +116,13 @@
     var setWH = document.querySelector('#setWH');
     uploadImage.addEventListener('click',function(){
             document.querySelector('#input_file').click();
+            uploadImage.style.opacity='0';
+            newImage.style.opacity='1';
         });
+    newImage.addEventListener('click',function(){
+        previewImage.src='';
+        document.querySelector('#input_file').click();
+    })
     //预览图片
     input_file.addEventListener('change',function(){
             var file = this.files[0];
@@ -129,7 +135,7 @@
             $('#previewImage').cropper({
                 aspectRatio:1/1,
                 viewMode:1,
-                autoCropArea:1,
+                autoCropArea:0.8,
                 background:false,
                 
                 ready:function () {
@@ -152,13 +158,11 @@
                 },
                 //setData:{width:100,height:200},
             });
+            $("#newImage").on("click",function(){
+                $('#previewImage').cropper('destroy');
 
-            //$("#previewImage").cropper('setCanvasData',{left:100,top:100,width:100,height:100});
-            // $("#setWH").on("click",function(){
-            //     $('#previewImage').cropper('setCanvasData',{left:100,top:100,width:100,height:100});
-            //     console.log("aaa");
-            // })
-            // setWH.click();
+            })
+
             $("#upload").on("click", function () {
                 //console.log($('#previewImage').cropper('getCroppedCanvas'));;
                 var cas=$('#previewImage').cropper('getCroppedCanvas');

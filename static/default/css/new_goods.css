@@ -1,6 +1,6 @@
 body {
     color:rgb(230,230,230);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 100;
 }
 input,textarea {
@@ -13,7 +13,7 @@ input,textarea {
     width: 400px;
     background-color: rgba(255,255,255,0.05);
     border-radius: 20px;
-    box-shadow: 20px 20px 30px rgba(255,255,255,0.3);
+    box-shadow: 20px 20px 30px rgba(255,255,255,0.2);
 }
 /* 流式布局 */
 .goodsname,.goodspri,.goodsdes,.upload {
@@ -77,8 +77,19 @@ input,textarea {
     margin-top: 20px;
     margin-left: 50%;
     margin-bottom: 10px;
-    transform: translateX(-50%);
+    transform: translate(-40%,130px);
     cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+#newImage {
+    position: absolute;
+    width: 80px;
+    height: 20px;
+    font-size: 14px;
+    transform: translate(90px,-270px);
+    cursor: pointer;
+    display: none;
 }
 /* 选择文件 */
 .inputfile {
@@ -142,5 +153,11 @@ span {
         box-shadow: 0px 0px 0px;
         transform: translate(-50%,-5%);
         background-color: rgba(255,255,255,0);
+    }
+    #newImage {
+        width: 100%;
+        text-align: center;
+        left:50%;
+        transform: translate(-50%,-270px);
     }
 }
