@@ -70,28 +70,31 @@
     <form class="edit" name="" method="post" action="">
         <!-- 安全性参数 -->
         {% csrf_token %}
-        <div class="return">&nbsp&lt&lt&nbsp返回</div>
-        <div class="new_name">
-            <div class="tips">编辑昵称：</div>
-            <input type="text" name="name" id="EditName" placeholder="{{user.name}}">
+        <div class="big_box">
+            <div class="return">&nbsp&lt&lt&nbsp返回</div>
+            <div class="new_name">
+                <div class="tips">编辑昵称：</div>
+                <input type="text" name="name" id="EditName" placeholder="{{user.name}}">
+            </div>
+            <div class="signature">
+                <div class="tips">编辑签名：</div>
+                <textarea name="signature" id="EditSignature" cols="30" rows="6" placeholder="{{user.signature}}"></textarea>
+            </div>
+            <div class="new_hp">
+                <div class="tips" id="uploadImage">更改头像</div>
+                <img  id="previewImage" alt=""><!-- 预览图片v1 -->
+                <input class="input_file" id="inputFile_base64" type="text"  name="imagefile">
+                <input class="input_file" id="inputFile_name" type="text" name="imagefile_name">
+                <span id="setWH"></span>
+            </div>
+            <input id="input_file" type="file" class="input_file">
+            <input class="upload" id="upload" type="submit" value="确认编辑" accept="image/*"></input>
         </div>
-        <div class="signature">
-            <div class="tips">编辑签名：</div>
-            <textarea name="signature" id="EditSignature" cols="30" rows="6" placeholder="{{user.signature}}"></textarea>
-        </div>
-        <div class="new_hp">
-            <div class="tips" id="uploadImage">更改头像</div>
-            <img  id="previewImage" alt=""><!-- 预览图片v1 -->
-            <input class="input_file" id="inputFile_base64" type="text"  name="imagefile">
-            <input class="input_file" id="inputFile_name" type="text" name="imagefile_name">
-            <span id="setWH"></span>
-        </div>
-        <input id="input_file" type="file" class="input_file">
-        <input class="upload" id="upload" type="submit" value="确认编辑" accept="image/*"></input>
     </form>
 </body>
 <script>
     //切换编辑
+    var logo = document.querySelector('.logo');
     var w = document.querySelector('.w');
     var to_edit = document.querySelector('.to_edit');
     var edit=document.querySelector('.edit');
@@ -99,10 +102,12 @@
     to_edit.addEventListener('click',function(){
         w.style.display='none';
         edit.style.display='flex';
+        logo.style.display='none';
     })
     returner.addEventListener('click',function(){
         edit.style.display='none';
         w.style.display='block';
+        logo.style.display='block';
     })
 
     var previewImage =document.querySelector('#previewImage')

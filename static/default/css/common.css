@@ -69,13 +69,13 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder{
     background-size: contain;
     font-size:0;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .logo {
         position:absolute;
         top: 15px;
         left:20px;
-        width: 150px;
-        height: 70px;
+        width: 120px;
+        height: 64px;
     }
     .logo a {
         display:block;
@@ -231,10 +231,10 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder{
     font-size: 12px;
     scale: 0.9;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .nav {
-        scale:0.9;
-        transform: translate(-30px,20px);
+        scale:0.8;
+        transform: translate(-50px,20px);
     }
 }
 /* 底部 */

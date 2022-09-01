@@ -14,11 +14,14 @@ body {
     overflow: hidden;
     margin-top: 150px;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
+    body {
+        overflow-x: hidden;
+    }
     .goods {
         display: flex;
-        width: 375px;
-        height: 250px;
+        width: 100vw;
+        height: 66vw;
         border-radius: 20px;
         background-color: rgba(255,255,255,.5);
         overflow: hidden;
@@ -52,7 +55,7 @@ body {
     font-size: 13px;
     cursor: pointer;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .delete_goods {
         position: absolute;
         transform: translate(70px,-110px);
@@ -98,7 +101,7 @@ body {
     transform: translate(280px,60px);
 }
 
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .detail .dt {
         font-size: 18px;
         display: flex;
@@ -157,7 +160,7 @@ body {
     background-color: rgba(255,255,255,.3);
 }
 
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .addmcomment {
         margin-top: 5px;
         margin-left: -5px;
@@ -226,7 +229,7 @@ body {
     background-color: rgba(255,255,255,.3);
 }
 
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .uploadsc {
         transform:translate(365px,68px);
         border-radius: 5px;
@@ -282,11 +285,11 @@ body {
     width: 480px;
 }
 
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .comment {
-        width: 450px;
+        width: 100vw;
         height:auto;
-        margin: 20px 20px;
+        margin: 10px 0px;
         transition: 0.5s;
         border-radius: 20px;
         display: flex;
@@ -294,19 +297,19 @@ body {
         flex-wrap: wrap;
     }
     .mcomment {
-        width: 85%;
+        width: 100%;
         height: 100px;
         background-color: rgba(103, 193, 223, 0.3);
         display: flex;
         border-radius: 10px;
-        margin-top: 5px;
+        margin-top: 0px;
     }
     .comhp {
         position: relative;
         left :1%;
         top:10%;
-        width: 20px;
-        height: 20px;
+        width: 8vw;
+        height: 8vw;
         border-radius: 50%;
         background-color: rgba(255,255,255,.6);
         overflow: hidden;
@@ -373,12 +376,30 @@ body {
     cursor: pointer;
     margin: 3px 0px;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
+    .soncomment {
+        width: 100%;
+        height: auto;
+        background-color: rgba(118, 179, 210, 0.2);
+        /* margin-bottom: 10px; */
+        margin-left: 7%;
+        padding: 15px;
+        line-height: 20px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+    .tomcomment {
+        float: right;
+        transform: translate(75%,-20%);
+        color: rgba(0,0,0,.4);
+        cursor: pointer;
+        font-family: 'icomoon';
+    }
     .replysc {
         float: right;
         font-size: 10px;
         color:rgba(0,0,0,.4);
-        transform: translate(8px,33px);
+        transform: translate(8px,18px);
         margin: 3px 0px;
         cursor: pointer;
     }

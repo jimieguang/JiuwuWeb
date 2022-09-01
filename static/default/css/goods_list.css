@@ -8,10 +8,10 @@
     font-weight: 500;
     text-align: center;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .page_title {
-        scale:0.8;
-        transform: translateY(-50%);
+        font-size: 26px;
+        transform: translateY(-5px);
     }
 }
 /* 标题外盒子 */
@@ -55,10 +55,16 @@
     line-height: 33px;
     cursor: pointer;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
+    .box1 {
+        height: 40px;
+        margin-top: 70px;
+    }
     .sort {
-        scale: 0.8;
-        transform: translateY(100%);
+        /* scale: 0.8; */
+        left:100%;
+        transform: translate(-120%,180%);
+        z-index: 1;
     }
 }
 /* 鼠标悬浮展开 */
@@ -111,10 +117,16 @@
 .newbtn {
     /* cursor: pointer; */
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
+    .box1_5 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+    }
     .search {
         scale: 0.9;
-        transform: translateY(-50%);
+        /* transform: translateY(-50%); */
     }
 }
 /* 列表外盒子 */
@@ -131,6 +143,7 @@
     padding-top: 20px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 /* 框框 */
 /* .item {
@@ -174,11 +187,19 @@ span img {
     height: 300px;
 }
 
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
+    .box2 {
+        width: 100%;
+        margin-top: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(30px);
+    }
     .list span {
         width: 154px;
         height: 210px;
-        margin: 20px 20px;
+        margin: 20px 10px;
         border-radius: 2%;
         align-items: flex-end;
         overflow: hidden;
@@ -221,9 +242,9 @@ span img:hover {
     align-items: center;
     margin: 30px 0;
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .pagenav {
-        scale: 0.9;
+        scale: 0.8;
     }
 }
 /* 分页 */

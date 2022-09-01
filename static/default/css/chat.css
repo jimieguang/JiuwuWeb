@@ -183,17 +183,18 @@ textarea::-webkit-scrollbar-track {
     -5px 0px 10px rgba(255,255,255,0.1),
     0px -5px 10px rgba(255,255,255,0.1);
 }
-/* 图片 */
+/* 图片图标 */
 .photo {
     font-family: 'icomoon';
     font-size: 16px;
     cursor: pointer;
     transform: translate(-45px,0px);
     color: rgba(255,255,255,.6);
-    width: 20px;
-    height: 20px;
+    /* width: 20px; */
+    /* height: 20px; */
     /* background-color: rgba(255,255,255,.2); */
     overflow: hidden;
+    float:left;
 }
 #send_img {
     display: none;
@@ -202,14 +203,38 @@ textarea::-webkit-scrollbar-track {
     width: 250px;
     height: 100%;
 }
-@media screen and (orientation:portrait) {
+/* 768,992,1200 */
+@media screen and (orientation:portrait) and (max-width:760px) {
+    .logo {
+        display: none;
+    }
+    body {
+        overflow: hidden;
+    }
     .w ,.object,.text{
-        width: 80%;
+        width: 100%;
+        padding-top: 0px;
+        border-radius: 0px;
+        max-width: 100%;
+    }
+    .object {
+        height: 5vh;
+        opacity: 0.7;
+        margin-top: 0px;
     }
     .w {
-        height: 590px;
+        height: 85vh;
+        margin-top: 0px;
+        background-color: rgba(255,255,255,0);
+    }
+    .text {
+        height: 10vh;
+        width: 100%;
+        max-width: 100%;
+        padding-bottom: 0px;
+        background-color: rgba(255,255,255,0);
     }
     .photo {
-        transform: translate(10px,-25px);
+        /* transform: translate(10px,-25px); */
     }
 }

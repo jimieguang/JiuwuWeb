@@ -132,7 +132,7 @@ input::-moz-placeholder,textarea::-moz-placeholder{
 input::-ms-input-placeholder,textarea::-ms-input-placeholder{		
 	color: rgba(0, 0, 0, 0.4);
 }
-@media screen and (orientation:portrait) {
+@media screen and (orientation:portrait) and (max-width:760px) {
     .search {
         scale:0.9;
         transform: translateY(10px);
