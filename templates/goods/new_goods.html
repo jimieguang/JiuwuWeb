@@ -41,6 +41,7 @@
             <div class="goodsimg">
                 <div class="uploadImage" id="uploadImage">选择图片</div><!-- 上传按钮 -->
                 <img  id="previewImage" alt=""><!-- 预览图片v1 -->
+                <div id="newImage">重新选择</div>
             </div>
             <input class="inputfile" id="inputFile_base64" type="text"  name="imagefile">
             <input class="inputfile" id="inputFile_name" type="text" name="imagefile_name">
@@ -56,15 +57,20 @@
         //点击选择图片时打开上传文件窗口
         uploadImage.addEventListener('click',function(){
             document.querySelector('#inputFile').click();
+            uploadImage.style.opacity='0';
+            newImage.style.display='block';
         });
 
+        newImage.addEventListener('click',function(){
+            previewImage.src='';
+            document.querySelector('#inputFile').click();
+        })
         //预览图片
         inputFile.addEventListener('change',function(){
             var file = this.files[0];
             name = file.name;
             previewImage.src = file ? URL.createObjectURL(file) : '';
             tailor();
-            
         },this);
 
         //裁剪
@@ -73,9 +79,9 @@
                 aspectRatio:11/15,
                 viewMode:1,
                 //preview:".new_preview",hid
-                autoCropArea:1,
+                autoCropArea:0.8,
                 background:false,
-                
+
                 ready:function () {
                     console.log("ready");
                 },
@@ -103,6 +109,11 @@
             })
             $("#reset").on("click",function(){
                 $('#previewImage').cropper('reset');
+            })
+            $("#newImage").on("click",function(){
+                $('#previewImage').cropper('destroy');
+                // previewImage.src='';
+                // document.querySelector('#inputFile').click();
             })
 
             $("#getCroppedCanvas").on("click", function () {
