@@ -121,9 +121,10 @@ def goodsDetail(req,goods_id):
     if data.get('reply_from'):
         # 需要更改modelform，并且区别评论母子表，删除评论栏模块
         message_infos["reply_from_id"] = data.get('reply_from')
-        message_infos["reply_to_id"] = data.get('reply_to')
+        if data.get('reply_from')!=data.get('reply_to'):
+            message_infos["reply_to_id"] = data.get('reply_to')
         MessageComment.objects.create(**message_infos)
     else:
         message_infos["goods_id"] = goods_id
         MessageCompose.objects.create(**message_infos)
-    return HttpResponseRedirect(f"./{goods_id}")
+    return HttpResponseRedirect("./")

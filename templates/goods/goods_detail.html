@@ -41,7 +41,7 @@
             </div>
 
             <!-- 删除商品 -->
-            <form class="delete_goods_form" action="../delGoods/" method="post">
+            <form class="delete_goods_form" action="../../delGoods/" method="post">
                 <!-- 安全性参数 -->
                 {% csrf_token %}
                 <input name="goods_id"  value={{goods.id}}>
@@ -131,6 +131,7 @@
                 num_j++;
             {% endfor %}
             num_i++;
+            num_j=0;
         {% endfor %}
         
         //生成
