@@ -20,17 +20,23 @@
             <div class="image"><img src="https://inews.gtimg.com/newsapp_bt/0/15133660520/1000" alt=""></div>
         {% endif %}
         <div class="detail">
-            <div class="delete_goods">删除商品</div>
+            <div class="set">
+                <div class="symbol"></div>
+                <div class="set_box">
+                    <div class="delete_goods">删除</div>
+                    <div class="edit_goods"><del>编辑</del></div>
+                </div>
+            </div>
             <div class="w">
             <div class="dt">商品详情</div>
             <div class="dd">商品名称:<i>{{goods.name}}</i></div>
             <div class="dd">商品价格:<i>{{goods.price}}</i>¥</div>
             <div class="dd">上架时间:<i>{{goods.issuedate}}</i></div>
             <div class="dd">商品描述:<i>{{goods.introduction}}</i></div>
-            <div class="dd"></div>
             <div class="tochat">
-                <a href="/userIssue/PM/{{goods.owner.id}}" >点此私聊</a>
+                <a href="/userIssue/PM/{{goods.owner.id}}" >私聊我</a>
             </div>
+            
             <div class="tocomment">评论商品&nbsp</div>
             <form  class="addmc" action="" method="post">
                 <!-- 安全性参数 -->
@@ -40,7 +46,7 @@
             </form>
             </div>
 
-            <!-- 删除商品 -->
+            <!-- 删除商品_表单 -->
             <form class="delete_goods_form" action="../../delGoods/" method="post">
                 <!-- 安全性参数 -->
                 {% csrf_token %}
@@ -83,7 +89,6 @@
 
 
     <script>
-
         //选择同一类名的所有元素
         var getElementsByClassName = function(classname) {
             //如果浏览器支持getElementsByClassName，使用现有方法
@@ -206,63 +211,108 @@
         var time =0;
         tocomment.addEventListener('click',function(){
             if (time==0){
-                addmc.style.display='block';
+                addmc.style.opacity='1';
                 tocomment.innerHTML=('收起评论&nbsp');
                 time++;
             }
             else{
-                addmc.style.display='none';
+                addmc.style.opacity='0';
                 tocomment.innerHTML=('评论商品&nbsp');
                 time--;
             }
         })
         //回复评论
+        var current_case = new Array(-1,-1);
         var reply =getElementsByClassName("tomcomment");//母评回复按钮集合
         var comments_gather=getElementsByClassName("comment");//母评及其子评所在盒子的集合
-        var time_m=new Array(reply.length);//访问次数
-        for(let i=0;i<reply.length;i++){time_m[i]=0;}
+        //母评回复按钮点击事件
         for(let i=0;i<reply.length;i++){
             reply[i].index=i;
-            //var comname = comments_gather[i].getElementsByClassName('comname');
             reply[i].addEventListener('click',function(){
-                if(time_m[i] == 0){
-                    time_m[i]=1;
+                if(reply[i].innerHTML=="回复"){
+                    if(current_case[0]!=-1){
+                        reply[current_case[0]].innerHTML="回复";
+                        var rsc_before = comments_gather[current_case[0]].getElementsByClassName('replysc');
+                        for(let a=0;a<rsc_before.length;a++){
+                            rsc_before[a].innerHTML="回复";
+                        }
+                        comments_gather[current_case[0]].removeChild(comments_gather[current_case[0]].children[comments_gather[current_case[0]].children.length-1]);
+                    }
                     var comname = comments_gather[i].getElementsByClassName('comname');
                     var mcomment_list = comments_gather[i].getElementsByClassName('mcomment');
                     add_case(comments_gather[i],comname[0].innerHTML,mcomment_list[0]);
+                    current_case[0]=i;
+                    reply[i].innerHTML="收起";
                 }
-                else {
-                    //display:none
-                    comments_gather[i].removeChild(comments_gather[i].children[comments_gather[i].children.length-1]);
-                    time_m[i]=0;
+                else if(reply[i].innerHTML=="收起"){
+                    reply[i].innerHTML="回复";
+                    comments_gather[current_case[0]].removeChild(comments_gather[current_case[0]].children[comments_gather[current_case[0]].children.length-1]);
+                    current_case[0]=-1;
                 }
             })
             var replysc = comments_gather[i].getElementsByClassName("replysc");
-            var time_s=new Array(replysc.length);
-            for(let i=0;i<replysc.length;i++){time_s[i]=0;}
+            //子评回复按钮点击事件
             if(replysc.length > 0){
                 for(let j=0;j<replysc.length;j++){
-                replysc.index=i;
-                replysc[j].addEventListener('click',function(){
-                    //alert(time_s[j]);______undefined??
-                    if(time_s[j]!=1){
-                        time_s[j]=1;
-                        var soncomment_name = comments_gather[i].getElementsByClassName('name');
-                        var soncomment_list = comments_gather[i].getElementsByClassName('soncomment');
-                        add_case(comments_gather[i],soncomment_name[j].innerHTML,soncomment_list[j]);
-                    }
-                    else {
-                        comments_gather[i].removeChild(comments_gather[i].children[comments_gather[i].children.length-1]);
-                        time_s[j]=0;
-                    }
-                })
-            }
+                    replysc.index=i;
+                    replysc[j].addEventListener('click',function(){
+                        var mm=comments_gather[i].children[j+1].getElementsByClassName('replysc');
+                        if(mm[0].innerHTML=="回复"){
+                            if(current_case[0]!=-1){
+                                reply[current_case[0]].innerHTML="回复";
+                                var rsc_before = comments_gather[current_case[0]].getElementsByClassName('replysc');
+                                for(let a=0;a<rsc_before.length;a++){
+                                    rsc_before[a].innerHTML="回复";
+                                }
+                                comments_gather[current_case[0]].removeChild(comments_gather[current_case[0]].children[comments_gather[current_case[0]].children.length-1]);
+                            }
+                            var soncomment_name = comments_gather[i].getElementsByClassName('name');
+                            var soncomment_list = comments_gather[i].getElementsByClassName('soncomment');
+                            add_case(comments_gather[i],soncomment_name[j].innerHTML,soncomment_list[j]);
+                            current_case[0]=i;
+                            mm[0].innerHTML="收起";
+                        }
+                        else if(mm[0].innerHTML=="收起"){
+                            mm[0].innerHTML="回复";
+                            comments_gather[current_case[0]].removeChild(comments_gather[current_case[0]].children[comments_gather[current_case[0]].children.length-1]);
+                            current_case[0]=-1;
+                        }
+                    })
+                }
             }
         }
-        // 删除商品
-        var delete_btn = document.querySelector('.delete_goods');
+        // 回复按钮btn.click,function(){
+        //     if(btn.innerHTML="回复"){
+        //         if(有其他评论框){
+        //             将原评论框对应按钮值改为"回复";
+        //             删除当前评论框;
+        //         }
+        //         添加评论框;
+        //         btn.innerHTML="收起";
+        //     }
+        //     else if(btn.innerHTML=="收起"){
+        //         删除当前评论框;
+        //     }
+        // }
+
+        // 设置
+        var set = document.querySelector('.set');
+        var set_box= document.querySelector('.set_box');
+        var symbol = document.querySelector('.symbol');
+        var time =0;
+        symbol.addEventListener('click',function(){
+            if(time==0){
+                time++;
+                set_box.style.opacity='1';
+            }
+            else {
+                time--;
+                set_box.style.opacity='0';
+            }
+        })
+        var delete_goods = document.querySelector('.delete_goods');
         var delete_upload = document.querySelector('.delete_upload');
-        delete_btn.addEventListener('click',function(){
+        delete_goods.addEventListener('click',function(){
             delete_upload.click();
         })
     </script>
