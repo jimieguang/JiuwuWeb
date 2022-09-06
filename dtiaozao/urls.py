@@ -18,6 +18,9 @@ urlpatterns = [
     # 商品相关模块
     path('goodsIssue/', include('goodsIssue.urls',namespace = "goodsIssue")),
 
+    # 奇奇怪怪的附加模块
+    path('others/', include('others.urls',namespace = "others")),
+
     # 消息中心模块
     path('message/',views.message),
 

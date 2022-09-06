@@ -66,11 +66,17 @@ def mySpace(req,uid):
         user = User.objects.get(id=uid)
         isOwner = (uid == req.session['user_info']['uid'])
         return render(req,'user/self.html',locals())
-    # 修改个人信息
     uid = req.session.get('user_info')['uid']
     obj = User.objects.get(id=uid)
-    # req.POST默认不可修改，所以需要“副本”
-    data = req.POST.copy()
+    # 修改密码
+    data = req.POST
+    if req.POST.get("type") == "account":
+        if fun.mk_md5(data['passwd']) != obj.passwd:
+            return HttpResponse(json.dumps({"status":"原密码错误，请重新输入！"}))
+        obj.passwd = fun.mk_md5(data["new_passwd"])
+        return HttpResponse(json.dumps({"status":200}))
+    # 修改个人信息
+    data = req.POST.copy()  # req.POST默认不可修改，所以需要“副本”
     data["name"] = data['name'] if data['name']!="" else obj.name
     data["signature"] = data['signature'] if data["signature"]!="" else obj.signature
     form = Userform(data = data,instance = obj)

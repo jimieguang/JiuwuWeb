@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # "goodsIssue.apps.GoodsissueConfig",
     'userIssue',
     'goodsIssue',
+    'others',   # 额外功能，可去除
 ]
 
 MIDDLEWARE = [
