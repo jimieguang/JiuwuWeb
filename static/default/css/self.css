@@ -157,14 +157,12 @@ body,.header {
     width: 80%;
     max-width: 700px;
     min-width: 500px;
-    /* overflow-y: hidden; */
     display: none;
     justify-content: center;
-    /* align-items: center; */
     transform: translateY(5vh);
     box-shadow: 5px 8px 8px rgba(255, 255, 255, 0.05),-5px 8px 8px rgba(255, 255, 255, 0.05);
 }
-.return {
+.return_1 {
     color: rgba(255, 255, 255, 0.5);
     font-size: 13px;
     transform: translate(-60%,-10%);
@@ -269,9 +267,91 @@ textarea {
         /* background-color:rgba(255,255,255,.1); */
         box-shadow: 0px 0px 0px;
     }
-    .return {
+    .return_1 {
         transform: translate(80px,0px);
         color:rgba(190, 236, 237, 0.7);
 
     }
+}
+
+/* _____________________________________________________________________________*/
+/* 修改密码 */
+.new_password {
+    width: 80%;
+    max-width: 700px;
+    min-width: 500px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    box-shadow: 5px 8px 8px rgba(255, 255, 255, 0.05),-5px 8px 8px rgba(255, 255, 255, 0.05);
+}
+.new_password .big_box {
+    transform: translateY(-10%);
+}
+.new_password .top {
+    color:rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    position: relative;
+    left:50%;
+    transform: translate(-2em,-3em);
+}
+.inp input{
+    border:0px;
+    border-bottom: 1px solid rgba(255,255,255,0.7);
+    margin-left: 5px;
+    background-color: rgba(255,255,255,0);
+    outline: none;
+    width: 200px;
+    color:azure;
+    font-size: 15px;
+    font-weight: 100;
+}
+.tab {
+    transform: translateX(-2em);
+}
+.check_new_password {
+    width: 45px;
+    height: 25px;
+    background-color: rgba(0,0,0,0);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: rgba(190, 236, 237, 0.8);
+    font-size: 15px;
+    line-height: 15px;
+    position: relative;
+    left:50%;
+    transform: translate(-50%,2em);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.upload_new_password:hover {
+    box-shadow: 5px 0px 10px rgba(255,255,255,0.1),
+    0px 5px 10px rgba(255,255,255,0.1),
+    -5px 0px 10px rgba(255,255,255,0.1),
+    0px -5px 10px rgba(255,255,255,0.1);
+}
+.return_2 {
+    cursor: pointer;
+    font-size: 13px;
+    transform: translate(-2em,8em);
+    color: rgba(255, 255, 255, 0.5);
+}
+.err_1  , .err_2 {
+    color: rgb(173, 14, 14);
+    transform: translateX(4em);
+    font-size: 12px;
+}
+@media screen and (orientation:portrait) and (max-width:760px) {
+    .new_password {
+        width: 100%;
+        min-width: 200px;
+        max-width: 100%;
+        box-shadow: 0px 0px 0px;
+    }
+    /* .return_2 {
+        transform: translate(80px,0px);
+        color:rgba(190, 236, 237, 0.7);
+
+    } */
 }

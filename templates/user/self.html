@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{% static 'default/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'default/css/common.css' %}">
     <link rel="stylesheet" href="{% static 'default/css/self.css' %}">
+    <script src="{% static 'default/js/safe.js' %}"></script>
+    
     <!-- 引入jquery,cropper -->
     <script src="{% static 'default/jquery/dist/jquery.js' %}"></script>
     <!-- <script src="../../static/default/cropperjs/dist/cropper.js"></script> -->
@@ -63,7 +65,7 @@
         </div>
         <div class="footer">
             <div class="to_edit">编辑资料</div>
-            <div style="pointer-events:none;">关注</div>
+            <div class="account">账户安全</div>
             <div>私信<a href="/userIssue/PM/{{user.id}}"></a></div>
         </div>
     </div>
@@ -88,27 +90,59 @@
             </div>
             <input id="input_file" type="file" class="input_file">
             <input class="upload" id="upload" type="submit" value="确认编辑" accept="image/*"></input>
-            <div class="return">返回</div>
+            <div class="return_1">返回</div>
+            <input class="hide" type="text" name="type" value="account">
+        </div>
+    </form>
+    <form class="new_password" name="" method="" action="">
+        <!-- 安全性参数 -->
+        {% csrf_token %}
+        <div class="big_box">
+            <input class="hide" type="text" name="type" value="account">
+            <div class="top">修改密码</div>
+            <div class="inp">原密码:<input type="password" name="" class="passwd"></div>
+            <div class="err_1">&nbsp</div>
+            <div class="inp">新密码:<input type="password" name="" class="new_1"></div>
+            <div>&nbsp</div>
+            <div class="inp tab">确认新密码:<input type="password" name="" class="new_2"></div>
+            <div class="err_2">&nbsp</div>
+            <input type="submit" class="upload_new_password hide">
+            <div class="check_new_password">提交</div>
+            <div class="return_2">返回</div>
         </div>
     </form>
 </body>
 <script>
-    //切换编辑
+    //切换编辑、修改密码
     var logo = document.querySelector('.logo');
     var w = document.querySelector('.w');
     var to_edit = document.querySelector('.to_edit');
     var edit=document.querySelector('.edit');
-    var returner =document.querySelector('.return');
+    var return_1 =document.querySelector('.return_1');
+    var account = document.querySelector('.account');
+    var new_password = document.querySelector('.new_password');
+    var return_2 = document.querySelector('.return_2');
     to_edit.addEventListener('click',function(){
         w.style.display='none';
         edit.style.display='flex';
         logo.style.display='none';
     })
-    returner.addEventListener('click',function(){
+    return_1.addEventListener('click',function(){
         edit.style.display='none';
         w.style.display='block';
         logo.style.display='block';
     })
+    account.addEventListener('click',function(){
+        w.style.display='none';
+        new_password.style.display='flex';
+        logo.style.display='none';
+    })
+    return_2.addEventListener('click',function(){
+        new_password.style.display='none';
+        w.style.display='block';
+        logo.style.display='block';
+    })
+    
 
     var previewImage =document.querySelector('#previewImage')
     var uploadImage=document.querySelector('#uploadImage');
@@ -132,46 +166,79 @@
         },this);
     //裁剪
     function tailor(){
-            $('#previewImage').cropper({
-                aspectRatio:1/1,
-                viewMode:1,
-                autoCropArea:0.8,
-                background:false,
-                
-                ready:function () {
-                    console.log("ready");
-                },
-                cropstart: function (e) {
-                    console.log("cropstart");
-                },
-                cropmove: function (e) {
-                    console.log("cropmove");
-                },
-                cropend: function (e) {
-                    console.log("cropend");
-                },
-                crop: function (e) {
-                    console.log("crop");
-                },
-                zoom: function (e) {
-                    console.log("zoom");
-                },
-                //setData:{width:100,height:200},
-            });
-            $("#newImage").on("click",function(){
-                $('#previewImage').cropper('destroy');
-
-            })
-
-            $("#upload").on("click", function () {
-                //console.log($('#previewImage').cropper('getCroppedCanvas'));;
-                var cas=$('#previewImage').cropper('getCroppedCanvas');
-                var base64url=cas.toDataURL('image/jpeg');
-                var inputFile = document.getElementById('inputFile_base64');
-                var inputFile_name = document.getElementById('inputFile_name');
-                inputFile.value = base64url;
-                inputFile_name.value = name;
-            })
+        $('#previewImage').cropper({
+            aspectRatio:1/1,
+            viewMode:1,
+            autoCropArea:0.8,
+            background:false,
+            
+            ready:function () {
+                console.log("ready");
+            },
+            cropstart: function (e) {
+                console.log("cropstart");
+            },
+            cropmove: function (e) {
+                console.log("cropmove");
+            },
+            cropend: function (e) {
+                console.log("cropend");
+            },
+            crop: function (e) {
+                console.log("crop");
+            },
+            zoom: function (e) {
+                console.log("zoom");
+            },
+            //setData:{width:100,height:200},
+        });
+        $("#newImage").on("click",function(){
+            $('#previewImage').cropper('destroy');
+        })
+        $("#upload").on("click", function () {
+            //console.log($('#previewImage').cropper('getCroppedCanvas'));;
+            var cas=$('#previewImage').cropper('getCroppedCanvas');
+            var base64url=cas.toDataURL('image/jpeg');
+            var inputFile = document.getElementById('inputFile_base64');
+            var inputFile_name = document.getElementById('inputFile_name');
+            inputFile.value = base64url;
+            inputFile_name.value = name;
+        })
+    }
+    // 密码校验
+    var check = document.querySelector('.check_new_password');
+    var upload_new_password =document.querySelector('.upload_new_password');
+    var passwd = document.querySelector('.passwd');
+    var new_1 = document.querySelector('.new_1');
+    var new_2 = document.querySelector('.new_2');
+    var err_1 = document.querySelector('.err_1');
+    var err_2 = document.querySelector('.err_2');
+    check.addEventListener('click',function(){
+        if(new_1.value != new_2.value){
+            err_2.innerHTML='请确认新密码一致哦~';
+            new_1.value='';
+            new_2.value='';
         }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "",
+                data:{"csrfmiddlewaretoken": "{{csrf_token}}","passwd":passwd.value,"new_passwd": new_1.value} ,
+                dataType:"json",    
+                success: function(msg){
+                    if(msg.status == 200){
+                        window.location.href="./";
+                    }
+                    else {
+                        err_1.innerHTML='原密码错误';
+                        passwd.value='';
+                    }
+                },
+                error: function(msg){
+                    //alert('error!');
+                }
+            });
+        }
+    })
 </script>
 </html>

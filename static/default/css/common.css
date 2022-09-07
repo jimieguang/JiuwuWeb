@@ -86,7 +86,9 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder{
         font-size:0;
     }
 }
-
+.hide {
+    display: none;
+}
 /* 大导航栏 */
 .nav {
     position: absolute;
