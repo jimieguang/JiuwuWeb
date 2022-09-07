@@ -3,9 +3,11 @@ from django.shortcuts import render
 def detect_login_middleware(get_response):
     '''检查用户是否登录以决定返回正常网页与否'''
     # One-time configuration and initialization.
+    # 完全匹配
     need_login_urls = [
         '/goodsIssue/newGoods',
     ]
+    # 部分匹配
     need_login_url_elements = [
         '/userIssue/PM/',
         '/message/', 

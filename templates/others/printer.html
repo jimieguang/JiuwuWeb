@@ -1,0 +1,40 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线打印</title>
+    <!-- 网站说明 -->
+    <meta name="description" content="九十九物-暨大珠区首个闲置/二手物品交易网站，为您提供高效便捷的校内交易平台！"/>
+    <meta name="keywords" content="暨南大学,珠海校区,闲置,二手,交易,买卖,线上"/>
+    <link rel="shortcut icon" href="{% static 'default/favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'default/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'default/css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'default/css/login.css' %}">
+    <script src="{% static 'default/js/login.js' %}"></script>
+</head>
+<body>
+    <!-- hesder头部模块 -->
+        <div class="logo">
+            <h1><a href="/" title="九物">九物</a></h1>
+        </div>
+    <!-- hesder头部模块end -->
+    <div class="lr">
+        <div class="login">
+            <div class="lrt">打印</div>
+            <form method="post" action="" enctype="multipart/form-data">
+                <!-- 安全性参数 -->
+                {% csrf_token %}
+                <div class="inp">文件:<input type="file" name="image" value=""></div>
+                <div class="inp">数量:<input type="text" name="num" value="1"></div>
+                <div class="inp">黑白:<input type="text" name="gray" value="no"></div>
+                <div class="inp">双面:<input type="text" name="one_side" value="no"></div>
+                <div class="subm"><input type="submit" value="开始打印" class="sub"></div>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
