@@ -121,8 +121,15 @@ body {
 }
 /* 子项 */
 .detail .dd {
-    width: 100%;
+    width: 90%;
     height: 33px;
+    font-size: 17px;
+    line-height: 40px;
+    margin-left: 10%;
+}
+.detail .det {
+    width: 90%;
+    height: auto;
     font-size: 17px;
     line-height: 40px;
     margin-left: 10%;
@@ -156,6 +163,11 @@ body {
         font-size: 14px;
         line-height: 20px;
     }
+    .detail .det {
+        height: auto;
+        font-size: 14px;
+        line-height: 20px;
+    }
     .tocomment {
         font-size: 13px;
         margin-top: -12px;
@@ -174,6 +186,11 @@ body {
         font-size: 12px;
         line-height: 20px;
     }
+    .detail .det {
+        height: auto;
+        font-size: 12px;
+        line-height: 20px;
+    }
     .tocomment {
         font-size: 12px;
         margin-top: -12px;
@@ -186,6 +203,12 @@ body {
     }
     .detail .dd {
         height: 16px;
+        font-size: 10px;
+        line-height: 16px;
+        margin-left: 5%;
+    }
+    .detail .det {
+        height: auto;
         font-size: 10px;
         line-height: 16px;
         margin-left: 5%;
