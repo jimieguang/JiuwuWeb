@@ -91,14 +91,13 @@
             <input id="input_file" type="file" class="input_file">
             <input class="upload" id="upload" type="submit" value="确认编辑" accept="image/*"></input>
             <div class="return_1">返回</div>
-            <input class="hide" type="text" name="type" value="account">
+            <input class="hide" type="text" name="type" value="edit">
         </div>
     </form>
     <form class="new_password" name="" method="" action="">
         <!-- 安全性参数 -->
         {% csrf_token %}
         <div class="big_box">
-            <input class="hide" type="text" name="type" value="account">
             <div class="top">修改密码</div>
             <div class="inp">原密码:<input type="password" name="" class="passwd"></div>
             <div class="err_1">&nbsp</div>
@@ -223,7 +222,7 @@
             $.ajax({
                 type: "POST",
                 url: "",
-                data:{"csrfmiddlewaretoken": "{{csrf_token}}","passwd":passwd.value,"new_passwd": new_1.value} ,
+                data:{"csrfmiddlewaretoken": "{{csrf_token}}","type":"account","passwd":passwd.value,"new_passwd": new_1.value} ,
                 dataType:"json",    
                 success: function(msg){
                     if(msg.status == 200){

@@ -40,7 +40,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="action" value="register">
                 <div class="inp">昵称:<input type="text" name="name"></div>
-                <div class="inp">学号:<input type="text" maxlength="10" name="student_id"></div>
+                <div class="inp">学号:<input type="text" maxlength="10" name="student_id" minlength="10"></div>
                 <div class="inp">密码:<input type="password" name="passwd"></div>
                 <div class="inp tab">确认密码:<input type="password" name="confirm_passwd"></div>
                 <div class="agreement"><input type="checkbox" class="test"/>我已阅读并同意&nbsp<a href="#">《九物用户协议》</a></div>
