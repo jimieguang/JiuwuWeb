@@ -31,7 +31,11 @@
                         </div>
                         <!-- <img src=''>-->
                     </div>
-                    <!-- <div class="unread">未读</div> -->
+                    {% if message.isRead %}
+                        <div class="read">已读</div>
+                    {% else %}
+                        <div class="unread">未读</div>
+                    {% endif %}
                 </div>
             {% else %} 
                 <div class="other">
@@ -95,13 +99,16 @@
         var hp = document.createElement('div');
         var content = document.createElement('div');
         var txt = document.createElement('div');
+        var isRead = document.createElement('div');
         var img = document.createElement('img');
         w.appendChild(owner);
         owner.appendChild(time);
         owner.appendChild(hp);
         owner.appendChild(content);
         content.appendChild(txt);
+        content.appendChild(isRead);
         hp.appendChild(img);
+        isRead.innerHTML='未读';
         owner.className=Owner;
         time.className='time';
         hp.className='hp';
@@ -109,6 +116,7 @@
         content.className='content';
         time.innerHTML=(Time);
         txt.className='txt';
+        isRead.className='unread';
         if(Content!=''){
             txt.innerHTML=(Content);
         }

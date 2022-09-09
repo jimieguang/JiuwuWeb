@@ -93,7 +93,7 @@ body {
 .other .content {
     border-radius: 0px 10px 10px 10px;
 }
-.self .content,.self .hp,.err,.unread {
+.self .content,.self .hp,.err,.unread,.read {
     float: right;
 }
 .other .content,.other .hp,.other .occupied {
@@ -113,6 +113,10 @@ body {
 .unread {
     transform: translate(-5px,12px);
     color: rgba(236, 24, 24, 0.6);
+}
+.read {
+    transform: translate(-5px,12px);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 /* 伪元素清除浮动 */
@@ -234,8 +238,5 @@ textarea::-webkit-scrollbar-track {
         max-width: 100%;
         padding-bottom: 0px;
         background-color: rgba(255,255,255,0);
-    }
-    .photo {
-        /* transform: translate(10px,-25px); */
     }
 }
