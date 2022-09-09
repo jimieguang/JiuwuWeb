@@ -74,6 +74,7 @@ def mySpace(req,uid):
         if fun.mk_md5(data['passwd']) != obj.passwd:
             return HttpResponse(json.dumps({"status":"原密码错误，请重新输入！"}))
         obj.passwd = fun.mk_md5(data["new_passwd"])
+        obj.save()
         return HttpResponse(json.dumps({"status":200}))
     # 修改个人信息
     data = req.POST.copy()  # req.POST默认不可修改，所以需要“副本”
